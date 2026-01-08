@@ -1,0 +1,72 @@
+<div class="landing-genialisis">
+  <div class="container">
+    <div class="hero">
+      <div class="logo-minimal">
+        <img src="assets/images/logo.png" alt="GENIALISIS">
+      </div>
+      <h1>Tu jardín funciona perfecto.<br><span class="highlight">Demuéstralo.</span></h1>
+      <p>Ahorra 60% del tiempo administrativo mientras garantizas el 100% de tu promesa educativa</p>
+    </div>
+
+    <div class="boxes-layout">
+      <ng-container *ngFor="let box of boxes; let i = index">
+        
+        <div class="thread-wrapper" [attr.data-index]="i">
+          <div class="thread"></div>
+        </div>
+        
+        <div class="box-wrapper" 
+             [class.left]="box.position === 'left'"
+             [class.center]="box.position === 'center'"
+             [class.right]="box.position === 'right'"
+             [class.wide]="box.position === 'wide'"
+             [attr.data-delay]="box.delay"
+             [attr.data-index]="i">
+          
+          <div class="box" 
+               [class.cta-box]="box.isCTA"
+               (click)="openModal(box)">
+            
+            <div *ngIf="!box.isCTA" class="box-icon-minimal">
+              <svg viewBox="0 0 24 24">
+                <path [attr.d]="box.icon" />
+              </svg>
+            </div>
+
+            <h2 class="box-title">{{ box.title }}</h2>
+            <p *ngIf="box.subtitle" class="box-subtitle">{{ box.subtitle }}</p>
+
+            <div *ngIf="box.title === '8 Módulos'" class="minimal-grid">
+              <div *ngFor="let modulo of modulos" class="minimal-item">
+                <div class="minimal-item-title">{{ modulo }}</div>
+              </div>
+            </div>
+
+            <div *ngIf="box.title !== '8 Módulos'" class="box-content" [innerHTML]="box.content"></div>
+
+            <button *ngIf="box.isCTA" class="cta-button" (click)="onCtaClick(); $event.stopPropagation()">
+              Agendar con un Agente
+            </button>
+          </div>
+        </div>
+        
+      </ng-container>
+    </div>
+  </div>
+
+  <div *ngIf="showModal" class="modal-overlay" (click)="closeModal()">
+    <div class="modal-content" (click)="$event.stopPropagation()">
+      <button class="modal-close" (click)="closeModal()">
+        <svg viewBox="0 0 24 24" fill="none">
+          <line x1="18" y1="6" x2="6" y2="18"/>
+          <line x1="6" y1="6" x2="18" y2="18"/>
+        </svg>
+      </button>
+      <div class="modal-header">
+        <h2 class="modal-title">{{ modalTitle }}</h2>
+        <p class="modal-subtitle">{{ modalSubtitle }}</p>
+      </div>
+      <div class="modal-body" [innerHTML]="modalBody"></div>
+    </div>
+  </div>
+</div>
