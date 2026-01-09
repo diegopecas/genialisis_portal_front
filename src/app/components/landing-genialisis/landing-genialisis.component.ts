@@ -160,7 +160,9 @@ export class LandingGenialisisComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    this.initAnimations();
+    setTimeout(() => {
+      this.initAnimations();
+    }, 100);
   }
 
   initAnimations(): void {
@@ -182,49 +184,61 @@ export class LandingGenialisisComponent implements OnInit, AfterViewInit {
 
       if (!thread || !box) return;
 
-      // Si está en el viewport inicial (primeras 2 cajas), animar con delay
-      const rect = threadWrapper.getBoundingClientRect();
-      const isInViewport = rect.top < window.innerHeight;
+      if (index === 0) {
+        // Primera caja: animación automática con delay
+        const tl = gsap.timeline({ delay: 0.3 });
+        
+        tl.fromTo(thread, 
+          { height: 0, opacity: 0 },
+          { 
+            height: 120, 
+            opacity: 1, 
+            duration: 1.5, 
+            ease: 'power2.out'
+          }
+        );
 
-      if (isInViewport) {
-        const delay = index * 0.3;
-        gsap.to(thread, { 
-          height: 120, 
-          opacity: 1, 
-          duration: 1.5, 
-          delay: delay,
-          ease: 'power2.out' 
-        });
-        gsap.to(box, { 
-          y: 0, 
-          opacity: 1, 
-          duration: 3, 
-          delay: delay + 0.8,
-          ease: 'elastic.out(1, 0.3)' 
-        });
+        tl.fromTo(box, 
+          { y: -200, opacity: 0 },
+          { 
+            y: 0, 
+            opacity: 1, 
+            duration: 3, 
+            ease: 'elastic.out(1, 0.3)'
+          }, 
+          '-=0.7'
+        );
       } else {
-        // Si no está en viewport, usar scroll trigger
+        // Resto de cajas: ScrollTrigger
         const tl = gsap.timeline({
           scrollTrigger: {
             trigger: threadWrapper,
-            start: 'top 85%',
-            toggleActions: 'play none none none'
+            start: 'top 75%',
+            toggleActions: 'play none none none',
+            markers: true
           }
         });
 
-        tl.to(thread, { 
-          height: 120, 
-          opacity: 1, 
-          duration: 1.5, 
-          ease: 'power2.out' 
-        });
+        tl.fromTo(thread, 
+          { height: 0, opacity: 0 },
+          { 
+            height: 120, 
+            opacity: 1, 
+            duration: 1.5, 
+            ease: 'power2.out'
+          }
+        );
 
-        tl.to(box, { 
-          y: 0, 
-          opacity: 1, 
-          duration: 3, 
-          ease: 'elastic.out(1, 0.3)' 
-        }, '-=0.7');
+        tl.fromTo(box, 
+          { y: -200, opacity: 0 },
+          { 
+            y: 0, 
+            opacity: 1, 
+            duration: 3, 
+            ease: 'elastic.out(1, 0.3)'
+          }, 
+          '-=0.7'
+        );
       }
     });
   }
