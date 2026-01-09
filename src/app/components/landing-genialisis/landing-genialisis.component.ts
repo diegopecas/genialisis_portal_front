@@ -186,58 +186,33 @@ export class LandingGenialisisComponent implements OnInit, AfterViewInit {
 
       if (index === 0) {
         // Primera caja: animación automática con delay
-        const tl = gsap.timeline({ delay: 0.3 });
-        
-        tl.fromTo(thread, 
-          { height: 0, opacity: 0 },
-          { 
-            height: 120, 
-            opacity: 1, 
-            duration: 1.5, 
-            ease: 'power2.out'
-          }
-        );
-
-        tl.fromTo(box, 
+        gsap.fromTo(box, 
           { y: -200, opacity: 0 },
           { 
             y: 0, 
             opacity: 1, 
             duration: 3, 
-            ease: 'elastic.out(1, 0.3)'
-          }, 
-          '-=0.7'
+            ease: 'elastic.out(1, 0.3)',
+            delay: 0.3
+          }
         );
       } else {
         // Resto de cajas: ScrollTrigger
-        const tl = gsap.timeline({
+        gsap.timeline({
           scrollTrigger: {
             trigger: threadWrapper,
             start: 'top 75%',
-            toggleActions: 'play none none none',
-            markers: true
+            toggleActions: 'play none none none'
           }
-        });
-
-        tl.fromTo(thread, 
-          { height: 0, opacity: 0 },
-          { 
-            height: 120, 
-            opacity: 1, 
-            duration: 1.5, 
-            ease: 'power2.out'
-          }
-        );
-
-        tl.fromTo(box, 
+        })
+        .fromTo(box, 
           { y: -200, opacity: 0 },
           { 
             y: 0, 
             opacity: 1, 
             duration: 3, 
             ease: 'elastic.out(1, 0.3)'
-          }, 
-          '-=0.7'
+          }
         );
       }
     });
