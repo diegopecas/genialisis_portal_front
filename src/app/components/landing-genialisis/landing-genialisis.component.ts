@@ -1,161 +1,547 @@
-import { Component, OnInit, AfterViewInit, HostListener } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { HttpClient } from '@angular/common/http';
 
 gsap.registerPlugin(ScrollTrigger);
 
-interface BoxData {
-  title: string;
-  subtitle: string;
+interface Stat {
+  value: string;
+  label: string;
   icon: string;
-  content: string;
-  position: 'left' | 'center' | 'right' | 'wide';
-  delay: number;
-  isCTA?: boolean;
-  modalContent?: {
-    subtitle: string;
-    body: string;
-  };
+}
+
+interface Problem {
+  icon: string;
+  title: string;
+  description: string;
+}
+
+interface SolutionBenefit {
+  value: string;
+  label: string;
+}
+
+interface Module {
+  title: string;
+  description: string;
+  icon: string;
+  fullDescription: string;
+}
+
+interface Differentiator {
+  title: string;
+  description: string;
+  icon: string;
+  badge?: string;
+}
+
+interface FAQ {
+  question: string;
+  answer: string;
 }
 
 @Component({
   selector: 'app-landing-genialisis',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './landing-genialisis.component.html',
   styleUrl: './landing-genialisis.component.scss'
 })
 export class LandingGenialisisComponent implements OnInit, AfterViewInit {
-  
-  showModal = false;
-  modalTitle = '';
-  modalSubtitle = '';
-  modalBody = '';
+  @ViewChild('contactSection') contactSection!: ElementRef;
+  @ViewChild('modulesSection') modulesSection!: ElementRef;
 
-  boxes: BoxData[] = [
+  contactForm!: FormGroup;
+  isSubmitting = false;
+  showSuccessMessage = false;
+  showModal = false;
+  selectedModule: Module | null = null;
+  activeFaqIndex: number | null = null;
+
+  stats: Stat[] = [
     {
-      title: 'El Problema',
-      subtitle: 'Excel + WhatsApp + Cuadernos',
-      icon: 'M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z',
-      content: 'Información dispersa, docentes sobrecargadas, padres sin acceso, sin control de inventarios, cobertura curricular incierta.',
-      position: 'left',
-      delay: 0.2,
-      modalContent: {
-        subtitle: 'Excel + WhatsApp + Cuadernos = Caos',
-        body: `
-          <ul class="modal-list">
-            <li><strong>Información dispersa:</strong> Datos en Excel, WhatsApp, cuadernos físicos. Imposible encontrar nada cuando más lo necesitas.</li>
-            <li><strong>Docentes sobrecargadas:</strong> Horas extras registrando calificaciones de memoria fuera de horario laboral.</li>
-            <li><strong>Padres sin información:</strong> Preguntan por WhatsApp 24/7 porque no tienen acceso a datos en tiempo real.</li>
-            <li><strong>Sin control de inventarios:</strong> Te enteras de faltantes cuando ya es demasiado tarde para reordenar.</li>
-            <li><strong>Cobertura curricular incierta:</strong> No sabes con certeza si trabajaste todos los indicadores prometidos.</li>
-            <li><strong>Pérdida de matrículas:</strong> 3-4 matrículas perdidas al mes por falta de seguimiento profesional y organización visible.</li>
-          </ul>
-        `
-      }
+      value: '60%',
+      label: 'Ahorro en tiempo administrativo',
+      icon: '<path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>'
     },
     {
-      title: 'La Solución',
-      subtitle: 'Ecosistema Integrado',
-      icon: 'M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z',
-      content: '<div class="big-number">60%</div>Menos tiempo administrativo con trazabilidad completa',
-      position: 'right',
-      delay: 0.5,
-      modalContent: {
-        subtitle: 'Un registro = Múltiples procesos automáticos',
-        body: `
-          <p><strong>Ecosistema Integrado donde cada dato genera valor en múltiples puntos:</strong></p>
-          <ul class="modal-list">
-            <li><strong>60% menos tiempo administrativo:</strong> Ahorra 9+ horas semanales en tareas repetitivas.</li>
-            <li><strong>100% trazabilidad:</strong> Cada acción queda registrada con fecha, hora y responsable.</li>
-            <li><strong>Acceso 24/7 para padres:</strong> Portal transparente donde consultan todo sin molestar por WhatsApp.</li>
-            <li><strong>Armonía operacional:</strong> No digitalizamos el caos, creamos sistemas que fluyen naturalmente.</li>
-            <li><strong>Garantía de cobertura:</strong> Metodología ágil con sprints educativos que aseguran el 100% del plan de estudios.</li>
-          </ul>
-        `
-      }
+      value: '100%',
+      label: 'Cobertura curricular garantizada',
+      icon: '<polyline points="20 6 9 17 4 12"/>'
     },
     {
-      title: '8 Módulos',
-      subtitle: 'Todo integrado',
-      icon: 'M3 3h7v7H3V3zm0 11h7v7H3v-7zm11-11h7v7h-7V3zm0 11h7v7h-7v-7z',
-      content: '',
-      position: 'center',
-      delay: 0.8,
-      modalContent: {
-        subtitle: 'Todo lo que necesitas en un solo lugar',
-        body: `
-          <ul class="modal-list">
-            <li><strong>Estudiantes:</strong> Vista 360° con historial médico, académico, financiero y antropométrico.</li>
-            <li><strong>Académico:</strong> Sprints + Logros + Indicadores con metodología ágil garantizando cobertura curricular.</li>
-            <li><strong>Calificaciones:</strong> ~5 minutos para evaluar 15 niños en tiempo real, integrado con la clase.</li>
-            <li><strong>Asistencia:</strong> Verificación de personas autorizadas con trazabilidad completa de ingresos y salidas.</li>
-            <li><strong>Financiero:</strong> Estados de cuenta automáticos con comprobantes profesionales y portal para padres.</li>
-            <li><strong>CRM Admisiones:</strong> Seguimiento de visitas con temperatura de prospecto y conversión de matrículas.</li>
-            <li><strong>Operaciones:</strong> Control de inventarios + Limpieza + Medidas antropométricas (EXCLUSIVO).</li>
-            <li><strong>Reportes:</strong> Listos con un clic para auditorías, reuniones y Secretaría de Salud.</li>
-          </ul>
-        `
-      }
+      value: '5 min',
+      label: 'Para evaluar 15 niños',
+      icon: '<circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>'
     },
     {
-      title: '¿Por Qué GENIALISIS?',
-      subtitle: 'Control de inventarios EXCLUSIVO',
-      icon: 'M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z',
-      content: 'Ningún competidor lo ofrece • Metodología ágil • 100% Colombia • Evaluaciones incluidas • Tarifa plana • Todo incluido',
-      position: 'right',
-      delay: 1.1,
-      modalContent: {
-        subtitle: 'Diferenciadores únicos en el mercado',
-        body: `
-          <ul class="modal-list">
-            <li><strong>Control de Inventarios (EXCLUSIVO):</strong> Ningún competidor lo ofrece. Sabe exactamente qué tienes, qué falta y cuándo reordenar.</li>
-            <li><strong>Metodología Ágil:</strong> Sprints educativos con cobertura curricular garantizada al 100%. No promesas, sino certeza.</li>
-            <li><strong>100% Colombia:</strong> Cumple requisitos de Secretaría de Salud + Soporte local que entiende tu contexto.</li>
-            <li><strong>Evaluaciones Incluidas:</strong> Competidores cobran $80.000 extra por evaluaciones. En GENIALISIS están incluidas.</li>
-            <li><strong>Tarifa Plana:</strong> Hasta 50 estudiantes sin cobro adicional. Predecible, transparente, justo.</li>
-            <li><strong>Todo Incluido:</strong> Sin costos ocultos, sin módulos extra, sin sorpresas. Un precio, todo el poder.</li>
-          </ul>
-        `
-      }
-    },
-    {
-      title: 'Garantía 60 Días',
-      subtitle: 'Cero riesgo',
-      icon: 'M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z',
-      content: 'Si no quedas satisfecho: devolvemos tu dinero Y te entregamos todos los datos. Sin pérdida de tiempo.',
-      position: 'center',
-      delay: 1.4,
-      modalContent: {
-        subtitle: 'Prueba sin riesgo',
-        body: `
-          <p><strong>Nuestra promesa es simple:</strong></p>
-          <ul class="modal-list">
-            <li><strong>60 días de prueba:</strong> Tiempo suficiente para validar que GENIALISIS transforma tu operación.</li>
-            <li><strong>Devolución completa:</strong> Si no quedas satisfecho, devolvemos el 100% de tu inversión. Sin preguntas.</li>
-            <li><strong>Tus datos son tuyos:</strong> Te entregamos toda la información que ingresaste en formatos estándar (Excel, PDF).</li>
-            <li><strong>Sin pérdida de tiempo:</strong> No quedas en ceros. Mantienes todo lo que construiste durante la prueba.</li>
-            <li><strong>Implementación incluida:</strong> Migración de datos, capacitación del equipo, soporte completo.</li>
-          </ul>
-          <p style="margin-top: 20px;"><strong>¿Por qué ofrecemos esto?</strong> Porque sabemos que una vez pruebes GENIALISIS, no querrás volver al caos.</p>
-        `
-      }
-    },
-    {
-      title: 'Hablemos de tu jardín',
-      subtitle: '',
-      icon: '',
-      content: 'Agenda una sesión de 30 minutos con nuestro equipo. Sin compromiso.',
-      position: 'wide',
-      delay: 1.7,
-      isCTA: true
+      value: '24/7',
+      label: 'Acceso para padres',
+      icon: '<path d="M12 2a10 10 0 1 0 0 20 10 10 0 1 0 0-20zM2 12h20"/>'
     }
   ];
 
-  modulos = ['Estudiantes', 'Académico', 'Calificaciones', 'Asistencia', 'Financiero', 'CRM', 'Operaciones', 'Reportes'];
+  problems: Problem[] = [
+    {
+      icon: '📊',
+      title: 'Información dispersa',
+      description: 'Datos en Excel, WhatsApp, cuadernos físicos. Imposible encontrar nada cuando más lo necesitas.'
+    },
+    {
+      icon: '⏰',
+      title: 'Docentes sobrecargadas',
+      description: 'Horas extras registrando calificaciones de memoria fuera de horario laboral.'
+    },
+    {
+      icon: '📱',
+      title: 'Padres sin información',
+      description: 'Preguntan por WhatsApp 24/7 porque no tienen acceso a datos en tiempo real.'
+    },
+    {
+      icon: '📦',
+      title: 'Sin control de inventarios',
+      description: 'Te enteras de faltantes cuando ya es demasiado tarde para reordenar.'
+    },
+    {
+      icon: '❓',
+      title: 'Cobertura incierta',
+      description: 'No sabes con certeza si trabajaste todos los indicadores prometidos.'
+    },
+    {
+      icon: '📉',
+      title: 'Pérdida de matrículas',
+      description: '3-4 matrículas perdidas al mes por falta de seguimiento profesional.'
+    }
+  ];
+
+  solutionBenefits: SolutionBenefit[] = [
+    { value: '60%', label: 'Menos tiempo administrativo' },
+    { value: '100%', label: 'Trazabilidad completa' },
+    { value: '24/7', label: 'Acceso para padres' }
+  ];
+
+  modules: Module[] = [
+    {
+      title: 'Estudiantes',
+      description: 'Vista 360° completa con historial médico, académico, financiero y antropométrico.',
+      icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>',
+      fullDescription: `
+        <p><strong>El corazón del ecosistema GENIALISIS. Centraliza TODA la información de cada niño en un solo lugar.</strong></p>
+        
+        <p><strong>Ficha del Estudiante:</strong></p>
+        <ul>
+          <li><strong>Identificación completa:</strong> Tipo y número de documento, nombres completos, nacionalidad</li>
+          <li><strong>Información médica crítica:</strong> Grupo sanguíneo, EPS, fecha de nacimiento con cálculo automático de edad</li>
+          <li><strong>Contacto y ubicación:</strong> Dirección, ciudad, correo, teléfono principal y de emergencia</li>
+          <li><strong>Información académica:</strong> Grupo asignado, año escolar, fecha de ingreso</li>
+        </ul>
+        
+        <p><strong>Gestión de Acudientes:</strong></p>
+        <ul>
+          <li><strong>Control granular de permisos:</strong> Define quién es responsable de pago, quién puede recoger al niño, quién tiene acceso al portal</li>
+          <li><strong>Seguridad verificable:</strong> Eliminación del "¿quién recogió al niño? ¿estaba autorizado?"</li>
+          <li><strong>Trazabilidad completa:</strong> Todo queda registrado con fecha y usuario</li>
+        </ul>
+        
+        <p><strong>Vista 360° - Todo en una sola pantalla:</strong></p>
+        <ul>
+          <li><strong>Datos personales y acudientes:</strong> Información completa sin cambiar de pantalla</li>
+          <li><strong>Estado de cuenta:</strong> Resumen financiero, movimientos, pagos, saldo pendiente y vencido</li>
+          <li><strong>Asistencia:</strong> Resumen del mes, gráficas diarias, registro detallado con observaciones</li>
+          <li><strong>Evaluaciones:</strong> Promedio por área, desempeño global, áreas destacadas y por mejorar</li>
+          <li><strong>Medidas antropométricas:</strong> Gráficas de evolución de peso y talla</li>
+          <li><strong>Observaciones:</strong> Historial completo académico, disciplinario y social</li>
+        </ul>
+        
+        <p><strong>Beneficio clave:</strong> Respuesta inmediata a cualquier pregunta. Cuando un padre llama, tienes TODO al instante. No más "lo busco y te llamo después".</p>
+      `
+    },
+    {
+      title: 'Académico',
+      description: 'Sprints + Logros + Indicadores con metodología ágil garantizando cobertura curricular.',
+      icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>',
+      fullDescription: `
+        <p><strong>El cerebro pedagógico de GENIALISIS. Garantiza que TODOS los indicadores de logro se trabajen de manera equilibrada.</strong></p>
+        
+        <p><strong>Estructura Curricular Clara:</strong></p>
+        <ul>
+          <li><strong>Logros:</strong> Objetivos generales de aprendizaje por grupo y área</li>
+          <li><strong>Indicadores:</strong> Evidencias específicas y medibles de avance</li>
+          <li><strong>Actividades:</strong> Experiencias concretas con materiales, duración y niveles (básico/avanzado)</li>
+        </ul>
+        
+        <p><strong>Sprints Académicos - Metodología Ágil Educativa:</strong></p>
+        <ul>
+          <li><strong>Ciclos cortos:</strong> Períodos de 2 semanas con fechas definidas</li>
+          <li><strong>Control de capacidad:</strong> El sistema impide crear más actividades de las que caben en el tiempo disponible</li>
+          <li><strong>Visualización de progreso:</strong> Dashboards por grupo y área en tiempo real</li>
+          <li><strong>Identificación de vacíos:</strong> Alerta de logros sin actividades asignadas</li>
+          <li><strong>Análisis por áreas:</strong> Gráficas que comparan actividades del sprint vs acumulado del corte</li>
+        </ul>
+        
+        <p><strong>Gestión del Sprint:</strong></p>
+        <ul>
+          <li><strong>Información General:</strong> KPIs, análisis de logros atendidos vs sin atender</li>
+          <li><strong>Configuración:</strong> Capacidad por grupo y área tipo "tanque" que muestra % utilizado</li>
+          <li><strong>Progreso:</strong> Avance por grupo y área con barras de progreso</li>
+        </ul>
+        
+        <p><strong>Beneficio clave:</strong> El director puede demostrar con DATOS que el 100% de los indicadores prometidos se trabajaron. No basado en suposiciones, sino en registros reales.</p>
+      `
+    },
+    {
+      title: 'Calificaciones',
+      description: '~5 minutos para evaluar 15 niños en tiempo real, integrado con la clase.',
+      icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>',
+      fullDescription: `
+        <p><strong>Revoluciona la evaluación. La docente NUNCA más tiene que "quedarse después" o "llevarse trabajo a casa".</strong></p>
+        
+        <p><strong>Evaluación en Dos Momentos:</strong></p>
+        <ul>
+          <li><strong>Momento 1 - Inicio de actividad:</strong>
+            <ul>
+              <li>Estado de Ánimo (3 estrellas): ¿Cómo llegó el niño? Triste, normal o entusiasta</li>
+              <li>Salud (2 estrellas): ¿Presenta síntomas o está en buen estado?</li>
+            </ul>
+          </li>
+          <li><strong>Momento 2 - Fin de actividad:</strong>
+            <ul>
+              <li>Efectividad (5 estrellas): ¿Qué tan bien logró el objetivo?</li>
+              <li>Número de Intentos (4 estrellas): ¿Cuántos intentos necesitó?</li>
+            </ul>
+          </li>
+        </ul>
+        
+        <p><strong>Interfaz Optimizada:</strong></p>
+        <ul>
+          <li><strong>Todos los estudiantes visibles:</strong> En una sola pantalla, sin cambiar vistas</li>
+          <li><strong>Selección de un toque:</strong> Las estrellas se marcan con un clic</li>
+          <li><strong>Información completa visible:</strong> Indicador de logro, actividad, materiales, niveles</li>
+          <li><strong>Tiempo real:</strong> ~20 segundos por niño = 5 minutos para grupo completo</li>
+        </ul>
+        
+        <p><strong>Criterios Personalizables:</strong></p>
+        <ul>
+          <li>El sistema viene con 4 criterios predefinidos</li>
+          <li>Cada jardín puede configurar los criterios que necesite: participación, creatividad, trabajo en equipo, etc.</li>
+          <li>Se adapta al proyecto educativo del jardín</li>
+        </ul>
+        
+        <p><strong>Reportes Automáticos:</strong></p>
+        <ul>
+          <li>Al registrar calificaciones, los reportes se generan solos</li>
+          <li>Boletines listos para padres</li>
+          <li>Vista 360° actualizada en tiempo real</li>
+          <li>Portal de padres con información al día</li>
+        </ul>
+        
+        <p><strong>Beneficio clave:</strong> La evaluación es parte natural de la clase, NO trabajo extra. Docentes liberadas, datos precisos, padres informados 24/7.</p>
+      `
+    },
+    {
+      title: 'Asistencia',
+      description: 'Verificación de personas autorizadas con trazabilidad completa de ingresos y salidas.',
+      icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>',
+      fullDescription: `
+        <p><strong>Control de seguridad profesional. Sabe en todo momento qué niños están en el jardín.</strong></p>
+        
+        <p><strong>Registro de Ingreso:</strong></p>
+        <ul>
+          <li><strong>Lista organizada por grupo:</strong> Identificación visual por colores</li>
+          <li><strong>Campo de observaciones:</strong> "Llegó con gripa", "Trae autorización para salir temprano"</li>
+          <li><strong>Hora exacta automática:</strong> Registro con timestamp sin intervención</li>
+          <li><strong>Filtro de búsqueda:</strong> Ubicación rápida cuando hay varios niños llegando</li>
+        </ul>
+        
+        <p><strong>Registro de Salida:</strong></p>
+        <ul>
+          <li><strong>Verificación de autorizados:</strong> Botón "detalle" muestra quién puede recoger al niño</li>
+          <li><strong>Lista de personas autorizadas:</strong> Nombre, relación (padre/madre/abuelo/nana), confirmación Sí/No</li>
+          <li><strong>Campo de observaciones:</strong> "Recogió la abuela María"</li>
+          <li><strong>Trazabilidad completa:</strong> Quién, cuándo y a qué hora</li>
+        </ul>
+        
+        <p><strong>Contador en Tiempo Real:</strong></p>
+        <ul>
+          <li><strong>Vista "Actual":</strong> Cantidad exacta de niños presentes en este momento</li>
+          <li><strong>Actualización automática:</strong> Se actualiza con cada ingreso/salida</li>
+          <li><strong>Crítico para emergencias:</strong> Simulacros de evacuación, conteo rápido</li>
+          <li><strong>Control de capacidad:</strong> Saber cuántos espacios hay disponibles</li>
+        </ul>
+        
+        <p><strong>Integración con Otros Módulos:</strong></p>
+        <ul>
+          <li>Alimenta la Vista 360° del estudiante con resumen mensual y gráficas</li>
+          <li>Conecta con módulo de Acudientes para verificación de autorizados</li>
+          <li>Las observaciones quedan en el historial del estudiante</li>
+        </ul>
+        
+        <p><strong>Beneficio clave:</strong> Ante cualquier emergencia, sabes en segundos exactamente qué niños están en las instalaciones. Seguridad verificable con un clic.</p>
+      `
+    },
+    {
+      title: 'Financiero',
+      description: 'Estados de cuenta automáticos con comprobantes profesionales y portal para padres.',
+      icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>',
+      fullDescription: `
+        <p><strong>Gestión financiera automatizada. Los padres dejan de preguntarte "¿cuánto debo?" por WhatsApp 24/7.</strong></p>
+        
+        <p><strong>Gestión de Productos y Servicios:</strong></p>
+        <ul>
+          <li><strong>Clasificación:</strong> Académico, Alimentación, Vestuario, Transporte, etc.</li>
+          <li><strong>Conceptos:</strong> Pensión, Matrícula, Almuerzo, Uniforme, Servicios extra</li>
+          <li><strong>Detalle completo:</strong> Fecha, valor, valor pagado, saldo pendiente</li>
+          <li><strong>Trazabilidad:</strong> Usuario que registró cada cargo</li>
+        </ul>
+        
+        <p><strong>Registro de Pagos:</strong></p>
+        <ul>
+          <li><strong>Múltiples métodos:</strong> Efectivo, Nequi, transferencia bancaria, etc.</li>
+          <li><strong>Referencia bancaria:</strong> Número de transacción para trazabilidad</li>
+          <li><strong>Estado:</strong> Contabilizado / Pendiente con fecha de estado</li>
+          <li><strong>Acciones:</strong> Editar, contabilizar, imprimir, ver detalle, eliminar (con permisos)</li>
+        </ul>
+        
+        <p><strong>Comprobantes Profesionales:</strong></p>
+        <ul>
+          <li><strong>Generación automática:</strong> Con datos del jardín (nombre, NIT, ciudad)</li>
+          <li><strong>Número consecutivo:</strong> Control interno de documentos</li>
+          <li><strong>Detalle completo:</strong> Conceptos aplicados, valores, saldos</li>
+          <li><strong>Espacio para firmas:</strong> "Recibido por" y "Aprobado por"</li>
+          <li><strong>Opciones:</strong> Imprimir, exportar PDF, compartir por WhatsApp</li>
+        </ul>
+        
+        <p><strong>Estado de Cuenta (Vista 360°):</strong></p>
+        <ul>
+          <li><strong>Resumen financiero:</strong> Total cobrado, saldo pendiente, valor pagado, saldo vencido</li>
+          <li><strong>Movimientos detallados:</strong> Tabla con filtros por estado, categoría y fecha</li>
+          <li><strong>Compartir:</strong> Por WhatsApp o exportar a PDF directamente</li>
+          <li><strong>Acceso padres 24/7:</strong> Portal donde consultan cuando quieran</li>
+        </ul>
+        
+        <p><strong>Beneficio clave:</strong> Ahorra horas semanales en generar estados de cuenta manualmente. Profesionaliza la imagen del jardín con documentos formales. Los padres se autoatienden.</p>
+      `
+    },
+    {
+      title: 'CRM Admisiones',
+      description: 'Seguimiento de visitas con temperatura de prospecto y conversión de matrículas.',
+      icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>',
+      fullDescription: `
+        <p><strong>Sistema profesional de admisiones. Los jardines pierden 3-4 matrículas al mes porque no hay seguimiento estructurado.</strong></p>
+        
+        <p><strong>Registro de Visitas:</strong></p>
+        <ul>
+          <li><strong>Información de la visita:</strong> Fecha, hora, tipo de contacto, canal de captación</li>
+          <li><strong>Quién nos visita:</strong> Datos completos de los padres</li>
+          <li><strong>Datos del niño:</strong> Información del prospecto</li>
+          <li><strong>Observaciones del asesor:</strong> Notas libres para contexto</li>
+        </ul>
+        
+        <p><strong>Temperatura del Prospecto:</strong></p>
+        <ul>
+          <li><strong>Explorando:</strong> Está conociendo opciones, no hay urgencia</li>
+          <li><strong>Listo para despegar:</strong> Muestra interés alto, probable cierre pronto</li>
+          <li><strong>No le interesó:</strong> Descartó la opción</li>
+          <li><strong>Sembrando semilla:</strong> Interesado pero con restricciones temporales</li>
+        </ul>
+        
+        <p><strong>Seguimiento Estructurado:</strong></p>
+        <ul>
+          <li><strong>Cuándo hacer seguimiento:</strong> Fecha programada del próximo contacto</li>
+          <li><strong>Horario preferido:</strong> Mejores horas para contactar</li>
+          <li><strong>Quién decide:</strong> Identificar el tomador de decisiones</li>
+        </ul>
+        
+        <p><strong>Compromisos del Jardín:</strong></p>
+        <ul>
+          <li>Agendar segunda visita</li>
+          <li>Enviar documentos</li>
+          <li>Compartir lista de precios</li>
+          <li>Otros compromisos personalizables</li>
+        </ul>
+        
+        <p><strong>Dashboard de Conversión:</strong></p>
+        <ul>
+          <li>Métricas de visitas vs matrículas</li>
+          <li>Estadísticas por canal de captación</li>
+          <li>Temperatura promedio de prospectos</li>
+          <li>Seguimientos pendientes</li>
+        </ul>
+        
+        <p><strong>Beneficio clave:</strong> Protocolo profesional de admisiones. Cada visita se trabaja con estructura, seguimiento automático y compromisos claros. Mayor conversión = más matrículas.</p>
+      `
+    },
+    {
+      title: 'Operaciones',
+      description: 'Control de inventarios + Limpieza + Medidas antropométricas (EXCLUSIVO).',
+      icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>',
+      fullDescription: `
+        <p><strong>Control operativo completo. ÚNICO EN EL MERCADO - Ningún competidor ofrece control de inventarios.</strong></p>
+        
+        <p><strong>Control de Inventarios (EXCLUSIVO):</strong></p>
+        <ul>
+          <li><strong>Productos de Mobiliario:</strong> Inventario de elementos físicos con mantenimiento</li>
+          <li><strong>Productos de Limpieza:</strong> Inventario con alertas de faltantes</li>
+          <li><strong>Productos de Alimentación:</strong> Control con vida útil y fechas de vencimiento</li>
+          <li><strong>Movimientos:</strong> Entradas, salidas y ajustes con trazabilidad</li>
+          <li><strong>Alertas automáticas:</strong> Notificaciones cuando algo está por agotarse</li>
+        </ul>
+        
+        <p><strong>Registro de Limpieza:</strong></p>
+        <ul>
+          <li><strong>Áreas Físicas:</strong> Espacios del jardín con mobiliario asignado</li>
+          <li><strong>Fichas técnicas:</strong> Procesos de limpieza y desinfección por área</li>
+          <li><strong>Frecuencia:</strong> Diaria, semanal, mensual según área</li>
+          <li><strong>Responsables:</strong> Asignación de personal por área</li>
+          <li><strong>Trazabilidad:</strong> Quién limpió, cuándo y qué productos usó</li>
+        </ul>
+        
+        <p><strong>Medidas Antropométricas:</strong></p>
+        <ul>
+          <li><strong>Registro masivo:</strong> Captura de peso y talla de múltiples niños rápidamente</li>
+          <li><strong>Historial completo:</strong> Evolución del crecimiento con gráficas</li>
+          <li><strong>Cumplimiento normativo:</strong> Requisito de Secretaría de Salud</li>
+          <li><strong>Integración:</strong> Datos visibles en Vista 360° del estudiante</li>
+        </ul>
+        
+        <p><strong>Gestión de Alimentación:</strong></p>
+        <ul>
+          <li><strong>Menús del restaurante:</strong> Planificación de menús e ítems</li>
+          <li><strong>Salidas por clasificación:</strong> Registro de productos usados en cocina</li>
+          <li><strong>Integración financiera:</strong> Genera cargos automáticos al padre</li>
+        </ul>
+        
+        <p><strong>Beneficio clave:</strong> Control real de inventarios con alertas. Cumplimiento automático de Secretaría de Salud con fichas técnicas de limpieza. Auditorías listas en segundos, no en días.</p>
+      `
+    },
+    {
+      title: 'Reportes',
+      description: 'Listos con un clic para auditorías, reuniones y Secretaría de Salud.',
+      icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>',
+      fullDescription: `
+        <p><strong>Reportes automáticos sin esfuerzo. Generar reportes toma horas de trabajo manual. Con GENIALISIS: un clic.</strong></p>
+        
+        <p><strong>Reportes Académicos:</strong></p>
+        <ul>
+          <li><strong>Calificaciones por Sprint:</strong> Seguimiento y evaluación de sprints académicos con progreso detallado</li>
+          <li><strong>Calificaciones por Estudiante:</strong> Reporte individual con promedios por área e indicador</li>
+          <li><strong>Boletines para padres:</strong> Exportables a PDF con formato profesional</li>
+          <li><strong>Análisis de cobertura:</strong> Verificación de que todos los indicadores fueron trabajados</li>
+        </ul>
+        
+        <p><strong>Reportes Operativos:</strong></p>
+        <ul>
+          <li><strong>Reporte de Asistencia:</strong> Control y análisis por fecha con indicadores de puntualidad</li>
+          <li><strong>Reporte de Alimentación:</strong> Control del servicio con valores y productos consumidos</li>
+          <li><strong>Inventarios:</strong> Estado actual con alertas de faltantes y próximos a vencer</li>
+          <li><strong>Limpieza:</strong> Fichas técnicas listas para Secretaría de Salud</li>
+        </ul>
+        
+        <p><strong>Reportes Financieros:</strong></p>
+        <ul>
+          <li><strong>Estado de Cartera:</strong> Saldos pendientes, vencidos y pagos proyectados</li>
+          <li><strong>Movimientos Financieros:</strong> Ingresos, egresos y flujo de caja</li>
+          <li><strong>Análisis por concepto:</strong> Pensiones, matrículas, alimentación, servicios extra</li>
+          <li><strong>Estados de cuenta:</strong> Por estudiante o consolidados</li>
+        </ul>
+        
+        <p><strong>Reportes para Auditorías:</strong></p>
+        <ul>
+          <li><strong>Reporte General de Estudiantes:</strong> Información completa de toda la población</li>
+          <li><strong>Tamizajes de Desarrollo:</strong> Análisis integral por áreas de desarrollo infantil</li>
+          <li><strong>Medidas antropométricas:</strong> Seguimiento nutricional con gráficas de evolución</li>
+          <li><strong>Cumplimiento normativo:</strong> Todo lo que Secretaría de Salud requiere</li>
+        </ul>
+        
+        <p><strong>Características Transversales:</strong></p>
+        <ul>
+          <li><strong>Exportación múltiple:</strong> PDF, Excel, impresión directa</li>
+          <li><strong>Filtros avanzados:</strong> Por fecha, grupo, área, estado</li>
+          <li><strong>Compartir:</strong> WhatsApp, email, descarga</li>
+          <li><strong>Actualización automática:</strong> Datos siempre al día sin regenerar</li>
+        </ul>
+        
+        <p><strong>Beneficio clave:</strong> Auditorías de Secretaría de Salud resueltas en segundos, no en días. Reuniones con padres con datos actualizados. Transparencia total con evidencia verificable.</p>
+      `
+    }
+  ];
+
+  differentiators: Differentiator[] = [
+    {
+      title: 'Control de Inventarios',
+      description: 'ÚNICO en el mercado. Ningún competidor lo ofrece. Sabe exactamente qué tienes, qué falta y cuándo reordenar.',
+      icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>',
+      badge: 'EXCLUSIVO'
+    },
+    {
+      title: 'Metodología Ágil',
+      description: 'Sprints educativos con cobertura curricular garantizada al 100%. No promesas, sino certeza medible.',
+      icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>',
+      badge: ''
+    },
+    {
+      title: '100% Colombia',
+      description: 'Cumple requisitos de Secretaría de Salud + Soporte local que entiende tu contexto y habla tu idioma.',
+      icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s-8-4.5-8-11.8A8 8 0 0 1 12 2a8 8 0 0 1 8 8.2c0 7.3-8 11.8-8 11.8z"/><path d="M12 13a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/></svg>',
+      badge: ''
+    },
+    {
+      title: 'Evaluaciones Incluidas',
+      description: 'Competidores cobran $80.000 extra por evaluaciones. En GENIALISIS están incluidas sin costo adicional.',
+      icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>',
+      badge: ''
+    },
+    {
+      title: 'Tarifa Plana',
+      description: 'Hasta 50 estudiantes sin cobro adicional. Predecible, transparente, justo. Sin sorpresas en la factura.',
+      icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>',
+      badge: ''
+    },
+    {
+      title: 'Todo Incluido',
+      description: 'Sin costos ocultos, sin módulos extra, sin sorpresas. Un precio, todo el poder del sistema completo.',
+      icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>',
+      badge: ''
+    }
+  ];
+
+  faqs: FAQ[] = [
+    {
+      question: '¿Cuánto tiempo toma implementar GENIALISIS en mi jardín?',
+      answer: 'La implementación es rápida. Incluimos migración de datos, capacitación del equipo y soporte completo. La mayoría de jardines están operando en menos de 2 semanas.'
+    },
+    {
+      question: '¿Cómo funciona el modelo de precios?',
+      answer: 'Tarifa plana mensual hasta 50 estudiantes. Sin cobros adicionales por módulos, sin sorpresas. Todo incluido: evaluaciones, inventarios, CRM, reportes y soporte.'
+    },
+    {
+      question: '¿Qué tipo de soporte ofrecen?',
+      answer: 'Soporte técnico local que entiende el contexto colombiano. Asistencia por WhatsApp, teléfono y email. Actualizaciones incluidas sin costo adicional.'
+    },
+    {
+      question: '¿Qué medidas de seguridad tiene GENIALISIS?',
+      answer: 'Infraestructura encriptada, respaldos automáticos diarios, y cumplimiento de normativas de protección de datos. Tus datos nunca se venden ni se comparten.'
+    },
+    {
+      question: '¿Puedo personalizar GENIALISIS para mi jardín?',
+      answer: 'Sí. Los campos de clasificación curricular, criterios de evaluación y estructura de grupos son completamente parametrizables según tu proyecto educativo.'
+    },
+    {
+      question: '¿GENIALISIS funciona para jardines de cualquier tamaño?',
+      answer: 'Sí. El sistema es escalable y funciona igual de bien con 20 o 200 estudiantes. La tarifa plana cubre hasta 50 estudiantes sin costo adicional.'
+    }
+  ];
+
+  constructor(
+    private fb: FormBuilder,
+    private http: HttpClient
+  ) {}
 
   ngOnInit(): void {
+    this.initContactForm();
     window.scrollTo(0, 0);
   }
 
@@ -165,102 +551,215 @@ export class LandingGenialisisComponent implements OnInit, AfterViewInit {
     }, 100);
   }
 
+  initContactForm(): void {
+    this.contactForm = this.fb.group({
+      nombreEstablecimiento: ['', [Validators.required, Validators.minLength(3)]],
+      nombreContacto: ['', [Validators.required, Validators.minLength(3)]],
+      email: ['', [Validators.required, Validators.email]],
+      telefono: ['', [Validators.required, Validators.pattern(/^[0-9]{7,10}$/)]],
+      mensaje: ['']
+    });
+  }
+
   initAnimations(): void {
-    gsap.to('.logo-minimal', {
-      y: -10,
-      duration: 2,
+    // Asegurar que todos los elementos sean visibles por defecto
+    gsap.set(['.stat-card', '.problem-card', '.flow-step', '.module-card', '.diff-card', '.faq-item', '.guarantee-card'], {
+      opacity: 1,
+      clearProps: 'transform'
+    });
+
+    // Hero logo animation
+    gsap.to('.hero-logo', {
+      y: -15,
+      duration: 3,
       repeat: -1,
       yoyo: true,
       ease: 'power1.inOut'
     });
 
-    const threadWrappers = document.querySelectorAll('.thread-wrapper');
-    const boxWrappers = document.querySelectorAll('.box-wrapper');
-
-    boxWrappers.forEach((wrapper: any, index) => {
-      const threadWrapper = threadWrappers[index] as HTMLElement;
-      const thread = threadWrapper?.querySelector('.thread') as HTMLElement;
-      const box = wrapper.querySelector('.box') as HTMLElement;
-
-      if (!thread || !box) return;
-
-      if (index === 0) {
-        // Primera caja: animación automática con delay
-        gsap.fromTo(box, 
-          { y: -200, opacity: 0 },
-          { 
-            y: 0, 
-            opacity: 1, 
-            duration: 3, 
-            ease: 'elastic.out(1, 0.3)',
-            delay: 0.3
-          }
-        );
-      } else {
-        // Resto de cajas: ScrollTrigger
-        gsap.timeline({
-          scrollTrigger: {
-            trigger: threadWrapper,
-            start: 'top 75%',
-            toggleActions: 'play none none none'
-          }
-        })
-        .fromTo(box, 
-          { y: -200, opacity: 0 },
-          { 
-            y: 0, 
-            opacity: 1, 
-            duration: 3, 
-            ease: 'elastic.out(1, 0.3)'
-          }
-        );
+    // Stats cards animation
+    gsap.fromTo('.stat-card',
+      { y: 30, opacity: 0 },
+      {
+        scrollTrigger: {
+          trigger: '.stats',
+          start: 'top 80%',
+          toggleActions: 'play none none reverse'
+        },
+        y: 0,
+        opacity: 1,
+        duration: 0.6,
+        stagger: 0.15,
+        ease: 'power2.out'
       }
-    });
+    );
+
+    // Problem cards animation
+    gsap.fromTo('.problem-card',
+      { y: 40, opacity: 0 },
+      {
+        scrollTrigger: {
+          trigger: '.problem-section',
+          start: 'top 70%',
+          toggleActions: 'play none none reverse'
+        },
+        y: 0,
+        opacity: 1,
+        duration: 0.6,
+        stagger: 0.1,
+        ease: 'power2.out'
+      }
+    );
+
+    // Solution flow animation
+    gsap.fromTo('.flow-step',
+      { x: -30, opacity: 0 },
+      {
+        scrollTrigger: {
+          trigger: '.solution-section',
+          start: 'top 70%',
+          toggleActions: 'play none none reverse'
+        },
+        x: 0,
+        opacity: 1,
+        duration: 0.6,
+        stagger: 0.15,
+        ease: 'power2.out'
+      }
+    );
+
+    // Module cards animation
+    gsap.fromTo('.module-card',
+      { y: 40, opacity: 0 },
+      {
+        scrollTrigger: {
+          trigger: '.modules-section',
+          start: 'top 70%',
+          toggleActions: 'play none none reverse'
+        },
+        y: 0,
+        opacity: 1,
+        duration: 0.6,
+        stagger: 0.08,
+        ease: 'power2.out'
+      }
+    );
+
+    // Differentiator cards animation
+    gsap.fromTo('.diff-card',
+      { scale: 0.95, opacity: 0 },
+      {
+        scrollTrigger: {
+          trigger: '.differentiators-section',
+          start: 'top 70%',
+          toggleActions: 'play none none reverse'
+        },
+        scale: 1,
+        opacity: 1,
+        duration: 0.6,
+        stagger: 0.1,
+        ease: 'back.out(1.2)'
+      }
+    );
+
+    // Guarantee card animation
+    gsap.fromTo('.guarantee-card',
+      { y: 50, opacity: 0 },
+      {
+        scrollTrigger: {
+          trigger: '.guarantee-section',
+          start: 'top 70%',
+          toggleActions: 'play none none reverse'
+        },
+        y: 0,
+        opacity: 1,
+        duration: 0.8,
+        ease: 'power2.out'
+      }
+    );
+
+    // FAQ items animation
+    gsap.fromTo('.faq-item',
+      { x: -20, opacity: 0 },
+      {
+        scrollTrigger: {
+          trigger: '.faq-section',
+          start: 'top 70%',
+          toggleActions: 'play none none reverse'
+        },
+        x: 0,
+        opacity: 1,
+        duration: 0.5,
+        stagger: 0.08,
+        ease: 'power2.out'
+      }
+    );
   }
 
-  @HostListener('mouseenter', ['$event'])
-  onBoxHover(event: MouseEvent): void {
-    const box = (event.target as HTMLElement).closest('.box');
-    if (box && !box.classList.contains('cta-box')) {
-      gsap.to(box, { y: -10, duration: 0.3, ease: 'power2.out' });
-    }
+  scrollToContact(): void {
+    this.contactSection.nativeElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
 
-  @HostListener('mouseleave', ['$event'])
-  onBoxLeave(event: MouseEvent): void {
-    const box = (event.target as HTMLElement).closest('.box');
-    if (box && !box.classList.contains('cta-box')) {
-      gsap.to(box, { y: 0, duration: 0.3, ease: 'power2.out' });
-    }
+  scrollToModules(): void {
+    this.modulesSection.nativeElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
 
-  openModal(box: BoxData): void {
-    if (box.isCTA || !box.modalContent) return;
-    this.modalTitle = box.title;
-    this.modalSubtitle = box.modalContent.subtitle;
-    this.modalBody = box.modalContent.body;
+  openModuleModal(module: Module): void {
+    this.selectedModule = module;
     this.showModal = true;
+    
     setTimeout(() => {
-      const modal = document.querySelector('.modal-overlay');
-      const content = document.querySelector('.modal-content');
-      gsap.to(modal, { opacity: 1, duration: 0.3, ease: 'power2.out' });
-      gsap.to(content, { scale: 1, rotation: 0, opacity: 1, duration: 0.6, ease: 'back.out(1.7)' });
+      gsap.to('.modal-overlay', { opacity: 1, duration: 0.3 });
+      gsap.fromTo('.modal-content', 
+        { scale: 0.8, opacity: 0 },
+        { scale: 1, opacity: 1, duration: 0.5, ease: 'back.out(1.7)' }
+      );
     }, 10);
   }
 
   closeModal(): void {
-    const modal = document.querySelector('.modal-overlay');
-    const content = document.querySelector('.modal-content');
-    gsap.to(content, { scale: 0.5, rotation: 10, opacity: 0, duration: 0.3, ease: 'back.in(1.7)' });
-    gsap.to(modal, { opacity: 0, duration: 0.3, ease: 'power2.in', onComplete: () => { this.showModal = false; } });
+    gsap.to('.modal-content', { scale: 0.8, opacity: 0, duration: 0.3 });
+    gsap.to('.modal-overlay', { 
+      opacity: 0, 
+      duration: 0.3,
+      onComplete: () => {
+        this.showModal = false;
+        this.selectedModule = null;
+      }
+    });
   }
 
-  onCtaClick(): void {
-    alert('Agendar con un agente - TODO');
+  toggleFaq(index: number): void {
+    this.activeFaqIndex = this.activeFaqIndex === index ? null : index;
   }
 
-  @HostListener('document:keydown.escape')
-  onEscape(): void {
-    if (this.showModal) this.closeModal();
+  onSubmit(): void {
+    if (this.contactForm.invalid) {
+      Object.keys(this.contactForm.controls).forEach(key => {
+        this.contactForm.get(key)?.markAsTouched();
+      });
+      return;
+    }
+
+    this.isSubmitting = true;
+
+    // Aquí se integra con tu backend PHP existente
+    this.http.post('/api/genialisis/contactos', this.contactForm.value)
+      .subscribe({
+        next: (response: any) => {
+          this.isSubmitting = false;
+          this.showSuccessMessage = true;
+          this.contactForm.reset();
+
+          setTimeout(() => {
+            this.showSuccessMessage = false;
+          }, 5000);
+        },
+        error: (error) => {
+          console.error('Error al enviar formulario:', error);
+          this.isSubmitting = false;
+          alert('Hubo un error al enviar el formulario. Por favor intenta nuevamente.');
+        }
+      });
   }
 }
