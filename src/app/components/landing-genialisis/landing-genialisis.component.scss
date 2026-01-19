@@ -22,11 +22,16 @@ $gray-800: #424242;
 }
 
 @mixin card-hover {
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: transform, box-shadow;
   
   &:hover {
-    transform: translateY(-8px);
+    transform: translateY(-8px) !important;
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+  }
+  
+  &.animate-in:hover {
+    transform: translateY(-8px) !important;
   }
 }
 
@@ -278,8 +283,26 @@ $gray-800: #424242;
   
   .stat-card {
     text-align: center;
-    opacity: 1 !important; // Forzar visibilidad
-    transform: none !important; // Resetear transforms
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    cursor: pointer;
+    
+    &:hover {
+      transform: translateY(-8px) scale(1.02);
+      box-shadow: 0 12px 24px rgba($gold, 0.2);
+      
+      .stat-icon {
+        transform: scale(1.1) rotate(5deg);
+        background: linear-gradient(135deg, rgba($gold, 0.2), rgba($gold, 0.3));
+      }
+      
+      .stat-value {
+        color: $gold-dark;
+      }
+    }
+    
+    &.animate-in:hover {
+      transform: translateY(-8px) scale(1.02) !important;
+    }
     
     .stat-icon {
       width: 60px;
@@ -291,6 +314,7 @@ $gray-800: #424242;
       background: linear-gradient(135deg, rgba($gold, 0.1), rgba($gold, 0.2));
       border-radius: 12px;
       border: 2px solid $gold;
+      transition: all 0.3s ease;
       
       svg {
         width: 30px;
@@ -307,6 +331,7 @@ $gray-800: #424242;
       color: $gold;
       line-height: 1;
       margin-bottom: 12px;
+      transition: color 0.3s ease;
     }
     
     .stat-label {
@@ -382,13 +407,29 @@ $gray-800: #424242;
     background: $white;
     border: 2px solid $gray-200;
     border-radius: 16px;
-    opacity: 1 !important; // Forzar visibilidad
-    transform: none !important; // Resetear transforms
+    cursor: pointer;
     @include card-hover;
+    
+    &:hover {
+      border-color: $gold;
+      
+      .problem-icon {
+        transform: scale(1.15);
+      }
+      
+      .problem-title {
+        color: $gold;
+      }
+    }
+    
+    &.animate-in:hover {
+      transform: translateY(-8px) !important;
+    }
     
     .problem-icon {
       font-size: 3rem;
       margin-bottom: 20px;
+      transition: transform 0.3s ease;
     }
     
     .problem-title {
@@ -396,6 +437,7 @@ $gray-800: #424242;
       font-weight: 700;
       color: $dark;
       margin-bottom: 12px;
+      transition: color 0.3s ease;
     }
     
     .problem-description {
@@ -444,8 +486,6 @@ $gray-800: #424242;
     border-radius: 12px;
     border: 2px solid $gray-200;
     min-width: 150px;
-    opacity: 1 !important; // Forzar visibilidad
-    transform: none !important; // Resetear transforms
     
     .flow-icon {
       font-size: 2.5rem;
@@ -513,8 +553,6 @@ $gray-800: #424242;
     @include card-hover;
     position: relative;
     overflow: hidden;
-    opacity: 1 !important; // Forzar visibilidad
-    transform: none !important; // Resetear transforms
     
     &::before {
       content: '';
@@ -532,6 +570,28 @@ $gray-800: #424242;
       transform: scaleX(1);
     }
     
+    &:hover {
+      border-color: $gold;
+      
+      .module-icon {
+        transform: scale(1.1) rotate(-5deg);
+        background: linear-gradient(135deg, rgba($gold, 0.2), rgba($gold, 0.3));
+      }
+      
+      .module-title {
+        color: $gold;
+      }
+      
+      .module-link {
+        transform: translateX(5px);
+        color: $gold-dark;
+      }
+    }
+    
+    &.animate-in:hover {
+      transform: translateY(-8px) !important;
+    }
+    
     .module-header {
       margin-bottom: 20px;
     }
@@ -545,6 +605,7 @@ $gray-800: #424242;
       justify-content: center;
       background: linear-gradient(135deg, rgba($gold, 0.1), rgba($gold, 0.2));
       border-radius: 12px;
+      transition: all 0.3s ease;
       
       svg {
         width: 32px;
@@ -558,6 +619,7 @@ $gray-800: #424242;
       font-weight: 700;
       color: $dark;
       margin-bottom: 12px;
+      transition: color 0.3s ease;
     }
     
     .module-description {
@@ -572,13 +634,9 @@ $gray-800: #424242;
         font-size: 0.95rem;
         color: $gold;
         font-weight: 600;
-        transition: transform 0.3s ease;
+        transition: all 0.3s ease;
         display: inline-block;
       }
-    }
-    
-    &:hover .module-link {
-      transform: translateX(5px);
     }
   }
 }
@@ -600,9 +658,29 @@ $gray-800: #424242;
     border: 2px solid $gray-200;
     border-radius: 16px;
     position: relative;
-    opacity: 1 !important; // Forzar visibilidad
-    transform: none !important; // Resetear transforms
     @include card-hover;
+    
+    &:hover {
+      border-color: $gold;
+      
+      .diff-icon {
+        transform: scale(1.1) rotate(5deg);
+        background: linear-gradient(135deg, rgba($gold, 0.2), rgba($gold, 0.3));
+        border-color: $gold-dark;
+      }
+      
+      .diff-title {
+        color: $gold;
+      }
+      
+      .diff-badge span {
+        background: $gold-dark;
+      }
+    }
+    
+    &.animate-in:hover {
+      transform: translateY(-8px) !important;
+    }
     
     .diff-badge {
       position: absolute;
@@ -619,6 +697,7 @@ $gray-800: #424242;
         border-radius: 20px;
         text-transform: uppercase;
         letter-spacing: 0.5px;
+        transition: background 0.3s ease;
       }
     }
     
@@ -632,6 +711,7 @@ $gray-800: #424242;
       background: linear-gradient(135deg, rgba($gold, 0.1), rgba($gold, 0.2));
       border-radius: 16px;
       border: 2px solid $gold;
+      transition: all 0.3s ease;
       
       svg {
         width: 36px;
@@ -645,6 +725,7 @@ $gray-800: #424242;
       font-weight: 700;
       color: $dark;
       margin-bottom: 16px;
+      transition: color 0.3s ease;
     }
     
     .diff-description {
@@ -749,8 +830,6 @@ $gray-800: #424242;
     border-radius: 12px;
     overflow: hidden;
     transition: all 0.3s ease;
-    opacity: 1 !important; // Forzar visibilidad
-    transform: none !important; // Resetear transforms
     
     &.active {
       border-color: $gold;
@@ -1101,6 +1180,7 @@ $gray-800: #424242;
   z-index: 1000;
   padding: 24px;
   opacity: 0;
+  transition: opacity 0.3s ease;
   
   .modal-content {
     background: $white;
@@ -1112,6 +1192,9 @@ $gray-800: #424242;
     padding: 64px 48px;
     position: relative;
     border: 2px solid $gray-200;
+    transform: scale(0.9);
+    opacity: 0;
+    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
     
     @media (max-width: 768px) {
       padding: 40px 24px;
@@ -1264,6 +1347,34 @@ $gray-800: #424242;
   to {
     opacity: 1;
     transform: translateY(0);
+  }
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-15px);
+  }
+}
+
+// Intersection Observer animations
+.stat-card,
+.problem-card,
+.flow-step,
+.module-card,
+.diff-card,
+.guarantee-card,
+.faq-item,
+.benefit-card {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+  
+  &.animate-in {
+    opacity: 1 !important;
+    transform: translateY(0) !important;
   }
 }
 

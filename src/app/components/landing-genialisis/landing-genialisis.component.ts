@@ -1,11 +1,7 @@
 import { Component, OnInit, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
-import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { HttpClient } from '@angular/common/http';
-
-gsap.registerPlugin(ScrollTrigger);
 
 interface Stat {
   value: string;
@@ -562,138 +558,38 @@ export class LandingGenialisisComponent implements OnInit, AfterViewInit {
   }
 
   initAnimations(): void {
-    // Asegurar que todos los elementos sean visibles por defecto
-    gsap.set(['.stat-card', '.problem-card', '.flow-step', '.module-card', '.diff-card', '.faq-item', '.guarantee-card'], {
-      opacity: 1,
-      clearProps: 'transform'
+    // Hero logo animation con CSS (sin GSAP)
+    const heroLogo = document.querySelector('.hero-logo') as HTMLElement;
+    if (heroLogo) {
+      heroLogo.style.animation = 'float 3s ease-in-out infinite';
+    }
+
+    // Intersection Observer para animaciones al scroll
+    const observerOptions = {
+      threshold: 0.1,
+      rootMargin: '0px 0px -100px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('animate-in');
+          // Opcional: dejar de observar después de animar
+          // observer.unobserve(entry.target);
+        }
+      });
+    }, observerOptions);
+
+    // Observar todos los elementos que queremos animar
+    const animatedElements = document.querySelectorAll(
+      '.stat-card, .problem-card, .flow-step, .module-card, .diff-card, .guarantee-card, .faq-item, .benefit-card'
+    );
+
+    animatedElements.forEach((el, index) => {
+      // Agregar delay escalonado
+      (el as HTMLElement).style.transitionDelay = `${index * 0.1}s`;
+      observer.observe(el);
     });
-
-    // Hero logo animation
-    gsap.to('.hero-logo', {
-      y: -15,
-      duration: 3,
-      repeat: -1,
-      yoyo: true,
-      ease: 'power1.inOut'
-    });
-
-    // Stats cards animation
-    gsap.fromTo('.stat-card',
-      { y: 30, opacity: 0 },
-      {
-        scrollTrigger: {
-          trigger: '.stats',
-          start: 'top 80%',
-          toggleActions: 'play none none reverse'
-        },
-        y: 0,
-        opacity: 1,
-        duration: 0.6,
-        stagger: 0.15,
-        ease: 'power2.out'
-      }
-    );
-
-    // Problem cards animation
-    gsap.fromTo('.problem-card',
-      { y: 40, opacity: 0 },
-      {
-        scrollTrigger: {
-          trigger: '.problem-section',
-          start: 'top 70%',
-          toggleActions: 'play none none reverse'
-        },
-        y: 0,
-        opacity: 1,
-        duration: 0.6,
-        stagger: 0.1,
-        ease: 'power2.out'
-      }
-    );
-
-    // Solution flow animation
-    gsap.fromTo('.flow-step',
-      { x: -30, opacity: 0 },
-      {
-        scrollTrigger: {
-          trigger: '.solution-section',
-          start: 'top 70%',
-          toggleActions: 'play none none reverse'
-        },
-        x: 0,
-        opacity: 1,
-        duration: 0.6,
-        stagger: 0.15,
-        ease: 'power2.out'
-      }
-    );
-
-    // Module cards animation
-    gsap.fromTo('.module-card',
-      { y: 40, opacity: 0 },
-      {
-        scrollTrigger: {
-          trigger: '.modules-section',
-          start: 'top 70%',
-          toggleActions: 'play none none reverse'
-        },
-        y: 0,
-        opacity: 1,
-        duration: 0.6,
-        stagger: 0.08,
-        ease: 'power2.out'
-      }
-    );
-
-    // Differentiator cards animation
-    gsap.fromTo('.diff-card',
-      { scale: 0.95, opacity: 0 },
-      {
-        scrollTrigger: {
-          trigger: '.differentiators-section',
-          start: 'top 70%',
-          toggleActions: 'play none none reverse'
-        },
-        scale: 1,
-        opacity: 1,
-        duration: 0.6,
-        stagger: 0.1,
-        ease: 'back.out(1.2)'
-      }
-    );
-
-    // Guarantee card animation
-    gsap.fromTo('.guarantee-card',
-      { y: 50, opacity: 0 },
-      {
-        scrollTrigger: {
-          trigger: '.guarantee-section',
-          start: 'top 70%',
-          toggleActions: 'play none none reverse'
-        },
-        y: 0,
-        opacity: 1,
-        duration: 0.8,
-        ease: 'power2.out'
-      }
-    );
-
-    // FAQ items animation
-    gsap.fromTo('.faq-item',
-      { x: -20, opacity: 0 },
-      {
-        scrollTrigger: {
-          trigger: '.faq-section',
-          start: 'top 70%',
-          toggleActions: 'play none none reverse'
-        },
-        x: 0,
-        opacity: 1,
-        duration: 0.5,
-        stagger: 0.08,
-        ease: 'power2.out'
-      }
-    );
   }
 
   scrollToContact(): void {
@@ -708,25 +604,33 @@ export class LandingGenialisisComponent implements OnInit, AfterViewInit {
     this.selectedModule = module;
     this.showModal = true;
     
+    // Animación CSS pura para el modal
     setTimeout(() => {
-      gsap.to('.modal-overlay', { opacity: 1, duration: 0.3 });
-      gsap.fromTo('.modal-content', 
-        { scale: 0.8, opacity: 0 },
-        { scale: 1, opacity: 1, duration: 0.5, ease: 'back.out(1.7)' }
-      );
+      const modalOverlay = document.querySelector('.modal-overlay') as HTMLElement;
+      const modalContent = document.querySelector('.modal-content') as HTMLElement;
+      
+      if (modalOverlay && modalContent) {
+        modalOverlay.style.opacity = '1';
+        modalContent.style.transform = 'scale(1)';
+        modalContent.style.opacity = '1';
+      }
     }, 10);
   }
 
   closeModal(): void {
-    gsap.to('.modal-content', { scale: 0.8, opacity: 0, duration: 0.3 });
-    gsap.to('.modal-overlay', { 
-      opacity: 0, 
-      duration: 0.3,
-      onComplete: () => {
+    const modalOverlay = document.querySelector('.modal-overlay') as HTMLElement;
+    const modalContent = document.querySelector('.modal-content') as HTMLElement;
+    
+    if (modalOverlay && modalContent) {
+      modalContent.style.transform = 'scale(0.9)';
+      modalContent.style.opacity = '0';
+      modalOverlay.style.opacity = '0';
+      
+      setTimeout(() => {
         this.showModal = false;
         this.selectedModule = null;
-      }
-    });
+      }, 300);
+    }
   }
 
   toggleFaq(index: number): void {
