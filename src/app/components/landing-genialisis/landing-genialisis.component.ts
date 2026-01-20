@@ -2,6 +2,7 @@ import { Component, OnInit, AfterViewInit, ViewChild, ElementRef } from '@angula
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 
 interface Stat {
   value: string;
@@ -23,7 +24,7 @@ interface SolutionBenefit {
 interface Module {
   title: string;
   description: string;
-  icon: string;
+  icon: SafeHtml;
   fullDescription: string;
 }
 
@@ -123,7 +124,7 @@ export class LandingGenialisisComponent implements OnInit, AfterViewInit {
     {
       title: 'Estudiantes',
       description: 'Vista 360° completa con historial médico, académico, financiero y antropométrico.',
-      icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>',
+      icon: this.sanitizer.bypassSecurityTrustHtml('<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>'),
       fullDescription: `
         <p><strong>El corazón del ecosistema GENIALISIS. Centraliza TODA la información de cada niño en un solo lugar.</strong></p>
         
@@ -158,7 +159,7 @@ export class LandingGenialisisComponent implements OnInit, AfterViewInit {
     {
       title: 'Académico',
       description: 'Sprints + Logros + Indicadores con metodología ágil garantizando cobertura curricular.',
-      icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>',
+      icon: this.sanitizer.bypassSecurityTrustHtml('<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>'),
       fullDescription: `
         <p><strong>El cerebro pedagógico de GENIALISIS. Garantiza que TODOS los indicadores de logro se trabajen de manera equilibrada.</strong></p>
         
@@ -191,7 +192,7 @@ export class LandingGenialisisComponent implements OnInit, AfterViewInit {
     {
       title: 'Calificaciones',
       description: '~5 minutos para evaluar 15 niños en tiempo real, integrado con la clase.',
-      icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>',
+      icon: this.sanitizer.bypassSecurityTrustHtml('<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>'),
       fullDescription: `
         <p><strong>Revoluciona la evaluación. La docente NUNCA más tiene que "quedarse después" o "llevarse trabajo a casa".</strong></p>
         
@@ -240,7 +241,7 @@ export class LandingGenialisisComponent implements OnInit, AfterViewInit {
     {
       title: 'Asistencia',
       description: 'Verificación de personas autorizadas con trazabilidad completa de ingresos y salidas.',
-      icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>',
+      icon: this.sanitizer.bypassSecurityTrustHtml('<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/><path d="M8 14h.01M12 14h.01M16 14h.01M8 18h.01M12 18h.01M16 18h.01"/></svg>'),
       fullDescription: `
         <p><strong>Control de seguridad profesional. Sabe en todo momento qué niños están en el jardín.</strong></p>
         
@@ -281,7 +282,7 @@ export class LandingGenialisisComponent implements OnInit, AfterViewInit {
     {
       title: 'Financiero',
       description: 'Estados de cuenta automáticos con comprobantes profesionales y portal para padres.',
-      icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>',
+      icon: this.sanitizer.bypassSecurityTrustHtml('<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>'),
       fullDescription: `
         <p><strong>Gestión financiera automatizada. Los padres dejan de preguntarte "¿cuánto debo?" por WhatsApp 24/7.</strong></p>
         
@@ -310,21 +311,23 @@ export class LandingGenialisisComponent implements OnInit, AfterViewInit {
           <li><strong>Opciones:</strong> Imprimir, exportar PDF, compartir por WhatsApp</li>
         </ul>
         
-        <p><strong>Estado de Cuenta (Vista 360°):</strong></p>
+        <p><strong>Portal para Padres 24/7:</strong></p>
         <ul>
-          <li><strong>Resumen financiero:</strong> Total cobrado, saldo pendiente, valor pagado, saldo vencido</li>
-          <li><strong>Movimientos detallados:</strong> Tabla con filtros por estado, categoría y fecha</li>
-          <li><strong>Compartir:</strong> Por WhatsApp o exportar a PDF directamente</li>
-          <li><strong>Acceso padres 24/7:</strong> Portal donde consultan cuando quieran</li>
+          <li><strong>Estado de cuenta en tiempo real:</strong> Total cobrado, saldo pendiente, valor pagado, vencido</li>
+          <li><strong>Fotos de actividades diarias:</strong> Ven qué hace su hijo cada día en el jardín</li>
+          <li><strong>Evaluaciones académicas:</strong> Seguimiento del progreso por áreas</li>
+          <li><strong>Asistencia y observaciones:</strong> Registro completo de ingresos, salidas y notas</li>
+          <li><strong>Descarga de documentos:</strong> Exportar estados de cuenta a PDF, compartir por WhatsApp</li>
+          <li><strong>Auto-servicio:</strong> Los padres consultan cuando quieran, sin molestar por WhatsApp</li>
         </ul>
         
-        <p><strong>Beneficio clave:</strong> Ahorra horas semanales en generar estados de cuenta manualmente. Profesionaliza la imagen del jardín con documentos formales. Los padres se autoatienden.</p>
+        <p><strong>Beneficio clave:</strong> Ahorra horas semanales en generar estados de cuenta manualmente y responder consultas de padres. Profesionaliza la imagen del jardín con documentos formales. Los padres se autoatienden y ven en tiempo real todo lo relacionado con su hijo: finanzas, fotos, evaluaciones y más.</p>
       `
     },
     {
       title: 'CRM Admisiones',
       description: 'Seguimiento de visitas con temperatura de prospecto y conversión de matrículas.',
-      icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>',
+      icon: this.sanitizer.bypassSecurityTrustHtml('<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="8.5" cy="7" r="4"/><line x1="20" y1="8" x2="20" y2="14"/><line x1="23" y1="11" x2="17" y2="11"/></svg>'),
       fullDescription: `
         <p><strong>Sistema profesional de admisiones. Los jardines pierden 3-4 matrículas al mes porque no hay seguimiento estructurado.</strong></p>
         
@@ -373,7 +376,7 @@ export class LandingGenialisisComponent implements OnInit, AfterViewInit {
     {
       title: 'Operaciones',
       description: 'Control de inventarios + Limpieza + Medidas antropométricas (EXCLUSIVO).',
-      icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>',
+      icon: this.sanitizer.bypassSecurityTrustHtml('<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>'),
       fullDescription: `
         <p><strong>Control operativo completo. ÚNICO EN EL MERCADO - Ningún competidor ofrece control de inventarios.</strong></p>
         
@@ -416,7 +419,7 @@ export class LandingGenialisisComponent implements OnInit, AfterViewInit {
     {
       title: 'Reportes',
       description: 'Listos con un clic para auditorías, reuniones y Secretaría de Salud.',
-      icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>',
+      icon: this.sanitizer.bypassSecurityTrustHtml('<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>'),
       fullDescription: `
         <p><strong>Reportes automáticos sin esfuerzo. Generar reportes toma horas de trabajo manual. Con GENIALISIS: un clic.</strong></p>
         
@@ -506,34 +509,51 @@ export class LandingGenialisisComponent implements OnInit, AfterViewInit {
 
   faqs: FAQ[] = [
     {
+      question: '¿Por qué GENIALISIS incluye control de inventarios y ningún competidor lo ofrece?',
+      answer: 'Porque entendimos que los jardines no solo gestionan niños y maestros, también manejan productos de limpieza, alimentación y mobiliario. Las auditorías de Secretaría de Salud exigen trazabilidad de limpieza y desinfección. Sin inventarios, los jardines pierden días preparando fichas técnicas manualmente. Con GENIALISIS, está listo en segundos.'
+    },
+    {
+      question: '¿Cómo garantizan el 100% de cobertura curricular?',
+      answer: 'Con nuestra metodología de Sprints Académicos. El sistema tiene "tanques de capacidad" por grupo y área. Si intentas crear más actividades de las que caben en 2 semanas, el sistema te alerta. También visualizas en tiempo real qué logros e indicadores aún no tienen actividades asignadas. No es una promesa, es una certeza medible con datos.'
+    },
+    {
       question: '¿Cuánto tiempo toma implementar GENIALISIS en mi jardín?',
-      answer: 'La implementación es rápida. Incluimos migración de datos, capacitación del equipo y soporte completo. La mayoría de jardines están operando en menos de 2 semanas.'
+      answer: 'La implementación es rápida. Incluimos capacitación completa del equipo y soporte durante todo el proceso. La mayoría de jardines están operando en menos de 2 semanas. Si necesitas migrar datos desde Excel o sistemas anteriores, ofrecemos servicio de migración y digitación de información base.'
+    },
+    {
+      question: '¿Es verdad que evaluar 15 niños toma solo 5 minutos?',
+      answer: 'Sí. La evaluación está integrada en la actividad pedagógica, no es trabajo extra. La docente evalúa en DOS momentos: al inicio (estado de ánimo + salud) y al final (efectividad + intentos). La interfaz muestra todos los niños en una sola pantalla. Son ~20 segundos por niño. Total: 5 minutos. Los reportes se generan automáticamente.'
     },
     {
       question: '¿Cómo funciona el modelo de precios?',
-      answer: 'Tarifa plana mensual hasta 50 estudiantes. Sin cobros adicionales por módulos, sin sorpresas. Todo incluido: evaluaciones, inventarios, CRM, reportes y soporte.'
+      answer: 'Somos el sistema de gestión escolar con el mejor precio del mercado y la mejor relación costo-beneficio. Tarifa plana mensual sin cobros adicionales por módulos. Todo incluido: evaluaciones, inventarios, CRM, reportes, portal para padres y soporte. Mientras otros competidores cobran extra por evaluaciones y funcionalidades adicionales, con GENIALISIS pagas un precio justo, predecible y sin sorpresas.'
     },
     {
-      question: '¿Qué tipo de soporte ofrecen?',
-      answer: 'Soporte técnico local que entiende el contexto colombiano. Asistencia por WhatsApp, teléfono y email. Actualizaciones incluidas sin costo adicional.'
+      question: '¿Qué pasa si decido no continuar después de los 60 días?',
+      answer: 'Te devolvemos el 100% de tu inversión sin preguntas Y te entregamos todos tus datos en formatos estándar (Excel, PDF). No quedas en ceros. Mantienes todo lo que construiste durante esos 60 días. ¿Por qué ofrecemos esto? Porque sabemos que una vez pruebes GENIALISIS, no querrás volver al caos de Excel + WhatsApp + cuadernos.'
     },
     {
-      question: '¿Qué medidas de seguridad tiene GENIALISIS?',
-      answer: 'Infraestructura encriptada, respaldos automáticos diarios, y cumplimiento de normativas de protección de datos. Tus datos nunca se venden ni se comparten.'
+      question: '¿Necesito conocimientos técnicos para usar GENIALISIS?',
+      answer: 'No. Si sabes usar Word y Excel, puedes usar GENIALISIS. La capacitación es parte de la implementación. Además, tu equipo sigue trabajando como siempre: las maestras registran actividades y evaluaciones, las directoras consultan dashboards, los padres ven información de sus hijos. Todo es intuitivo y está diseñado para el flujo de trabajo real de un jardín infantil colombiano.'
+    },
+    {
+      question: '¿Los padres pueden ver información de sus hijos?',
+      answer: 'Sí. GENIALISIS incluye un portal exclusivo para padres donde pueden consultar 24/7: fotos y videos de las actividades diarias, estado de cuenta detallado, evaluaciones académicas, asistencia, observaciones, medidas antropométricas y más. Los padres dejan de preguntar por WhatsApp porque tienen toda la información actualizada en tiempo real. Esto libera tiempo de las maestras y profesionaliza la comunicación con las familias.'
     },
     {
       question: '¿Puedo personalizar GENIALISIS para mi jardín?',
-      answer: 'Sí. Los campos de clasificación curricular, criterios de evaluación y estructura de grupos son completamente parametrizables según tu proyecto educativo.'
+      answer: 'Sí. Los campos de clasificación curricular, criterios de evaluación y estructura de grupos son completamente parametrizables según tu proyecto educativo. Puedes adaptar GENIALISIS a tu metodología sin perder la potencia del sistema.'
     },
     {
       question: '¿GENIALISIS funciona para jardines de cualquier tamaño?',
-      answer: 'Sí. El sistema es escalable y funciona igual de bien con 20 o 200 estudiantes. La tarifa plana cubre hasta 50 estudiantes sin costo adicional.'
+      answer: 'Sí. El sistema es escalable y funciona igual de bien con 20 o 200 estudiantes. La tarifa plana cubre hasta 50 estudiantes sin costo adicional. Para jardines más grandes, tenemos planes empresariales con el mismo nivel de servicio.'
     }
   ];
 
   constructor(
     private fb: FormBuilder,
-    private http: HttpClient
+    private http: HttpClient,
+    private sanitizer: DomSanitizer
   ) {}
 
   ngOnInit(): void {
@@ -564,18 +584,16 @@ export class LandingGenialisisComponent implements OnInit, AfterViewInit {
       heroLogo.style.animation = 'float 3s ease-in-out infinite';
     }
 
-    // Intersection Observer para animaciones al scroll
+    // Intersection Observer para animaciones al scroll (OPTIMIZADO)
     const observerOptions = {
-      threshold: 0.1,
-      rootMargin: '0px 0px -100px 0px'
+      threshold: 0.05, // Reducido de 0.1 para que detecte antes
+      rootMargin: '0px 0px -50px 0px' // Reducido de -100px para aparecer más pronto
     };
 
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
           entry.target.classList.add('animate-in');
-          // Opcional: dejar de observar después de animar
-          // observer.unobserve(entry.target);
         }
       });
     }, observerOptions);
@@ -586,8 +604,8 @@ export class LandingGenialisisComponent implements OnInit, AfterViewInit {
     );
 
     animatedElements.forEach((el, index) => {
-      // Agregar delay escalonado
-      (el as HTMLElement).style.transitionDelay = `${index * 0.1}s`;
+      // Agregar delay escalonado MÁS RÁPIDO
+      (el as HTMLElement).style.transitionDelay = `${index * 0.05}s`; // Reducido de 0.1s a 0.05s
       observer.observe(el);
     });
   }
