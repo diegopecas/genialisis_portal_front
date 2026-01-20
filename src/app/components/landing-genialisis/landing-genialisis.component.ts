@@ -59,6 +59,14 @@ export class LandingGenialisisComponent implements OnInit, AfterViewInit {
   selectedModule: Module | null = null;
   activeFaqIndex: number | null = null;
   
+  
+  // Modales de páginas institucionales
+  showPaginaModal = false;
+  paginaModalTitulo = '';
+  paginaModalContenido: SafeHtml = '';
+  
+  // Menu mobile
+  menuMobileAbierto = false;
   // Datos cargados desde servicios
   tamanosEstablecimiento: TamanoEstablecimiento[] = [];
   tiposConsulta: TipoConsulta[] = [];
@@ -233,8 +241,8 @@ export class LandingGenialisisComponent implements OnInit, AfterViewInit {
         <p><strong>Criterios Personalizables:</strong></p>
         <ul>
           <li>El sistema viene con 4 criterios predefinidos</li>
-          <li>Cada jardín puede configurar los criterios que necesite: participación, creatividad, trabajo en equipo, etc.</li>
-          <li>Se adapta al proyecto educativo del jardín</li>
+          <li>Cada establecimiento puede configurar los criterios que necesite: participación, creatividad, trabajo en equipo, etc.</li>
+          <li>Se adapta al proyecto educativo del establecimiento</li>
         </ul>
         
         <p><strong>Reportes Automáticos:</strong></p>
@@ -253,7 +261,7 @@ export class LandingGenialisisComponent implements OnInit, AfterViewInit {
       description: 'Verificación de personas autorizadas con trazabilidad completa de ingresos y salidas.',
       icon: this.sanitizer.bypassSecurityTrustHtml('<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/><path d="M8 14h.01M12 14h.01M16 14h.01M8 18h.01M12 18h.01M16 18h.01"/></svg>'),
       fullDescription: `
-        <p><strong>Control de seguridad profesional. Sabe en todo momento qué niños están en el jardín.</strong></p>
+        <p><strong>Control de seguridad profesional. Sabe en todo momento qué niños están en el establecimiento.</strong></p>
         
         <p><strong>Registro de Ingreso:</strong></p>
         <ul>
@@ -314,7 +322,7 @@ export class LandingGenialisisComponent implements OnInit, AfterViewInit {
         
         <p><strong>Comprobantes Profesionales:</strong></p>
         <ul>
-          <li><strong>Generación automática:</strong> Con datos del jardín (nombre, NIT, ciudad)</li>
+          <li><strong>Generación automática:</strong> Con datos del establecimiento (nombre, NIT, ciudad)</li>
           <li><strong>Número consecutivo:</strong> Control interno de documentos</li>
           <li><strong>Detalle completo:</strong> Conceptos aplicados, valores, saldos</li>
           <li><strong>Espacio para firmas:</strong> "Recibido por" y "Aprobado por"</li>
@@ -324,14 +332,14 @@ export class LandingGenialisisComponent implements OnInit, AfterViewInit {
         <p><strong>Portal para Padres 24/7:</strong></p>
         <ul>
           <li><strong>Estado de cuenta en tiempo real:</strong> Total cobrado, saldo pendiente, valor pagado, vencido</li>
-          <li><strong>Fotos de actividades diarias:</strong> Ven qué hace su hijo cada día en el jardín</li>
+          <li><strong>Fotos de actividades diarias:</strong> Ven qué hace su hijo cada día en el establecimiento</li>
           <li><strong>Evaluaciones académicas:</strong> Seguimiento del progreso por áreas</li>
           <li><strong>Asistencia y observaciones:</strong> Registro completo de ingresos, salidas y notas</li>
           <li><strong>Descarga de documentos:</strong> Exportar estados de cuenta a PDF, compartir por WhatsApp</li>
           <li><strong>Auto-servicio:</strong> Los padres consultan cuando quieran, sin molestar por WhatsApp</li>
         </ul>
         
-        <p><strong>Beneficio clave:</strong> Ahorra horas semanales en generar estados de cuenta manualmente y responder consultas de padres. Profesionaliza la imagen del jardín con documentos formales. Los padres se autoatienden y ven en tiempo real todo lo relacionado con su hijo: finanzas, fotos, evaluaciones y más.</p>
+        <p><strong>Beneficio clave:</strong> Ahorra horas semanales en generar estados de cuenta manualmente y responder consultas de padres. Profesionaliza la imagen del establecimiento con documentos formales. Los padres se autoatienden y ven en tiempo real todo lo relacionado con su hijo: finanzas, fotos, evaluaciones y más.</p>
       `
     },
     {
@@ -339,7 +347,7 @@ export class LandingGenialisisComponent implements OnInit, AfterViewInit {
       description: 'Seguimiento de visitas con temperatura de prospecto y conversión de matrículas.',
       icon: this.sanitizer.bypassSecurityTrustHtml('<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="8.5" cy="7" r="4"/><line x1="20" y1="8" x2="20" y2="14"/><line x1="23" y1="11" x2="17" y2="11"/></svg>'),
       fullDescription: `
-        <p><strong>Sistema profesional de admisiones. Los jardines pierden 3-4 matrículas al mes porque no hay seguimiento estructurado.</strong></p>
+        <p><strong>Sistema profesional de admisiones. los establecimientos pierden 3-4 matrículas al mes porque no hay seguimiento estructurado.</strong></p>
         
         <p><strong>Registro de Visitas:</strong></p>
         <ul>
@@ -364,7 +372,7 @@ export class LandingGenialisisComponent implements OnInit, AfterViewInit {
           <li><strong>Quién decide:</strong> Identificar el tomador de decisiones</li>
         </ul>
         
-        <p><strong>Compromisos del Jardín:</strong></p>
+        <p><strong>Compromisos del establecimiento:</strong></p>
         <ul>
           <li>Agendar segunda visita</li>
           <li>Enviar documentos</li>
@@ -401,7 +409,7 @@ export class LandingGenialisisComponent implements OnInit, AfterViewInit {
         
         <p><strong>Registro de Limpieza:</strong></p>
         <ul>
-          <li><strong>Áreas Físicas:</strong> Espacios del jardín con mobiliario asignado</li>
+          <li><strong>Áreas Físicas:</strong> Espacios del establecimiento con mobiliario asignado</li>
           <li><strong>Fichas técnicas:</strong> Procesos de limpieza y desinfección por área</li>
           <li><strong>Frecuencia:</strong> Diaria, semanal, mensual según área</li>
           <li><strong>Responsables:</strong> Asignación de personal por área</li>
@@ -520,15 +528,15 @@ export class LandingGenialisisComponent implements OnInit, AfterViewInit {
   faqs: FAQ[] = [
     {
       question: '¿Por qué GENIALISIS incluye control de inventarios y ningún competidor lo ofrece?',
-      answer: 'Porque entendimos que los jardines no solo gestionan niños y maestros, también manejan productos de limpieza, alimentación y mobiliario. Las auditorías de Secretaría de Salud exigen trazabilidad de limpieza y desinfección. Sin inventarios, los jardines pierden días preparando fichas técnicas manualmente. Con GENIALISIS, está listo en segundos.'
+      answer: 'Porque entendimos que los establecimientos no solo gestionan niños y maestros, también manejan productos de limpieza, alimentación y mobiliario. Las auditorías de Secretaría de Salud exigen trazabilidad de limpieza y desinfección. Sin inventarios, los establecimientos pierden días preparando fichas técnicas manualmente. Con GENIALISIS, está listo en segundos.'
     },
     {
       question: '¿Cómo garantizan el 100% de cobertura curricular?',
       answer: 'Con nuestra metodología de Sprints Académicos. El sistema tiene "tanques de capacidad" por grupo y área. Si intentas crear más actividades de las que caben en 2 semanas, el sistema te alerta. También visualizas en tiempo real qué logros e indicadores aún no tienen actividades asignadas. No es una promesa, es una certeza medible con datos.'
     },
     {
-      question: '¿Cuánto tiempo toma implementar GENIALISIS en mi jardín?',
-      answer: 'La implementación es rápida. Incluimos capacitación completa del equipo y soporte durante todo el proceso. La mayoría de jardines están operando en menos de 2 semanas. Si necesitas migrar datos desde Excel o sistemas anteriores, ofrecemos servicio de migración y digitación de información base.'
+      question: '¿Cuánto tiempo toma implementar GENIALISIS en mi establecimiento?',
+      answer: 'La implementación es rápida. Incluimos capacitación completa del equipo y soporte durante todo el proceso. La mayoría de establecimientos están operando en menos de 2 semanas. Si necesitas migrar datos desde Excel o sistemas anteriores, ofrecemos servicio de migración y digitación de información base.'
     },
     {
       question: '¿Es verdad que evaluar 15 niños toma solo 5 minutos?',
@@ -544,19 +552,19 @@ export class LandingGenialisisComponent implements OnInit, AfterViewInit {
     },
     {
       question: '¿Necesito conocimientos técnicos para usar GENIALISIS?',
-      answer: 'No. Si sabes usar Word y Excel, puedes usar GENIALISIS. La capacitación es parte de la implementación. Además, tu equipo sigue trabajando como siempre: las maestras registran actividades y evaluaciones, las directoras consultan dashboards, los padres ven información de sus hijos. Todo es intuitivo y está diseñado para el flujo de trabajo real de un jardín infantil colombiano.'
+      answer: 'No. Si sabes usar Word y Excel, puedes usar GENIALISIS. La capacitación es parte de la implementación. Además, tu equipo sigue trabajando como siempre: las maestras registran actividades y evaluaciones, las directoras consultan dashboards, los padres ven información de sus hijos. Todo es intuitivo y está diseñado para el flujo de trabajo real de un establecimiento educativo colombiano.'
     },
     {
       question: '¿Los padres pueden ver información de sus hijos?',
       answer: 'Sí. GENIALISIS incluye un portal exclusivo para padres donde pueden consultar 24/7: fotos de las actividades diarias, estado de cuenta detallado, evaluaciones académicas, asistencia, observaciones, medidas antropométricas y más. Los padres dejan de preguntar por WhatsApp porque tienen toda la información actualizada en tiempo real. Esto libera tiempo de las maestras y profesionaliza la comunicación con las familias.'
     },
     {
-      question: '¿Puedo personalizar GENIALISIS para mi jardín?',
+      question: '¿Puedo personalizar GENIALISIS para mi establecimiento?',
       answer: 'Sí. Los campos de clasificación curricular, criterios de evaluación y estructura de grupos son completamente parametrizables según tu proyecto educativo. Puedes adaptar GENIALISIS a tu metodología sin perder la potencia del sistema.'
     },
     {
-      question: '¿GENIALISIS funciona para jardines de cualquier tamaño?',
-      answer: 'Sí. El sistema es escalable y funciona igual de bien con 20 o 200 estudiantes. La tarifa plana cubre hasta 50 estudiantes sin costo adicional. Para jardines más grandes, tenemos planes empresariales con el mismo nivel de servicio.'
+      question: '¿GENIALISIS funciona para establecimientos de cualquier tamaño?',
+      answer: 'Sí. El sistema es escalable y funciona igual de bien con 20 o 200 estudiantes. La tarifa plana cubre hasta 50 estudiantes sin costo adicional. para establecimientos más grandes, tenemos planes empresariales con el mismo nivel de servicio.'
     }
   ];
 
@@ -758,7 +766,7 @@ export class LandingGenialisisComponent implements OnInit, AfterViewInit {
 
   abrirWhatsApp(): void {
     if (this.whatsappUrl) {
-      const mensaje = encodeURIComponent('Hola, me gustaría conocer más sobre GENIALISIS para mi jardín infantil.');
+      const mensaje = encodeURIComponent('Hola, me gustaría conocer más sobre GENIALISIS para mi establecimiento educativo.');
       const urlCompleta = `${this.whatsappUrl}?text=${mensaje}`;
       window.open(urlCompleta, '_blank');
     }
@@ -790,5 +798,283 @@ export class LandingGenialisisComponent implements OnInit, AfterViewInit {
           alert('Hubo un error al enviar el formulario. Por favor intenta nuevamente.');
         }
       });
+  }
+
+  abrirPaginaModal(pagina: string): void {
+    console.log('abrirPaginaModal llamado con:', pagina);
+    const paginas: {[key: string]: {titulo: string, contenido: string}} = {
+      'sobre-nosotros': {
+        titulo: 'Sobre Nosotros',
+        contenido: `
+          <h3>Nuestra Misión</h3>
+          <p>En GENIALISIS creemos que la tecnología debe simplificar la gestión educativa, no complicarla. Desarrollamos soluciones intuitivas y poderosas que permiten a los establecimientos educativos enfocarse en lo que realmente importa: ofrecer educación de calidad.</p>
+          
+          <h3>¿Quiénes Somos?</h3>
+          <p>Somos un equipo colombiano apasionado por la educación y la tecnología. Con años de experiencia trabajando directamente con instituciones educativas, entendemos profundamente los desafíos que enfrentan establecimientos educativos como escuelas de danza, teatro, música, idiomas, deportes y centros de formación de todo tipo.</p>
+          
+          <p>Nacimos de la frustración de ver a directores y administradores perdiendo horas valiosas en tareas administrativas que podrían automatizarse. Vimos cómo establecimientos pequeños y medianos no podían acceder a sistemas profesionales por sus costos prohibitivos o complejidad técnica.</p>
+          
+          <h3>Nuestra Visión</h3>
+          <p>Ser la plataforma líder en gestión educativa para establecimientos de todos los tamaños en América Latina, democratizando el acceso a herramientas profesionales de administración que antes solo estaban disponibles para grandes instituciones.</p>
+          
+          <h3>Nuestros Valores</h3>
+          <ul>
+            <li><strong>Simplicidad:</strong> La tecnología debe ser invisible. GENIALISIS es tan intuitivo que cualquier persona puede usarlo sin capacitación técnica.</li>
+            <li><strong>Transparencia:</strong> Sin letra pequeña. Tarifa plana, sin costos ocultos, sin sorpresas en la factura.</li>
+            <li><strong>Compromiso:</strong> Tu éxito es nuestro éxito. Estamos contigo desde el día uno con soporte dedicado.</li>
+            <li><strong>Innovación:</strong> Escuchamos a nuestros usuarios y mejoramos constantemente el sistema con nuevas funcionalidades.</li>
+          </ul>
+        `
+      },
+      'contacto': {
+        titulo: 'Contacto',
+        contenido: `
+          <h3>¿Tienes preguntas? Estamos aquí para ayudarte</h3>
+          <p>Nuestro equipo está disponible para resolver todas tus dudas sobre GENIALISIS, ayudarte con la implementación o brindarte soporte técnico.</p>
+          
+          <h3>Horario de Atención</h3>
+          <p><strong>Lunes a Sábado:</strong> 8:00 AM - 6:30 PM (Hora de Colombia)</p>
+          <p>Respondemos todos los mensajes el mismo día si nos contactas dentro del horario de atención.</p>
+          
+          <h3>Canales de Contacto</h3>
+          <ul>
+            <li><strong>WhatsApp:</strong> <a href="${this.whatsappUrl}" target="_blank" style="color: #D4AF37;">${this.telefonoContacto}</a> (Respuesta inmediata)</li>
+            <li><strong>Teléfono:</strong> <a href="tel:${this.telefonoContacto}" style="color: #D4AF37;">${this.telefonoContacto}</a></li>
+            <li><strong>Email:</strong> <a href="mailto:${this.emailContacto}" style="color: #D4AF37;">${this.emailContacto}</a></li>
+          </ul>
+          
+          <h3>¿Qué podemos hacer por ti?</h3>
+          <ul>
+            <li><strong>Demostración personalizada:</strong> Te mostramos el sistema adaptado a las necesidades de tu establecimiento</li>
+            <li><strong>Cotización sin compromiso:</strong> Planes transparentes, sin letra pequeña</li>
+            <li><strong>Soporte técnico:</strong> Ayuda con cualquier duda o problema</li>
+            <li><strong>Asesoría en implementación:</strong> Te acompañamos en todo el proceso</li>
+          </ul>
+          
+          <p style="margin-top: 24px; padding: 16px; background: #f5f5f5; border-radius: 8px;">
+            <strong>💡 Tip:</strong> Si nos contactas por WhatsApp, recibimos tu mensaje de inmediato y podemos agendar una videollamada para mostrarte el sistema en tiempo real.
+          </p>
+        `
+      },
+      'politicas': {
+        titulo: 'Política de Privacidad y Protección de Datos',
+        contenido: `
+          <p><em>Última actualización: Enero 2025</em></p>
+          
+          <h3>1. Información que Recopilamos</h3>
+          <p>En GENIALISIS recopilamos únicamente la información necesaria para proporcionar nuestros servicios de gestión educativa:</p>
+          <ul>
+            <li><strong>Datos del establecimiento:</strong> Nombre, NIT, dirección, información de contacto</li>
+            <li><strong>Datos de usuarios:</strong> Nombres, correos electrónicos, roles dentro del establecimiento</li>
+            <li><strong>Datos de estudiantes:</strong> Información académica, asistencia, evaluaciones (según lo configurado por el establecimiento)</li>
+            <li><strong>Datos de uso:</strong> Registros de actividad para mejorar el servicio y proveer soporte</li>
+          </ul>
+          
+          <h3>2. Uso de la Información</h3>
+          <p>Los datos recopilados se utilizan exclusivamente para:</p>
+          <ul>
+            <li>Proporcionar y mantener los servicios de GENIALISIS</li>
+            <li>Mejorar la experiencia del usuario y desarrollar nuevas funcionalidades</li>
+            <li>Comunicarnos contigo sobre actualizaciones, soporte técnico y servicios</li>
+            <li>Cumplir con obligaciones legales y regulatorias</li>
+            <li>Proteger la seguridad e integridad de nuestros sistemas</li>
+          </ul>
+          
+          <p><strong>Importante:</strong> Nunca vendemos, alquilamos ni compartimos tus datos con terceros para fines comerciales.</p>
+          
+          <h3>3. Protección de Datos</h3>
+          <p>La seguridad de tu información es nuestra prioridad. Implementamos múltiples capas de protección:</p>
+          <ul>
+            <li><strong>Encriptación:</strong> Todos los datos se transmiten mediante conexiones seguras (HTTPS/TLS)</li>
+            <li><strong>Almacenamiento seguro:</strong> Bases de datos protegidas con acceso restringido</li>
+            <li><strong>Copias de seguridad:</strong> Respaldos automáticos diarios</li>
+            <li><strong>Acceso controlado:</strong> Solo personal autorizado puede acceder a los sistemas</li>
+            <li><strong>Monitoreo continuo:</strong> Sistemas de detección de amenazas 24/7</li>
+          </ul>
+          
+          <h3>4. Tus Derechos (Ley 1581 de 2012 - Colombia)</h3>
+          <p>Como titular de datos personales, tienes derecho a:</p>
+          <ul>
+            <li><strong>Acceder:</strong> Conocer qué información personal tenemos sobre ti</li>
+            <li><strong>Actualizar:</strong> Corregir datos incompletos o inexactos</li>
+            <li><strong>Eliminar:</strong> Solicitar la eliminación de tus datos (sujeto a obligaciones legales)</li>
+            <li><strong>Revocar:</strong> Retirar la autorización para el tratamiento de tus datos</li>
+            <li><strong>Portabilidad:</strong> Exportar tus datos en formato estructurado</li>
+          </ul>
+          
+          <h3>5. Cookies y Tecnologías Similares</h3>
+          <p>Utilizamos cookies esenciales para el funcionamiento del sistema (autenticación, preferencias). No utilizamos cookies de publicidad ni rastreadores de terceros.</p>
+          
+          <h3>6. Menores de Edad</h3>
+          <p>Los datos de estudiantes menores de edad son procesados bajo responsabilidad del establecimiento educativo, quien debe obtener el consentimiento de padres o tutores según la normativa vigente.</p>
+          
+          <h3>7. Contacto - Datos Personales</h3>
+          <p>Para ejercer tus derechos o resolver dudas sobre privacidad:</p>
+          <ul>
+            <li><strong>Email:</strong> <a href="mailto:${this.emailContacto}" style="color: #D4AF37;">${this.emailContacto}</a></li>
+            <li><strong>WhatsApp:</strong> ${this.telefonoContacto}</li>
+          </ul>
+          
+          <p style="margin-top: 24px; padding: 16px; background: #f5f5f5; border-radius: 8px;">
+            <strong>📌 Nota:</strong> Esta política puede actualizarse periódicamente. Te notificaremos sobre cambios importantes a través de la plataforma.
+          </p>
+        `
+      },
+      'terminos': {
+        titulo: 'Términos y Condiciones de Uso',
+        contenido: `
+          <p><em>Última actualización: Enero 2025</em></p>
+          
+          <h3>1. Aceptación de Términos</h3>
+          <p>Al acceder y utilizar GENIALISIS, aceptas estar legalmente vinculado por estos términos y condiciones. Si no estás de acuerdo con alguna parte de estos términos, no debes utilizar nuestra plataforma.</p>
+          
+          <h3>2. Descripción del Servicio</h3>
+          <p>GENIALISIS es una plataforma SaaS (Software as a Service) de gestión integral para establecimientos educativos que incluye módulos de:</p>
+          <ul>
+            <li>Gestión de estudiantes y familias</li>
+            <li>Administración académica y evaluaciones</li>
+            <li>Control de asistencia</li>
+            <li>Gestión financiera y facturación</li>
+            <li>Portal para padres/acudientes</li>
+            <li>Inventarios y activos</li>
+            <li>Reportes y analíticas</li>
+          </ul>
+          
+          <h3>3. Registro y Cuenta de Usuario</h3>
+          <p><strong>El usuario se compromete a:</strong></p>
+          <ul>
+            <li>Proporcionar información veraz y actualizada durante el registro</li>
+            <li>Mantener la confidencialidad de sus credenciales de acceso</li>
+            <li>Notificar inmediatamente cualquier uso no autorizado de su cuenta</li>
+            <li>No compartir su cuenta con terceros no autorizados</li>
+            <li>Ser responsable de todas las actividades realizadas bajo su cuenta</li>
+          </ul>
+          
+          <h3>4. Uso Aceptable</h3>
+          <p><strong>Está prohibido:</strong></p>
+          <ul>
+            <li>Utilizar el servicio para fines ilegales o no autorizados</li>
+            <li>Intentar acceder a áreas restringidas del sistema</li>
+            <li>Realizar ingeniería inversa, descompilar o desensamblar el software</li>
+            <li>Transmitir virus, malware o cualquier código malicioso</li>
+            <li>Sobrecargar intencionalmente los servidores</li>
+            <li>Extraer datos mediante técnicas automatizadas (scraping) sin autorización</li>
+            <li>Compartir información sensible de estudiantes sin autorización legal</li>
+          </ul>
+          
+          <h3>5. Propiedad Intelectual</h3>
+          <p>Todo el contenido, diseño, código fuente, logos, marcas y funcionalidades de GENIALISIS son propiedad exclusiva de nuestra empresa y están protegidos por las leyes de propiedad intelectual de Colombia y tratados internacionales.</p>
+          
+          <p><strong>Tus datos son tuyos:</strong> Los datos que ingresas en la plataforma (información de estudiantes, evaluaciones, etc.) son y permanecen de tu propiedad. GENIALISIS solo actúa como procesador de estos datos.</p>
+          
+          <h3>6. Precio y Facturación</h3>
+          <ul>
+            <li>Los precios se publican en nuestro sitio web y pueden variar según el plan contratado</li>
+            <li>Las tarifas se cobran mensualmente por adelantado</li>
+            <li>Los impuestos aplicables (IVA) se adicionan según la legislación vigente</li>
+            <li>Aceptamos pagos mediante transferencia bancaria, PSE y tarjetas de crédito</li>
+            <li>El no pago suspende temporalmente el acceso al servicio</li>
+          </ul>
+          
+          <h3>7. Garantía de Servicio</h3>
+          <p><strong>Garantizamos 30 días sin riesgo:</strong> Si dentro de los primeros 30 días decides que GENIALISIS no es para ti, te devolvemos el 100% de lo pagado, sin preguntas.</p>
+          
+          <p><strong>Disponibilidad del servicio:</strong> Nos esforzamos por mantener una disponibilidad del 99.5%, pero no podemos garantizar un servicio ininterrumpido debido a:</p>
+          <ul>
+            <li>Mantenimientos programados (notificados con anticipación)</li>
+            <li>Fallas de proveedores de internet o infraestructura</li>
+            <li>Eventos de fuerza mayor</li>
+          </ul>
+          
+          <h3>8. Limitación de Responsabilidad</h3>
+          <p>GENIALISIS no será responsable por:</p>
+          <ul>
+            <li>Pérdida de datos causada por acciones del usuario o terceros</li>
+            <li>Daños indirectos, incidentales o consecuentes</li>
+            <li>Interrupciones del servicio por causas fuera de nuestro control</li>
+            <li>Decisiones tomadas basándose en información del sistema</li>
+          </ul>
+          
+          <p><strong>Nuestra responsabilidad máxima</strong> se limita al monto pagado por el servicio en los últimos 3 meses.</p>
+          
+          <h3>9. Cancelación y Terminación</h3>
+          <p><strong>Puedes cancelar en cualquier momento:</strong></p>
+          <ul>
+            <li>La cancelación debe solicitarse con 30 días de anticipación</li>
+            <li>Conservamos tus datos por 60 días después de la cancelación</li>
+            <li>Puedes exportar toda tu información antes de cancelar</li>
+            <li>No hay penalidades ni costos de cancelación</li>
+          </ul>
+          
+          <p><strong>Podemos suspender o terminar el servicio si:</strong></p>
+          <ul>
+            <li>Incumples estos términos de manera grave o reiterada</li>
+            <li>Hay actividades fraudulentas o ilegales</li>
+            <li>No se realiza el pago después de 15 días de vencido</li>
+          </ul>
+          
+          <h3>10. Modificaciones</h3>
+          <p>Nos reservamos el derecho de modificar estos términos en cualquier momento. Los cambios importantes serán notificados con 30 días de anticipación a través de:</p>
+          <ul>
+            <li>Email a la dirección registrada</li>
+            <li>Notificación dentro de la plataforma</li>
+            <li>Publicación en nuestro sitio web</li>
+          </ul>
+          
+          <h3>11. Ley Aplicable y Jurisdicción</h3>
+          <p>Estos términos se rigen por las leyes de la República de Colombia. Cualquier disputa se resolverá en los tribunales de Bogotá D.C., Colombia.</p>
+          
+          <h3>12. Contacto Legal</h3>
+          <p>Para asuntos legales o preguntas sobre estos términos:</p>
+          <ul>
+            <li><strong>Email:</strong> <a href="mailto:${this.emailContacto}" style="color: #D4AF37;">${this.emailContacto}</a></li>
+            <li><strong>WhatsApp:</strong> ${this.telefonoContacto}</li>
+          </ul>
+          
+          <p style="margin-top: 24px; padding: 16px; background: #f5f5f5; border-radius: 8px;">
+            <strong>📌 Transparencia total:</strong> Si algo en estos términos no está claro, contáctanos. Preferimos una conversación honesta antes que un malentendido legal.
+          </p>
+        `
+      }
+    };
+
+    if (paginas[pagina]) {
+      this.paginaModalTitulo = paginas[pagina].titulo;
+      this.paginaModalContenido = this.sanitizer.bypassSecurityTrustHtml(paginas[pagina].contenido);
+      this.showPaginaModal = true;
+      document.body.style.overflow = 'hidden';
+    }
+  }
+
+  cerrarPaginaModal(): void {
+    this.showPaginaModal = false;
+    this.paginaModalTitulo = '';
+    this.paginaModalContenido = '';
+    document.body.style.overflow = 'auto';
+  }
+
+  toggleMenuMobile(): void {
+    this.menuMobileAbierto = !this.menuMobileAbierto;
+    if (this.menuMobileAbierto) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'auto';
+    }
+  }
+
+  cerrarMenuMobile(): void {
+    this.menuMobileAbierto = false;
+    document.body.style.overflow = 'auto';
+  }
+
+  scrollToSection(sectionId: string): void {
+    console.log('scrollToSection llamado con:', sectionId);
+    this.cerrarMenuMobile();
+    setTimeout(() => {
+      const element = document.getElementById(sectionId);
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }, 100);
   }
 }
