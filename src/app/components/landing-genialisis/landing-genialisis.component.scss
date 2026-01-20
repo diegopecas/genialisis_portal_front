@@ -269,6 +269,76 @@ $gray-800: #424242;
   }
 }
 
+.btn-whatsapp {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 20px 48px;
+  background: #25D366;
+  color: $white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1.1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  width: 100%;
+  
+  svg {
+    width: 24px;
+    height: 24px;
+    fill: $white;
+  }
+  
+  &:hover {
+    background: #128C7E;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(#25D366, 0.4);
+  }
+}
+
+.form-actions {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+  margin-top: 32px;
+  
+  @media (min-width: 768px) {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+// Estilos para select
+select {
+  width: 100%;
+  padding: 16px;
+  background: $gray-50;
+  border: 2px solid $gray-200;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-family: inherit;
+  color: $dark;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23D4AF37' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  background-size: 20px;
+  padding-right: 40px;
+  
+  &:focus {
+    outline: none;
+    border-color: $gold;
+    background-color: $white;
+  }
+  
+  option {
+    padding: 12px;
+  }
+}
+
 // Stats Section
 .stats {
   padding: 80px 0;

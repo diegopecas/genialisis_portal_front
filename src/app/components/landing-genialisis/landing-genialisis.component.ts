@@ -1,8 +1,9 @@
 import { Component, OnInit, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
-import { HttpClient } from '@angular/common/http';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
+import { ContactosService, TamanoEstablecimiento, TipoConsulta, ComoConocio } from '../../services/contactos.service';
+import { ConfiguracionService } from '../../services/configuracion.service';
 
 interface Stat {
   value: string;
@@ -57,6 +58,15 @@ export class LandingGenialisisComponent implements OnInit, AfterViewInit {
   showModal = false;
   selectedModule: Module | null = null;
   activeFaqIndex: number | null = null;
+  
+  // Datos cargados desde servicios
+  tamanosEstablecimiento: TamanoEstablecimiento[] = [];
+  tiposConsulta: TipoConsulta[] = [];
+  canalesComoConocio: ComoConocio[] = [];
+  whatsappUrl: string = 'https://wa.me/5731181818116'; // Valor por defecto
+  telefonoContacto: string = '+57 311 8181816'; // Valor por defecto
+  emailContacto: string = 'contacto@genialisis.com'; // Valor por defecto
+  mostrarDetalleComoConocio: boolean = false;
 
   stats: Stat[] = [
     {
@@ -538,7 +548,7 @@ export class LandingGenialisisComponent implements OnInit, AfterViewInit {
     },
     {
       question: '¿Los padres pueden ver información de sus hijos?',
-      answer: 'Sí. GENIALISIS incluye un portal exclusivo para padres donde pueden consultar 24/7: fotos y videos de las actividades diarias, estado de cuenta detallado, evaluaciones académicas, asistencia, observaciones, medidas antropométricas y más. Los padres dejan de preguntar por WhatsApp porque tienen toda la información actualizada en tiempo real. Esto libera tiempo de las maestras y profesionaliza la comunicación con las familias.'
+      answer: 'Sí. GENIALISIS incluye un portal exclusivo para padres donde pueden consultar 24/7: fotos de las actividades diarias, estado de cuenta detallado, evaluaciones académicas, asistencia, observaciones, medidas antropométricas y más. Los padres dejan de preguntar por WhatsApp porque tienen toda la información actualizada en tiempo real. Esto libera tiempo de las maestras y profesionaliza la comunicación con las familias.'
     },
     {
       question: '¿Puedo personalizar GENIALISIS para mi jardín?',
@@ -552,12 +562,17 @@ export class LandingGenialisisComponent implements OnInit, AfterViewInit {
 
   constructor(
     private fb: FormBuilder,
-    private http: HttpClient,
-    private sanitizer: DomSanitizer
+    private sanitizer: DomSanitizer,
+    private contactosService: ContactosService,
+    private configuracionService: ConfiguracionService
   ) {}
 
   ngOnInit(): void {
     this.initContactForm();
+    this.cargarTamanosEstablecimiento();
+    this.cargarTiposConsulta();
+    this.cargarComoConocio();
+    this.cargarConfiguracionContacto();
     window.scrollTo(0, 0);
   }
 
@@ -573,7 +588,16 @@ export class LandingGenialisisComponent implements OnInit, AfterViewInit {
       nombreContacto: ['', [Validators.required, Validators.minLength(3)]],
       email: ['', [Validators.required, Validators.email]],
       telefono: ['', [Validators.required, Validators.pattern(/^[0-9]{7,10}$/)]],
+      tamanoEstablecimiento: [''],
+      tipoConsulta: ['', Validators.required],
+      comoConocio: ['', Validators.required],
+      comoConocioDetalle: [''],
       mensaje: ['']
+    });
+
+    // Escuchar cambios en comoConocio para mostrar/ocultar campo detalle
+    this.contactForm.get('comoConocio')?.valueChanges.subscribe(value => {
+      this.onComoConocioChange(value);
     });
   }
 
@@ -655,6 +679,91 @@ export class LandingGenialisisComponent implements OnInit, AfterViewInit {
     this.activeFaqIndex = this.activeFaqIndex === index ? null : index;
   }
 
+  cargarTamanosEstablecimiento(): void {
+    this.contactosService.obtenerTamanos().subscribe({
+      next: (response) => {
+        if (response.success) {
+          this.tamanosEstablecimiento = response.tamanos;
+        }
+      },
+      error: (error) => {
+        console.error('Error cargando tamaños:', error);
+      }
+    });
+  }
+
+  cargarTiposConsulta(): void {
+    this.contactosService.obtenerTiposConsulta().subscribe({
+      next: (response) => {
+        if (response.success) {
+          this.tiposConsulta = response.tipos;
+        }
+      },
+      error: (error) => {
+        console.error('Error cargando tipos de consulta:', error);
+      }
+    });
+  }
+
+  cargarComoConocio(): void {
+    this.contactosService.obtenerComoConocio().subscribe({
+      next: (response) => {
+        if (response.success) {
+          this.canalesComoConocio = response.canales;
+        }
+      },
+      error: (error) => {
+        console.error('Error cargando canales:', error);
+      }
+    });
+  }
+
+  onComoConocioChange(canalId: number): void {
+    const canalSeleccionado = this.canalesComoConocio.find(c => c.id === Number(canalId));
+    
+    if (canalSeleccionado?.pide_detalle) {
+      this.mostrarDetalleComoConocio = true;
+      this.contactForm.get('comoConocioDetalle')?.setValidators([Validators.required]);
+    } else {
+      this.mostrarDetalleComoConocio = false;
+      this.contactForm.get('comoConocioDetalle')?.clearValidators();
+      this.contactForm.get('comoConocioDetalle')?.setValue('');
+    }
+    this.contactForm.get('comoConocioDetalle')?.updateValueAndValidity();
+  }
+
+  getPlaceholderDetalle(): string {
+    const canalId = this.contactForm.get('comoConocio')?.value;
+    if (!canalId) return 'Por favor especifica';
+    
+    const canal = this.canalesComoConocio.find(c => c.id === Number(canalId));
+    return canal?.placeholder_detalle || 'Por favor especifica';
+  }
+
+  cargarConfiguracionContacto(): void {
+    this.configuracionService.obtenerConfiguracionesContacto().subscribe({
+      next: (response) => {
+        if (response.success && response.contacto) {
+          this.whatsappUrl = response.contacto.whatsapp || 'https://wa.me/573118181816';
+          this.telefonoContacto = response.contacto.telefono || '+57 311 8181816';
+          this.emailContacto = response.contacto.correos?.[0] || 'contacto@genialisis.com';
+        }
+      },
+      error: (error) => {
+        console.error('Error cargando configuración:', error);
+        // Valor por defecto ya está asignado
+      }
+    });
+  }
+
+  abrirWhatsApp(): void {
+    if (this.whatsappUrl) {
+      const mensaje = encodeURIComponent('Hola, me gustaría conocer más sobre GENIALISIS para mi jardín infantil.');
+      const urlCompleta = `${this.whatsappUrl}?text=${mensaje}`;
+      window.open(urlCompleta, '_blank');
+    }
+  }
+
   onSubmit(): void {
     if (this.contactForm.invalid) {
       Object.keys(this.contactForm.controls).forEach(key => {
@@ -665,9 +774,7 @@ export class LandingGenialisisComponent implements OnInit, AfterViewInit {
 
     this.isSubmitting = true;
 
-    // Aquí se integra con tu backend PHP existente
-    this.http.post('/api/genialisis/contactos', this.contactForm.value)
-      .subscribe({
+    this.contactosService.crearContacto(this.contactForm.value).subscribe({
         next: (response: any) => {
           this.isSubmitting = false;
           this.showSuccessMessage = true;
