@@ -1249,7 +1249,7 @@ select {
   justify-content: center;
   z-index: 1000;
   padding: 24px;
-  opacity: 0;
+  opacity: 1;
   transition: opacity 0.3s ease;
   
   .modal-content {
@@ -1262,8 +1262,8 @@ select {
     padding: 0;
     position: relative;
     border: 3px solid $gold;
-    transform: scale(0.9);
-    opacity: 0;
+    transform: scale(1);
+    opacity: 1;
     transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
     box-shadow: 0 25px 50px rgba($dark, 0.3);
     

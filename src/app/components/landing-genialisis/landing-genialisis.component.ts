@@ -1039,11 +1039,15 @@ export class LandingGenialisisComponent implements OnInit, AfterViewInit {
     };
 
     if (paginas[pagina]) {
+    console.log("Buscando página:", pagina);
+    console.log("Página encontrada:", paginas[pagina]);
       this.paginaModalTitulo = paginas[pagina].titulo;
       this.paginaModalContenido = this.sanitizer.bypassSecurityTrustHtml(paginas[pagina].contenido);
+      console.log("Abriendo modal...");
       this.showPaginaModal = true;
       document.body.style.overflow = 'hidden';
     }
+      console.log("showPaginaModal:", this.showPaginaModal);
   }
 
   cerrarPaginaModal(): void {
