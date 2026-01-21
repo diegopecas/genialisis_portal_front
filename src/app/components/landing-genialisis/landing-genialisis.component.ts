@@ -600,7 +600,7 @@ export class LandingGenialisisComponent implements OnInit, AfterViewInit {
       tipoConsulta: ['', Validators.required],
       comoConocio: ['', Validators.required],
       comoConocioDetalle: [''],
-      mensaje: ['']
+      mensaje: ['', [Validators.required, Validators.minLength(10)]]
     });
 
     // Escuchar cambios en comoConocio para mostrar/ocultar campo detalle
