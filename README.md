@@ -84,4 +84,7 @@ Agregar en `index.html`:
 
 ---
 
+## Compilar producción
+ng build --configuration production
+
 **GENIALISIS** - Plataforma de Gestión Educativa | Colombia

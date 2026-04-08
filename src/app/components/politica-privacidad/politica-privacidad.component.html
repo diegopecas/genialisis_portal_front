@@ -1,0 +1,106 @@
+<div class="politica-page">
+  <header class="politica-header">
+    <div class="container">
+      <div class="header-content">
+        <img src="assets/images/logo.png" alt="GENIALISIS" class="header-logo" (click)="volverAlInicio()" />
+        <button class="btn-volver" (click)="volverAlInicio()">← Volver al inicio</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="politica-content">
+    <div class="container">
+      <h1>Política de Privacidad y Protección de Datos</h1>
+      <p class="fecha-actualizacion"><em>Última actualización: Enero 2025</em></p>
+
+      <section>
+        <h2>1. Información que Recopilamos</h2>
+        <p>En GENIALISIS recopilamos únicamente la información necesaria para proporcionar nuestros servicios de gestión educativa:</p>
+        <ul>
+          <li><strong>Datos del establecimiento:</strong> Nombre, NIT, dirección, información de contacto</li>
+          <li><strong>Datos de usuarios:</strong> Nombres, correos electrónicos, roles dentro del establecimiento</li>
+          <li><strong>Datos de estudiantes:</strong> Información académica, asistencia, evaluaciones (según lo configurado por el establecimiento)</li>
+          <li><strong>Datos de uso:</strong> Registros de actividad para mejorar el servicio y proveer soporte</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>2. Uso de la Información</h2>
+        <p>Los datos recopilados se utilizan exclusivamente para:</p>
+        <ul>
+          <li>Proporcionar y mantener los servicios de GENIALISIS</li>
+          <li>Mejorar la experiencia del usuario y desarrollar nuevas funcionalidades</li>
+          <li>Comunicarnos contigo sobre actualizaciones, soporte técnico y servicios</li>
+          <li>Cumplir con obligaciones legales y regulatorias</li>
+          <li>Proteger la seguridad e integridad de nuestros sistemas</li>
+        </ul>
+        <p><strong>Importante:</strong> Nunca vendemos, alquilamos ni compartimos tus datos con terceros para fines comerciales.</p>
+      </section>
+
+      <section>
+        <h2>3. Protección de Datos</h2>
+        <p>La seguridad de tu información es nuestra prioridad. Implementamos múltiples capas de protección:</p>
+        <ul>
+          <li><strong>Encriptación:</strong> Todos los datos se transmiten mediante conexiones seguras (HTTPS/TLS)</li>
+          <li><strong>Almacenamiento seguro:</strong> Bases de datos protegidas con acceso restringido</li>
+          <li><strong>Copias de seguridad:</strong> Respaldos automáticos diarios</li>
+          <li><strong>Acceso controlado:</strong> Solo personal autorizado puede acceder a los sistemas</li>
+          <li><strong>Monitoreo continuo:</strong> Sistemas de detección de amenazas 24/7</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>4. Tus Derechos (Ley 1581 de 2012 - Colombia)</h2>
+        <p>Como titular de datos personales, tienes derecho a:</p>
+        <ul>
+          <li><strong>Acceder:</strong> Conocer qué información personal tenemos sobre ti</li>
+          <li><strong>Actualizar:</strong> Corregir datos incompletos o inexactos</li>
+          <li><strong>Eliminar:</strong> Solicitar la eliminación de tus datos (sujeto a obligaciones legales)</li>
+          <li><strong>Revocar:</strong> Retirar la autorización para el tratamiento de tus datos</li>
+          <li><strong>Portabilidad:</strong> Exportar tus datos en formato estructurado</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>5. Cookies y Tecnologías Similares</h2>
+        <p>Utilizamos cookies esenciales para el funcionamiento del sistema (autenticación, preferencias). No utilizamos cookies de publicidad ni rastreadores de terceros.</p>
+      </section>
+
+      <section>
+        <h2>6. Menores de Edad</h2>
+        <p>Los datos de estudiantes menores de edad son procesados bajo responsabilidad del establecimiento educativo, quien debe obtener el consentimiento de padres o tutores según la normativa vigente.</p>
+      </section>
+
+      <section>
+        <h2>7. Integración con WhatsApp Business</h2>
+        <p>GENIALISIS integra la API de WhatsApp Business para facilitar la comunicación entre instituciones educativas y padres de familia. En este contexto:</p>
+        <ul>
+          <li><strong>Datos procesados:</strong> Números de teléfono, nombres de contacto y contenido de mensajes enviados/recibidos a través de la plataforma</li>
+          <li><strong>Finalidad:</strong> Comunicación institucional (recordatorios de pago, confirmaciones de asistencia, notificaciones generales)</li>
+          <li><strong>Almacenamiento:</strong> Los mensajes se almacenan en servidores seguros del tenant correspondiente</li>
+          <li><strong>No compartimos:</strong> Los datos de WhatsApp no se comparten con terceros ni se utilizan para publicidad</li>
+          <li><strong>Consentimiento:</strong> Los usuarios dan su consentimiento al iniciar una conversación con el número de WhatsApp Business de la institución</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>8. Contacto - Datos Personales</h2>
+        <p>Para ejercer tus derechos o resolver dudas sobre privacidad:</p>
+        <ul>
+          <li><strong>Email:</strong> <a [href]="'mailto:' + emailContacto">{{ emailContacto }}</a></li>
+          <li><strong>WhatsApp:</strong> {{ telefonoContacto }}</li>
+        </ul>
+      </section>
+
+      <div class="nota-final">
+        <strong>📌 Nota:</strong> Esta política puede actualizarse periódicamente. Te notificaremos sobre cambios importantes a través de la plataforma.
+      </div>
+    </div>
+  </main>
+
+  <footer class="politica-footer">
+    <div class="container">
+      <p>&copy; 2025 GENIALISIS. Todos los derechos reservados.</p>
+    </div>
+  </footer>
+</div>

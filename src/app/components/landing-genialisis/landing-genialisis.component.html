@@ -401,7 +401,6 @@
     </div>
   </section>
 
-  <!-- Footer -->
   <!-- Botón flotante WhatsApp -->
   <a [href]="whatsappUrl" target="_blank" class="whatsapp-float" *ngIf="whatsappUrl" aria-label="Contactar por WhatsApp">
     <svg viewBox="0 0 24 24" fill="currentColor">
@@ -448,8 +447,8 @@
           <ul>
             <li><button type="button" class="footer-link" (click)="abrirPaginaModal('sobre-nosotros')">Sobre Nosotros</button></li>
             <li><button type="button" class="footer-link" (click)="scrollToSection('contact')">Contacto</button></li>
-            <li><button type="button" class="footer-link" (click)="abrirPaginaModal('politicas')">Política de Privacidad</button></li>
-            <li><button type="button" class="footer-link" (click)="abrirPaginaModal('terminos')">Términos y Condiciones</button></li>
+            <li><a class="footer-link" routerLink="/politica-privacidad">Política de Privacidad</a></li>
+            <li><a class="footer-link" routerLink="/terminos-condiciones">Términos y Condiciones</a></li>
           </ul>
         </div>
 
@@ -497,9 +496,7 @@
     </div>
   </div>
 
-
-
-  <!-- Modal Páginas Institucionales (Dinámica) -->
+  <!-- Modal Páginas Institucionales (solo sobre-nosotros) -->
   <div class="modal-overlay" *ngIf="showPaginaModal" (click)="cerrarPaginaModal()">
     <div class="modal-content modal-pagina" (click)="$event.stopPropagation()">
       <button class="modal-close" (click)="cerrarPaginaModal()">

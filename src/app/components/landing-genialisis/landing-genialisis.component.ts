@@ -1,6 +1,7 @@
 import { Component, OnInit, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { ContactosService, TamanoEstablecimiento, TipoConsulta, ComoConocio } from '../../services/contactos.service';
 import { ConfiguracionService } from '../../services/configuracion.service';
@@ -44,7 +45,7 @@ interface FAQ {
 @Component({
   selector: 'app-landing-genialisis',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, RouterModule],
   templateUrl: './landing-genialisis.component.html',
   styleUrl: './landing-genialisis.component.scss'
 })
@@ -853,186 +854,6 @@ export class LandingGenialisisComponent implements OnInit, AfterViewInit {
           
           <p style="margin-top: 24px; padding: 16px; background: #f5f5f5; border-radius: 8px;">
             <strong>💡 Tip:</strong> Si nos contactas por WhatsApp, recibimos tu mensaje de inmediato y podemos agendar una videollamada para mostrarte el sistema en tiempo real.
-          </p>
-        `
-      },
-      'politicas': {
-        titulo: 'Política de Privacidad y Protección de Datos',
-        contenido: `
-          <p><em>Última actualización: Enero 2025</em></p>
-          
-          <h3>1. Información que Recopilamos</h3>
-          <p>En GENIALISIS recopilamos únicamente la información necesaria para proporcionar nuestros servicios de gestión educativa:</p>
-          <ul>
-            <li><strong>Datos del establecimiento:</strong> Nombre, NIT, dirección, información de contacto</li>
-            <li><strong>Datos de usuarios:</strong> Nombres, correos electrónicos, roles dentro del establecimiento</li>
-            <li><strong>Datos de estudiantes:</strong> Información académica, asistencia, evaluaciones (según lo configurado por el establecimiento)</li>
-            <li><strong>Datos de uso:</strong> Registros de actividad para mejorar el servicio y proveer soporte</li>
-          </ul>
-          
-          <h3>2. Uso de la Información</h3>
-          <p>Los datos recopilados se utilizan exclusivamente para:</p>
-          <ul>
-            <li>Proporcionar y mantener los servicios de GENIALISIS</li>
-            <li>Mejorar la experiencia del usuario y desarrollar nuevas funcionalidades</li>
-            <li>Comunicarnos contigo sobre actualizaciones, soporte técnico y servicios</li>
-            <li>Cumplir con obligaciones legales y regulatorias</li>
-            <li>Proteger la seguridad e integridad de nuestros sistemas</li>
-          </ul>
-          
-          <p><strong>Importante:</strong> Nunca vendemos, alquilamos ni compartimos tus datos con terceros para fines comerciales.</p>
-          
-          <h3>3. Protección de Datos</h3>
-          <p>La seguridad de tu información es nuestra prioridad. Implementamos múltiples capas de protección:</p>
-          <ul>
-            <li><strong>Encriptación:</strong> Todos los datos se transmiten mediante conexiones seguras (HTTPS/TLS)</li>
-            <li><strong>Almacenamiento seguro:</strong> Bases de datos protegidas con acceso restringido</li>
-            <li><strong>Copias de seguridad:</strong> Respaldos automáticos diarios</li>
-            <li><strong>Acceso controlado:</strong> Solo personal autorizado puede acceder a los sistemas</li>
-            <li><strong>Monitoreo continuo:</strong> Sistemas de detección de amenazas 24/7</li>
-          </ul>
-          
-          <h3>4. Tus Derechos (Ley 1581 de 2012 - Colombia)</h3>
-          <p>Como titular de datos personales, tienes derecho a:</p>
-          <ul>
-            <li><strong>Acceder:</strong> Conocer qué información personal tenemos sobre ti</li>
-            <li><strong>Actualizar:</strong> Corregir datos incompletos o inexactos</li>
-            <li><strong>Eliminar:</strong> Solicitar la eliminación de tus datos (sujeto a obligaciones legales)</li>
-            <li><strong>Revocar:</strong> Retirar la autorización para el tratamiento de tus datos</li>
-            <li><strong>Portabilidad:</strong> Exportar tus datos en formato estructurado</li>
-          </ul>
-          
-          <h3>5. Cookies y Tecnologías Similares</h3>
-          <p>Utilizamos cookies esenciales para el funcionamiento del sistema (autenticación, preferencias). No utilizamos cookies de publicidad ni rastreadores de terceros.</p>
-          
-          <h3>6. Menores de Edad</h3>
-          <p>Los datos de estudiantes menores de edad son procesados bajo responsabilidad del establecimiento educativo, quien debe obtener el consentimiento de padres o tutores según la normativa vigente.</p>
-          
-          <h3>7. Contacto - Datos Personales</h3>
-          <p>Para ejercer tus derechos o resolver dudas sobre privacidad:</p>
-          <ul>
-            <li><strong>Email:</strong> <a href="mailto:${this.emailContacto}" style="color: #D4AF37;">${this.emailContacto}</a></li>
-            <li><strong>WhatsApp:</strong> ${this.telefonoContacto}</li>
-          </ul>
-          
-          <p style="margin-top: 24px; padding: 16px; background: #f5f5f5; border-radius: 8px;">
-            <strong>📌 Nota:</strong> Esta política puede actualizarse periódicamente. Te notificaremos sobre cambios importantes a través de la plataforma.
-          </p>
-        `
-      },
-      'terminos': {
-        titulo: 'Términos y Condiciones de Uso',
-        contenido: `
-          <p><em>Última actualización: Enero 2025</em></p>
-          
-          <h3>1. Aceptación de Términos</h3>
-          <p>Al acceder y utilizar GENIALISIS, aceptas estar legalmente vinculado por estos términos y condiciones. Si no estás de acuerdo con alguna parte de estos términos, no debes utilizar nuestra plataforma.</p>
-          
-          <h3>2. Descripción del Servicio</h3>
-          <p>GENIALISIS es una plataforma SaaS (Software as a Service) de gestión integral para establecimientos educativos que incluye módulos de:</p>
-          <ul>
-            <li>Gestión de estudiantes y familias</li>
-            <li>Administración académica y evaluaciones</li>
-            <li>Control de asistencia</li>
-            <li>Gestión financiera y facturación</li>
-            <li>Portal para padres/acudientes</li>
-            <li>Inventarios y activos</li>
-            <li>Reportes y analíticas</li>
-          </ul>
-          
-          <h3>3. Registro y Cuenta de Usuario</h3>
-          <p><strong>El usuario se compromete a:</strong></p>
-          <ul>
-            <li>Proporcionar información veraz y actualizada durante el registro</li>
-            <li>Mantener la confidencialidad de sus credenciales de acceso</li>
-            <li>Notificar inmediatamente cualquier uso no autorizado de su cuenta</li>
-            <li>No compartir su cuenta con terceros no autorizados</li>
-            <li>Ser responsable de todas las actividades realizadas bajo su cuenta</li>
-          </ul>
-          
-          <h3>4. Uso Aceptable</h3>
-          <p><strong>Está prohibido:</strong></p>
-          <ul>
-            <li>Utilizar el servicio para fines ilegales o no autorizados</li>
-            <li>Intentar acceder a áreas restringidas del sistema</li>
-            <li>Realizar ingeniería inversa, descompilar o desensamblar el software</li>
-            <li>Transmitir virus, malware o cualquier código malicioso</li>
-            <li>Sobrecargar intencionalmente los servidores</li>
-            <li>Extraer datos mediante técnicas automatizadas (scraping) sin autorización</li>
-            <li>Compartir información sensible de estudiantes sin autorización legal</li>
-          </ul>
-          
-          <h3>5. Propiedad Intelectual</h3>
-          <p>Todo el contenido, diseño, código fuente, logos, marcas y funcionalidades de GENIALISIS son propiedad exclusiva de nuestra empresa y están protegidos por las leyes de propiedad intelectual de Colombia y tratados internacionales.</p>
-          
-          <p><strong>Tus datos son tuyos:</strong> Los datos que ingresas en la plataforma (información de estudiantes, evaluaciones, etc.) son y permanecen de tu propiedad. GENIALISIS solo actúa como procesador de estos datos.</p>
-          
-          <h3>6. Precio y Facturación</h3>
-          <ul>
-            <li>Los precios se publican en nuestro sitio web y pueden variar según el plan contratado</li>
-            <li>Las tarifas se cobran mensualmente por adelantado</li>
-            <li>Los impuestos aplicables (IVA) se adicionan según la legislación vigente</li>
-            <li>Aceptamos pagos mediante transferencia bancaria, PSE y tarjetas de crédito</li>
-            <li>El no pago suspende temporalmente el acceso al servicio</li>
-          </ul>
-          
-          <h3>7. Garantía de Servicio</h3>
-          <p><strong>Garantizamos 30 días sin riesgo:</strong> Si dentro de los primeros 30 días decides que GENIALISIS no es para ti, te devolvemos el 100% de lo pagado, sin preguntas.</p>
-          
-          <p><strong>Disponibilidad del servicio:</strong> Nos esforzamos por mantener una disponibilidad del 99.5%, pero no podemos garantizar un servicio ininterrumpido debido a:</p>
-          <ul>
-            <li>Mantenimientos programados (notificados con anticipación)</li>
-            <li>Fallas de proveedores de internet o infraestructura</li>
-            <li>Eventos de fuerza mayor</li>
-          </ul>
-          
-          <h3>8. Limitación de Responsabilidad</h3>
-          <p>GENIALISIS no será responsable por:</p>
-          <ul>
-            <li>Pérdida de datos causada por acciones del usuario o terceros</li>
-            <li>Daños indirectos, incidentales o consecuentes</li>
-            <li>Interrupciones del servicio por causas fuera de nuestro control</li>
-            <li>Decisiones tomadas basándose en información del sistema</li>
-          </ul>
-          
-          <p><strong>Nuestra responsabilidad máxima</strong> se limita al monto pagado por el servicio en los últimos 3 meses.</p>
-          
-          <h3>9. Cancelación y Terminación</h3>
-          <p><strong>Puedes cancelar en cualquier momento:</strong></p>
-          <ul>
-            <li>La cancelación debe solicitarse con 30 días de anticipación</li>
-            <li>Conservamos tus datos por 60 días después de la cancelación</li>
-            <li>Puedes exportar toda tu información antes de cancelar</li>
-            <li>No hay penalidades ni costos de cancelación</li>
-          </ul>
-          
-          <p><strong>Podemos suspender o terminar el servicio si:</strong></p>
-          <ul>
-            <li>Incumples estos términos de manera grave o reiterada</li>
-            <li>Hay actividades fraudulentas o ilegales</li>
-            <li>No se realiza el pago después de 15 días de vencido</li>
-          </ul>
-          
-          <h3>10. Modificaciones</h3>
-          <p>Nos reservamos el derecho de modificar estos términos en cualquier momento. Los cambios importantes serán notificados con 30 días de anticipación a través de:</p>
-          <ul>
-            <li>Email a la dirección registrada</li>
-            <li>Notificación dentro de la plataforma</li>
-            <li>Publicación en nuestro sitio web</li>
-          </ul>
-          
-          <h3>11. Ley Aplicable y Jurisdicción</h3>
-          <p>Estos términos se rigen por las leyes de la República de Colombia. Cualquier disputa se resolverá en los tribunales de Bogotá D.C., Colombia.</p>
-          
-          <h3>12. Contacto Legal</h3>
-          <p>Para asuntos legales o preguntas sobre estos términos:</p>
-          <ul>
-            <li><strong>Email:</strong> <a href="mailto:${this.emailContacto}" style="color: #D4AF37;">${this.emailContacto}</a></li>
-            <li><strong>WhatsApp:</strong> ${this.telefonoContacto}</li>
-          </ul>
-          
-          <p style="margin-top: 24px; padding: 16px; background: #f5f5f5; border-radius: 8px;">
-            <strong>📌 Transparencia total:</strong> Si algo en estos términos no está claro, contáctanos. Preferimos una conversación honesta antes que un malentendido legal.
           </p>
         `
       }
