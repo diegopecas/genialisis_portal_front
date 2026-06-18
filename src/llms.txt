@@ -1,0 +1,35 @@
+# GENIALISIS
+
+> GENIALISIS es una plataforma SaaS colombiana de gestión integral para jardines infantiles, preescolares y establecimientos educativos. Centraliza en un solo sistema la información de estudiantes, lo académico, las calificaciones, la asistencia, las finanzas, el CRM de admisiones, las operaciones (inventarios y limpieza) y los reportes. Su propuesta de valor es ahorrar hasta 60% del tiempo administrativo y garantizar el 100% de la cobertura curricular mediante una metodología de sprints académicos.
+
+## Qué resuelve
+
+- Reemplaza el caos de Excel + WhatsApp + cuadernos físicos por un ecosistema integrado.
+- Reduce la carga administrativa de las docentes: evaluar 15 niños toma alrededor de 5 minutos.
+- Da a los padres un portal de autoconsulta 24/7 (fotos, estado de cuenta, evaluaciones, asistencia).
+- Cumple los requisitos de la Secretaría de Salud con fichas técnicas y reportes listos.
+
+## Módulos
+
+- Estudiantes: vista 360° con información médica, académica, financiera y antropométrica.
+- Académico: logros, indicadores y actividades organizados en sprints con control de cobertura.
+- Calificaciones: evaluación en dos momentos (ánimo/salud y efectividad/intentos), reportes automáticos.
+- Asistencia: registro de ingreso/salida con verificación de personas autorizadas y conteo en tiempo real.
+- Financiero: estados de cuenta automáticos, comprobantes profesionales y portal para padres.
+- CRM Admisiones: seguimiento de visitas con temperatura de prospecto y dashboard de conversión.
+- Operaciones: control de inventarios (exclusivo en el mercado), limpieza y medidas antropométricas.
+- Reportes: académicos, operativos, financieros y de auditoría, exportables a PDF y Excel.
+
+## Diferenciadores
+
+- Control de inventarios incluido (ningún competidor lo ofrece).
+- Metodología ágil con cobertura curricular medible al 100%.
+- Diseñado para Colombia: cumple Secretaría de Salud y ofrece soporte local.
+- Evaluaciones incluidas sin costo adicional.
+- Tarifa plana hasta 50 estudiantes, sin costos ocultos.
+- Garantía de 60 días con devolución del 100% y entrega de datos en formatos estándar.
+
+## Contacto
+
+- Sitio web: https://www.genialisis.com/
+- Demostración: agendamiento en línea disponible desde el botón "Agendar Demo" del sitio.

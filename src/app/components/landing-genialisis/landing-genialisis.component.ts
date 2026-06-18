@@ -1,10 +1,12 @@
-import { Component, OnInit, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Component, OnInit, AfterViewInit, ViewChild, ElementRef, Inject, PLATFORM_ID } from '@angular/core';
+import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { ContactosService, TamanoEstablecimiento, TipoConsulta, ComoConocio } from '../../services/contactos.service';
 import { ConfiguracionService } from '../../services/configuracion.service';
+import { SeoService } from '../../services/seo.service';
+import { CalendlyService } from '../../services/calendly.service';
 
 interface Stat {
   value: string;
@@ -59,13 +61,13 @@ export class LandingGenialisisComponent implements OnInit, AfterViewInit {
   showModal = false;
   selectedModule: Module | null = null;
   activeFaqIndex: number | null = null;
-  
-  
+
+
   // Modales de páginas institucionales
   showPaginaModal = false;
   paginaModalTitulo = '';
   paginaModalContenido: SafeHtml = '';
-  
+
   // Menu mobile
   menuMobileAbierto = false;
   // Datos cargados desde servicios
@@ -76,6 +78,8 @@ export class LandingGenialisisComponent implements OnInit, AfterViewInit {
   telefonoContacto: string = '+57 311 8181816'; // Valor por defecto
   emailContacto: string = 'contacto@genialisis.com'; // Valor por defecto
   mostrarDetalleComoConocio: boolean = false;
+  // URL de agendamiento Calendly (se carga desde configuraciones públicas)
+  calendlyUrl: string | null = null;
 
   stats: Stat[] = [
     {
@@ -146,7 +150,7 @@ export class LandingGenialisisComponent implements OnInit, AfterViewInit {
       icon: this.sanitizer.bypassSecurityTrustHtml('<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>'),
       fullDescription: `
         <p><strong>El corazón del ecosistema GENIALISIS. Centraliza TODA la información de cada niño en un solo lugar.</strong></p>
-        
+
         <p><strong>Ficha del Estudiante:</strong></p>
         <ul>
           <li><strong>Identificación completa:</strong> Tipo y número de documento, nombres completos, nacionalidad</li>
@@ -154,14 +158,14 @@ export class LandingGenialisisComponent implements OnInit, AfterViewInit {
           <li><strong>Contacto y ubicación:</strong> Dirección, ciudad, correo, teléfono principal y de emergencia</li>
           <li><strong>Información académica:</strong> Grupo asignado, año escolar, fecha de ingreso</li>
         </ul>
-        
+
         <p><strong>Gestión de Acudientes:</strong></p>
         <ul>
           <li><strong>Control granular de permisos:</strong> Define quién es responsable de pago, quién puede recoger al niño, quién tiene acceso al portal</li>
           <li><strong>Seguridad verificable:</strong> Eliminación del "¿quién recogió al niño? ¿estaba autorizado?"</li>
           <li><strong>Trazabilidad completa:</strong> Todo queda registrado con fecha y usuario</li>
         </ul>
-        
+
         <p><strong>Vista 360° - Todo en una sola pantalla:</strong></p>
         <ul>
           <li><strong>Datos personales y acudientes:</strong> Información completa sin cambiar de pantalla</li>
@@ -171,7 +175,7 @@ export class LandingGenialisisComponent implements OnInit, AfterViewInit {
           <li><strong>Medidas antropométricas:</strong> Gráficas de evolución de peso y talla</li>
           <li><strong>Observaciones:</strong> Historial completo académico, disciplinario y social</li>
         </ul>
-        
+
         <p><strong>Beneficio clave:</strong> Respuesta inmediata a cualquier pregunta. Cuando un padre llama, tienes TODO al instante. No más "lo busco y te llamo después".</p>
       `
     },
@@ -181,14 +185,14 @@ export class LandingGenialisisComponent implements OnInit, AfterViewInit {
       icon: this.sanitizer.bypassSecurityTrustHtml('<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>'),
       fullDescription: `
         <p><strong>El cerebro pedagógico de GENIALISIS. Garantiza que TODOS los indicadores de logro se trabajen de manera equilibrada.</strong></p>
-        
+
         <p><strong>Estructura Curricular Clara:</strong></p>
         <ul>
           <li><strong>Logros:</strong> Objetivos generales de aprendizaje por grupo y área</li>
           <li><strong>Indicadores:</strong> Evidencias específicas y medibles de avance</li>
           <li><strong>Actividades:</strong> Experiencias concretas con materiales, duración y niveles (básico/avanzado)</li>
         </ul>
-        
+
         <p><strong>Sprints Académicos - Metodología Ágil Educativa:</strong></p>
         <ul>
           <li><strong>Ciclos cortos:</strong> Períodos de 2 semanas con fechas definidas</li>
@@ -197,14 +201,14 @@ export class LandingGenialisisComponent implements OnInit, AfterViewInit {
           <li><strong>Identificación de vacíos:</strong> Alerta de logros sin actividades asignadas</li>
           <li><strong>Análisis por áreas:</strong> Gráficas que comparan actividades del sprint vs acumulado del corte</li>
         </ul>
-        
+
         <p><strong>Gestión del Sprint:</strong></p>
         <ul>
           <li><strong>Información General:</strong> KPIs, análisis de logros atendidos vs sin atender</li>
           <li><strong>Configuración:</strong> Capacidad por grupo y área tipo "tanque" que muestra % utilizado</li>
           <li><strong>Progreso:</strong> Avance por grupo y área con barras de progreso</li>
         </ul>
-        
+
         <p><strong>Beneficio clave:</strong> El director puede demostrar con DATOS que el 100% de los indicadores prometidos se trabajaron. No basado en suposiciones, sino en registros reales.</p>
       `
     },
@@ -214,7 +218,7 @@ export class LandingGenialisisComponent implements OnInit, AfterViewInit {
       icon: this.sanitizer.bypassSecurityTrustHtml('<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>'),
       fullDescription: `
         <p><strong>Revoluciona la evaluación. La docente NUNCA más tiene que "quedarse después" o "llevarse trabajo a casa".</strong></p>
-        
+
         <p><strong>Evaluación en Dos Momentos:</strong></p>
         <ul>
           <li><strong>Momento 1 - Inicio de actividad:</strong>
@@ -230,7 +234,7 @@ export class LandingGenialisisComponent implements OnInit, AfterViewInit {
             </ul>
           </li>
         </ul>
-        
+
         <p><strong>Interfaz Optimizada:</strong></p>
         <ul>
           <li><strong>Todos los estudiantes visibles:</strong> En una sola pantalla, sin cambiar vistas</li>
@@ -238,14 +242,14 @@ export class LandingGenialisisComponent implements OnInit, AfterViewInit {
           <li><strong>Información completa visible:</strong> Indicador de logro, actividad, materiales, niveles</li>
           <li><strong>Tiempo real:</strong> ~20 segundos por niño = 5 minutos para grupo completo</li>
         </ul>
-        
+
         <p><strong>Criterios Personalizables:</strong></p>
         <ul>
           <li>El sistema viene con 4 criterios predefinidos</li>
           <li>Cada establecimiento puede configurar los criterios que necesite: participación, creatividad, trabajo en equipo, etc.</li>
           <li>Se adapta al proyecto educativo del establecimiento</li>
         </ul>
-        
+
         <p><strong>Reportes Automáticos:</strong></p>
         <ul>
           <li>Al registrar calificaciones, los reportes se generan solos</li>
@@ -253,7 +257,7 @@ export class LandingGenialisisComponent implements OnInit, AfterViewInit {
           <li>Vista 360° actualizada en tiempo real</li>
           <li>Portal de padres con información al día</li>
         </ul>
-        
+
         <p><strong>Beneficio clave:</strong> La evaluación es parte natural de la clase, NO trabajo extra. Docentes liberadas, datos precisos, padres informados 24/7.</p>
       `
     },
@@ -263,7 +267,7 @@ export class LandingGenialisisComponent implements OnInit, AfterViewInit {
       icon: this.sanitizer.bypassSecurityTrustHtml('<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/><path d="M8 14h.01M12 14h.01M16 14h.01M8 18h.01M12 18h.01M16 18h.01"/></svg>'),
       fullDescription: `
         <p><strong>Control de seguridad profesional. Sabe en todo momento qué niños están en el establecimiento.</strong></p>
-        
+
         <p><strong>Registro de Ingreso:</strong></p>
         <ul>
           <li><strong>Lista organizada por grupo:</strong> Identificación visual por colores</li>
@@ -271,7 +275,7 @@ export class LandingGenialisisComponent implements OnInit, AfterViewInit {
           <li><strong>Hora exacta automática:</strong> Registro con timestamp sin intervención</li>
           <li><strong>Filtro de búsqueda:</strong> Ubicación rápida cuando hay varios niños llegando</li>
         </ul>
-        
+
         <p><strong>Registro de Salida:</strong></p>
         <ul>
           <li><strong>Verificación de autorizados:</strong> Botón "detalle" muestra quién puede recoger al niño</li>
@@ -279,7 +283,7 @@ export class LandingGenialisisComponent implements OnInit, AfterViewInit {
           <li><strong>Campo de observaciones:</strong> "Recogió la abuela María"</li>
           <li><strong>Trazabilidad completa:</strong> Quién, cuándo y a qué hora</li>
         </ul>
-        
+
         <p><strong>Contador en Tiempo Real:</strong></p>
         <ul>
           <li><strong>Vista "Actual":</strong> Cantidad exacta de niños presentes en este momento</li>
@@ -287,14 +291,14 @@ export class LandingGenialisisComponent implements OnInit, AfterViewInit {
           <li><strong>Crítico para emergencias:</strong> Simulacros de evacuación, conteo rápido</li>
           <li><strong>Control de capacidad:</strong> Saber cuántos espacios hay disponibles</li>
         </ul>
-        
+
         <p><strong>Integración con Otros Módulos:</strong></p>
         <ul>
           <li>Alimenta la Vista 360° del estudiante con resumen mensual y gráficas</li>
           <li>Conecta con módulo de Acudientes para verificación de autorizados</li>
           <li>Las observaciones quedan en el historial del estudiante</li>
         </ul>
-        
+
         <p><strong>Beneficio clave:</strong> Ante cualquier emergencia, sabes en segundos exactamente qué niños están en las instalaciones. Seguridad verificable con un clic.</p>
       `
     },
@@ -304,7 +308,7 @@ export class LandingGenialisisComponent implements OnInit, AfterViewInit {
       icon: this.sanitizer.bypassSecurityTrustHtml('<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>'),
       fullDescription: `
         <p><strong>Gestión financiera automatizada. Los padres dejan de preguntarte "¿cuánto debo?" por WhatsApp 24/7.</strong></p>
-        
+
         <p><strong>Gestión de Productos y Servicios:</strong></p>
         <ul>
           <li><strong>Clasificación:</strong> Académico, Alimentación, Vestuario, Transporte, etc.</li>
@@ -312,7 +316,7 @@ export class LandingGenialisisComponent implements OnInit, AfterViewInit {
           <li><strong>Detalle completo:</strong> Fecha, valor, valor pagado, saldo pendiente</li>
           <li><strong>Trazabilidad:</strong> Usuario que registró cada cargo</li>
         </ul>
-        
+
         <p><strong>Registro de Pagos:</strong></p>
         <ul>
           <li><strong>Múltiples métodos:</strong> Efectivo, Nequi, transferencia bancaria, etc.</li>
@@ -320,7 +324,7 @@ export class LandingGenialisisComponent implements OnInit, AfterViewInit {
           <li><strong>Estado:</strong> Contabilizado / Pendiente con fecha de estado</li>
           <li><strong>Acciones:</strong> Editar, contabilizar, imprimir, ver detalle, eliminar (con permisos)</li>
         </ul>
-        
+
         <p><strong>Comprobantes Profesionales:</strong></p>
         <ul>
           <li><strong>Generación automática:</strong> Con datos del establecimiento (nombre, NIT, ciudad)</li>
@@ -329,7 +333,7 @@ export class LandingGenialisisComponent implements OnInit, AfterViewInit {
           <li><strong>Espacio para firmas:</strong> "Recibido por" y "Aprobado por"</li>
           <li><strong>Opciones:</strong> Imprimir, exportar PDF, compartir por WhatsApp</li>
         </ul>
-        
+
         <p><strong>Portal para Padres 24/7:</strong></p>
         <ul>
           <li><strong>Estado de cuenta en tiempo real:</strong> Total cobrado, saldo pendiente, valor pagado, vencido</li>
@@ -339,7 +343,7 @@ export class LandingGenialisisComponent implements OnInit, AfterViewInit {
           <li><strong>Descarga de documentos:</strong> Exportar estados de cuenta a PDF, compartir por WhatsApp</li>
           <li><strong>Auto-servicio:</strong> Los padres consultan cuando quieran, sin molestar por WhatsApp</li>
         </ul>
-        
+
         <p><strong>Beneficio clave:</strong> Ahorra horas semanales en generar estados de cuenta manualmente y responder consultas de padres. Profesionaliza la imagen del establecimiento con documentos formales. Los padres se autoatienden y ven en tiempo real todo lo relacionado con su hijo: finanzas, fotos, evaluaciones y más.</p>
       `
     },
@@ -349,7 +353,7 @@ export class LandingGenialisisComponent implements OnInit, AfterViewInit {
       icon: this.sanitizer.bypassSecurityTrustHtml('<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="8.5" cy="7" r="4"/><line x1="20" y1="8" x2="20" y2="14"/><line x1="23" y1="11" x2="17" y2="11"/></svg>'),
       fullDescription: `
         <p><strong>Sistema profesional de admisiones. los establecimientos pierden 3-4 matrículas al mes porque no hay seguimiento estructurado.</strong></p>
-        
+
         <p><strong>Registro de Visitas:</strong></p>
         <ul>
           <li><strong>Información de la visita:</strong> Fecha, hora, tipo de contacto, canal de captación</li>
@@ -357,7 +361,7 @@ export class LandingGenialisisComponent implements OnInit, AfterViewInit {
           <li><strong>Datos del niño:</strong> Información del prospecto</li>
           <li><strong>Observaciones del asesor:</strong> Notas libres para contexto</li>
         </ul>
-        
+
         <p><strong>Temperatura del Prospecto:</strong></p>
         <ul>
           <li><strong>Explorando:</strong> Está conociendo opciones, no hay urgencia</li>
@@ -365,14 +369,14 @@ export class LandingGenialisisComponent implements OnInit, AfterViewInit {
           <li><strong>No le interesó:</strong> Descartó la opción</li>
           <li><strong>Sembrando semilla:</strong> Interesado pero con restricciones temporales</li>
         </ul>
-        
+
         <p><strong>Seguimiento Estructurado:</strong></p>
         <ul>
           <li><strong>Cuándo hacer seguimiento:</strong> Fecha programada del próximo contacto</li>
           <li><strong>Horario preferido:</strong> Mejores horas para contactar</li>
           <li><strong>Quién decide:</strong> Identificar el tomador de decisiones</li>
         </ul>
-        
+
         <p><strong>Compromisos del establecimiento:</strong></p>
         <ul>
           <li>Agendar segunda visita</li>
@@ -380,7 +384,7 @@ export class LandingGenialisisComponent implements OnInit, AfterViewInit {
           <li>Compartir lista de precios</li>
           <li>Otros compromisos personalizables</li>
         </ul>
-        
+
         <p><strong>Dashboard de Conversión:</strong></p>
         <ul>
           <li>Métricas de visitas vs matrículas</li>
@@ -388,7 +392,7 @@ export class LandingGenialisisComponent implements OnInit, AfterViewInit {
           <li>Temperatura promedio de prospectos</li>
           <li>Seguimientos pendientes</li>
         </ul>
-        
+
         <p><strong>Beneficio clave:</strong> Protocolo profesional de admisiones. Cada visita se trabaja con estructura, seguimiento automático y compromisos claros. Mayor conversión = más matrículas.</p>
       `
     },
@@ -398,7 +402,7 @@ export class LandingGenialisisComponent implements OnInit, AfterViewInit {
       icon: this.sanitizer.bypassSecurityTrustHtml('<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>'),
       fullDescription: `
         <p><strong>Control operativo completo. ÚNICO EN EL MERCADO - Ningún competidor ofrece control de inventarios.</strong></p>
-        
+
         <p><strong>Control de Inventarios (EXCLUSIVO):</strong></p>
         <ul>
           <li><strong>Productos de Mobiliario:</strong> Inventario de elementos físicos con mantenimiento</li>
@@ -407,7 +411,7 @@ export class LandingGenialisisComponent implements OnInit, AfterViewInit {
           <li><strong>Movimientos:</strong> Entradas, salidas y ajustes con trazabilidad</li>
           <li><strong>Alertas automáticas:</strong> Notificaciones cuando algo está por agotarse</li>
         </ul>
-        
+
         <p><strong>Registro de Limpieza:</strong></p>
         <ul>
           <li><strong>Áreas Físicas:</strong> Espacios del establecimiento con mobiliario asignado</li>
@@ -416,7 +420,7 @@ export class LandingGenialisisComponent implements OnInit, AfterViewInit {
           <li><strong>Responsables:</strong> Asignación de personal por área</li>
           <li><strong>Trazabilidad:</strong> Quién limpió, cuándo y qué productos usó</li>
         </ul>
-        
+
         <p><strong>Medidas Antropométricas:</strong></p>
         <ul>
           <li><strong>Registro masivo:</strong> Captura de peso y talla de múltiples niños rápidamente</li>
@@ -424,14 +428,14 @@ export class LandingGenialisisComponent implements OnInit, AfterViewInit {
           <li><strong>Cumplimiento normativo:</strong> Requisito de Secretaría de Salud</li>
           <li><strong>Integración:</strong> Datos visibles en Vista 360° del estudiante</li>
         </ul>
-        
+
         <p><strong>Gestión de Alimentación:</strong></p>
         <ul>
           <li><strong>Menús del restaurante:</strong> Planificación de menús e ítems</li>
           <li><strong>Salidas por clasificación:</strong> Registro de productos usados en cocina</li>
           <li><strong>Integración financiera:</strong> Genera cargos automáticos al padre</li>
         </ul>
-        
+
         <p><strong>Beneficio clave:</strong> Control real de inventarios con alertas. Cumplimiento automático de Secretaría de Salud con fichas técnicas de limpieza. Auditorías listas en segundos, no en días.</p>
       `
     },
@@ -441,7 +445,7 @@ export class LandingGenialisisComponent implements OnInit, AfterViewInit {
       icon: this.sanitizer.bypassSecurityTrustHtml('<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>'),
       fullDescription: `
         <p><strong>Reportes automáticos sin esfuerzo. Generar reportes toma horas de trabajo manual. Con GENIALISIS: un clic.</strong></p>
-        
+
         <p><strong>Reportes Académicos:</strong></p>
         <ul>
           <li><strong>Calificaciones por Sprint:</strong> Seguimiento y evaluación de sprints académicos con progreso detallado</li>
@@ -449,7 +453,7 @@ export class LandingGenialisisComponent implements OnInit, AfterViewInit {
           <li><strong>Boletines para padres:</strong> Exportables a PDF con formato profesional</li>
           <li><strong>Análisis de cobertura:</strong> Verificación de que todos los indicadores fueron trabajados</li>
         </ul>
-        
+
         <p><strong>Reportes Operativos:</strong></p>
         <ul>
           <li><strong>Reporte de Asistencia:</strong> Control y análisis por fecha con indicadores de puntualidad</li>
@@ -457,7 +461,7 @@ export class LandingGenialisisComponent implements OnInit, AfterViewInit {
           <li><strong>Inventarios:</strong> Estado actual con alertas de faltantes y próximos a vencer</li>
           <li><strong>Limpieza:</strong> Fichas técnicas listas para Secretaría de Salud</li>
         </ul>
-        
+
         <p><strong>Reportes Financieros:</strong></p>
         <ul>
           <li><strong>Estado de Cartera:</strong> Saldos pendientes, vencidos y pagos proyectados</li>
@@ -465,7 +469,7 @@ export class LandingGenialisisComponent implements OnInit, AfterViewInit {
           <li><strong>Análisis por concepto:</strong> Pensiones, matrículas, alimentación, servicios extra</li>
           <li><strong>Estados de cuenta:</strong> Por estudiante o consolidados</li>
         </ul>
-        
+
         <p><strong>Reportes para Auditorías:</strong></p>
         <ul>
           <li><strong>Reporte General de Estudiantes:</strong> Información completa de toda la población</li>
@@ -473,7 +477,7 @@ export class LandingGenialisisComponent implements OnInit, AfterViewInit {
           <li><strong>Medidas antropométricas:</strong> Seguimiento nutricional con gráficas de evolución</li>
           <li><strong>Cumplimiento normativo:</strong> Todo lo que Secretaría de Salud requiere</li>
         </ul>
-        
+
         <p><strong>Características Transversales:</strong></p>
         <ul>
           <li><strong>Exportación múltiple:</strong> PDF, Excel, impresión directa</li>
@@ -481,7 +485,7 @@ export class LandingGenialisisComponent implements OnInit, AfterViewInit {
           <li><strong>Compartir:</strong> WhatsApp, email, descarga</li>
           <li><strong>Actualización automática:</strong> Datos siempre al día sin regenerar</li>
         </ul>
-        
+
         <p><strong>Beneficio clave:</strong> Auditorías de Secretaría de Salud resueltas en segundos, no en días. Reuniones con padres con datos actualizados. Transparencia total con evidencia verificable.</p>
       `
     }
@@ -573,22 +577,36 @@ export class LandingGenialisisComponent implements OnInit, AfterViewInit {
     private fb: FormBuilder,
     private sanitizer: DomSanitizer,
     private contactosService: ContactosService,
-    private configuracionService: ConfiguracionService
+    private configuracionService: ConfiguracionService,
+    private seoService: SeoService,
+    private calendlyService: CalendlyService,
+    @Inject(PLATFORM_ID) private platformId: object
   ) {}
 
   ngOnInit(): void {
     this.initContactForm();
-    this.cargarTamanosEstablecimiento();
-    this.cargarTiposConsulta();
-    this.cargarComoConocio();
-    this.cargarConfiguracionContacto();
-    window.scrollTo(0, 0);
+    // El SEO se aplica siempre (prerender + navegador) para que quede en el HTML estático.
+    this.aplicarSeo();
+
+    // Las llamadas a la API y las APIs de navegador solo corren en el cliente,
+    // no durante el prerender en tiempo de build.
+    if (isPlatformBrowser(this.platformId)) {
+      this.cargarTamanosEstablecimiento();
+      this.cargarTiposConsulta();
+      this.cargarComoConocio();
+      this.cargarConfiguracionContacto();
+      this.cargarConfiguracionPublica();
+      this.calendlyService.cargarWidget();
+      window.scrollTo(0, 0);
+    }
   }
 
   ngAfterViewInit(): void {
-    setTimeout(() => {
-      this.initAnimations();
-    }, 100);
+    if (isPlatformBrowser(this.platformId)) {
+      setTimeout(() => {
+        this.initAnimations();
+      }, 100);
+    }
   }
 
   initContactForm(): void {
@@ -608,6 +626,74 @@ export class LandingGenialisisComponent implements OnInit, AfterViewInit {
     this.contactForm.get('comoConocio')?.valueChanges.subscribe(value => {
       this.onComoConocioChange(value);
     });
+  }
+
+  /**
+   * Aplica metadatos y datos estructurados JSON-LD (Organization,
+   * SoftwareApplication y FAQPage) construidos a partir del contenido real.
+   */
+  aplicarSeo(): void {
+    const tituloPagina = 'GENIALISIS | Software de gestión para jardines infantiles y preescolares en Colombia';
+    const descripcionPagina = 'GENIALISIS es la plataforma colombiana que centraliza estudiantes, académico, calificaciones, asistencia, finanzas, CRM de admisiones, inventarios y reportes para jardines infantiles. Ahorra 60% del tiempo administrativo y garantiza el 100% de cobertura curricular.';
+    const urlSitio = 'https://www.genialisis.com/';
+
+    this.seoService.actualizarMetadatos({
+      titulo: tituloPagina,
+      descripcion: descripcionPagina,
+      url: urlSitio,
+      imagen: urlSitio + 'assets/images/logo.png',
+      tipo: 'website'
+    });
+
+    const organizationLd = {
+      '@context': 'https://schema.org',
+      '@type': 'Organization',
+      name: 'GENIALISIS',
+      url: urlSitio,
+      logo: urlSitio + 'assets/images/logo.png',
+      description: descripcionPagina,
+      areaServed: 'CO',
+      contactPoint: {
+        '@type': 'ContactPoint',
+        telephone: this.telefonoContacto,
+        email: this.emailContacto,
+        contactType: 'sales',
+        availableLanguage: ['Spanish']
+      }
+    };
+
+    const softwareLd = {
+      '@context': 'https://schema.org',
+      '@type': 'SoftwareApplication',
+      name: 'GENIALISIS',
+      applicationCategory: 'BusinessApplication',
+      applicationSubCategory: 'Software de gestión escolar',
+      operatingSystem: 'Web',
+      url: urlSitio,
+      description: descripcionPagina,
+      featureList: this.modules.map(m => m.title),
+      offers: {
+        '@type': 'Offer',
+        category: 'Suscripción mensual de tarifa plana'
+      }
+    };
+
+    const faqLd = {
+      '@context': 'https://schema.org',
+      '@type': 'FAQPage',
+      mainEntity: this.faqs.map(faq => ({
+        '@type': 'Question',
+        name: faq.question,
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: faq.answer
+        }
+      }))
+    };
+
+    this.seoService.establecerJsonLd(organizationLd, 'ld-organization');
+    this.seoService.establecerJsonLd(softwareLd, 'ld-software');
+    this.seoService.establecerJsonLd(faqLd, 'ld-faq');
   }
 
   initAnimations(): void {
@@ -651,15 +737,27 @@ export class LandingGenialisisComponent implements OnInit, AfterViewInit {
     this.modulesSection.nativeElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
 
+  /**
+   * CTA principal "Agendar Demo": abre Calendly si hay URL configurada;
+   * si no, cae al comportamiento anterior de hacer scroll al formulario.
+   */
+  agendarDemo(): void {
+    if (this.calendlyUrl) {
+      this.calendlyService.abrirPopup(this.calendlyUrl);
+    } else {
+      this.scrollToContact();
+    }
+  }
+
   openModuleModal(module: Module): void {
     this.selectedModule = module;
     this.showModal = true;
-    
+
     // Animación CSS pura para el modal
     setTimeout(() => {
       const modalOverlay = document.querySelector('.modal-overlay') as HTMLElement;
       const modalContent = document.querySelector('.modal-content') as HTMLElement;
-      
+
       if (modalOverlay && modalContent) {
         modalOverlay.style.opacity = '1';
         modalContent.style.transform = 'scale(1)';
@@ -671,12 +769,12 @@ export class LandingGenialisisComponent implements OnInit, AfterViewInit {
   closeModal(): void {
     const modalOverlay = document.querySelector('.modal-overlay') as HTMLElement;
     const modalContent = document.querySelector('.modal-content') as HTMLElement;
-    
+
     if (modalOverlay && modalContent) {
       modalContent.style.transform = 'scale(0.9)';
       modalContent.style.opacity = '0';
       modalOverlay.style.opacity = '0';
-      
+
       setTimeout(() => {
         this.showModal = false;
         this.selectedModule = null;
@@ -729,7 +827,7 @@ export class LandingGenialisisComponent implements OnInit, AfterViewInit {
 
   onComoConocioChange(canalId: number): void {
     const canalSeleccionado = this.canalesComoConocio.find(c => c.id === Number(canalId));
-    
+
     if (canalSeleccionado?.pide_detalle) {
       this.mostrarDetalleComoConocio = true;
       this.contactForm.get('comoConocioDetalle')?.setValidators([Validators.required]);
@@ -744,7 +842,7 @@ export class LandingGenialisisComponent implements OnInit, AfterViewInit {
   getPlaceholderDetalle(): string {
     const canalId = this.contactForm.get('comoConocio')?.value;
     if (!canalId) return 'Por favor especifica';
-    
+
     const canal = this.canalesComoConocio.find(c => c.id === Number(canalId));
     return canal?.placeholder_detalle || 'Por favor especifica';
   }
@@ -761,6 +859,22 @@ export class LandingGenialisisComponent implements OnInit, AfterViewInit {
       error: (error) => {
         console.error('Error cargando configuración:', error);
         // Valor por defecto ya está asignado
+      }
+    });
+  }
+
+  /**
+   * Carga la URL de Calendly desde las configuraciones públicas del backend.
+   */
+  cargarConfiguracionPublica(): void {
+    this.configuracionService.obtenerConfiguracionesPublicas().subscribe({
+      next: (response) => {
+        if (response.success && response.configuraciones.calendly_url) {
+          this.calendlyUrl = response.configuraciones.calendly_url;
+        }
+      },
+      error: (error) => {
+        console.error('Error cargando configuración pública:', error);
       }
     });
   }
@@ -809,15 +923,15 @@ export class LandingGenialisisComponent implements OnInit, AfterViewInit {
         contenido: `
           <h3>Nuestra Misión</h3>
           <p>En GENIALISIS creemos que la tecnología debe simplificar la gestión educativa, no complicarla. Desarrollamos soluciones intuitivas y poderosas que permiten a los establecimientos educativos enfocarse en lo que realmente importa: ofrecer educación de calidad.</p>
-          
+
           <h3>¿Quiénes Somos?</h3>
           <p>Somos un equipo colombiano apasionado por la educación y la tecnología. Con años de experiencia trabajando directamente con instituciones educativas, entendemos profundamente los desafíos que enfrentan establecimientos educativos como escuelas de danza, teatro, música, idiomas, deportes y centros de formación de todo tipo.</p>
-          
+
           <p>Nacimos de la frustración de ver a directores y administradores perdiendo horas valiosas en tareas administrativas que podrían automatizarse. Vimos cómo establecimientos pequeños y medianos no podían acceder a sistemas profesionales por sus costos prohibitivos o complejidad técnica.</p>
-          
+
           <h3>Nuestra Visión</h3>
           <p>Ser la plataforma líder en gestión educativa para establecimientos de todos los tamaños en América Latina, democratizando el acceso a herramientas profesionales de administración que antes solo estaban disponibles para grandes instituciones.</p>
-          
+
           <h3>Nuestros Valores</h3>
           <ul>
             <li><strong>Simplicidad:</strong> La tecnología debe ser invisible. GENIALISIS es tan intuitivo que cualquier persona puede usarlo sin capacitación técnica.</li>
@@ -832,18 +946,18 @@ export class LandingGenialisisComponent implements OnInit, AfterViewInit {
         contenido: `
           <h3>¿Tienes preguntas? Estamos aquí para ayudarte</h3>
           <p>Nuestro equipo está disponible para resolver todas tus dudas sobre GENIALISIS, ayudarte con la implementación o brindarte soporte técnico.</p>
-          
+
           <h3>Horario de Atención</h3>
           <p><strong>Lunes a Sábado:</strong> 8:00 AM - 6:30 PM (Hora de Colombia)</p>
           <p>Respondemos todos los mensajes el mismo día si nos contactas dentro del horario de atención.</p>
-          
+
           <h3>Canales de Contacto</h3>
           <ul>
             <li><strong>WhatsApp:</strong> <a href="${this.whatsappUrl}" target="_blank" style="color: #D4AF37;">${this.telefonoContacto}</a> (Respuesta inmediata)</li>
             <li><strong>Teléfono:</strong> <a href="tel:${this.telefonoContacto}" style="color: #D4AF37;">${this.telefonoContacto}</a></li>
             <li><strong>Email:</strong> <a href="mailto:${this.emailContacto}" style="color: #D4AF37;">${this.emailContacto}</a></li>
           </ul>
-          
+
           <h3>¿Qué podemos hacer por ti?</h3>
           <ul>
             <li><strong>Demostración personalizada:</strong> Te mostramos el sistema adaptado a las necesidades de tu establecimiento</li>
@@ -851,7 +965,7 @@ export class LandingGenialisisComponent implements OnInit, AfterViewInit {
             <li><strong>Soporte técnico:</strong> Ayuda con cualquier duda o problema</li>
             <li><strong>Asesoría en implementación:</strong> Te acompañamos en todo el proceso</li>
           </ul>
-          
+
           <p style="margin-top: 24px; padding: 16px; background: #f5f5f5; border-radius: 8px;">
             <strong>💡 Tip:</strong> Si nos contactas por WhatsApp, recibimos tu mensaje de inmediato y podemos agendar una videollamada para mostrarte el sistema en tiempo real.
           </p>

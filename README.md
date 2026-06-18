@@ -85,6 +85,14 @@ Agregar en `index.html`:
 ---
 
 ## Compilar producción
+ng serve --port 4400       
 ng build --configuration production
 
+
+## Arbol
+tree /F /A > estructura.txt
+
+
 **GENIALISIS** - Plataforma de Gestión Educativa | Colombia
+
+
