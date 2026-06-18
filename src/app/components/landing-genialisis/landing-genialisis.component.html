@@ -84,9 +84,7 @@
     <div class="container">
       <div class="stats-grid">
         <div class="stat-card" *ngFor="let stat of stats">
-          <div class="stat-icon">
-            <svg viewBox="0 0 24 24" [innerHTML]="stat.icon"></svg>
-          </div>
+          <div class="stat-icon" [innerHTML]="stat.icon"></div>
           <div class="stat-value">{{ stat.value }}</div>
           <div class="stat-label">{{ stat.label }}</div>
         </div>
@@ -176,6 +174,21 @@
         <span class="eyebrow">Módulos</span>
         <h2 class="section-title">Una plataforma, <span class="grad">todo tu jardín</span></h2>
         <p class="section-subtitle">Todo lo que necesitas para gestionar tu jardín, más allá de lo académico.</p>
+      </div>
+
+      <div class="magia-band">
+        <span class="eyebrow">La magia del sistema</span>
+        <h3>Una sola acción mueve <span class="grad">todo el sistema</span></h3>
+        <div class="magia-flow">
+          <span class="magia-chip">Registras las onces del niño</span>
+          <span class="magia-arrow">→</span>
+          <span class="magia-chip">El cobro queda hecho</span>
+          <span class="magia-arrow">→</span>
+          <span class="magia-chip">La cocina sabe qué preparar</span>
+          <span class="magia-arrow">→</span>
+          <span class="magia-chip">El papá lo ve en su estado de cuenta</span>
+        </div>
+        <p class="magia-note">Un solo dato optimiza tu equipo. Y este es apenas un ejemplo: muchos de nuestros procesos están profundamente integrados así.</p>
       </div>
       <div class="modules-grid">
         <div class="module-card" *ngFor="let module of modules" (click)="openModuleModal(module)">

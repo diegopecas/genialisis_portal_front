@@ -1,5 +1,6 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Inject, PLATFORM_ID } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
+import { isPlatformBrowser } from '@angular/common';
 import { filter } from 'rxjs/operators';
 
 declare let gtag: Function;
@@ -11,12 +12,20 @@ export class AnalyticsService {
   private analyticsId: string | null = null;
   private initialized = false;
 
-  constructor(private router: Router) {}
+  constructor(
+    private router: Router,
+    @Inject(PLATFORM_ID) private platformId: object
+  ) {}
 
   /**
    * Inicializar Google Analytics con el ID desde la configuración
    */
   async initialize(analyticsId: string): Promise<void> {
+    // No hacer nada durante el prerender (no hay navegador).
+    if (!isPlatformBrowser(this.platformId)) {
+      return;
+    }
+
     if (this.initialized) {
       console.warn('Analytics ya está inicializado');
       return;
@@ -99,6 +108,10 @@ export class AnalyticsService {
    * Enviar pageview manualmente
    */
   trackPageView(url?: string): void {
+    if (!isPlatformBrowser(this.platformId)) {
+      return;
+    }
+
     if (!this.initialized || !this.analyticsId) {
       console.warn('Analytics no inicializado');
       return;
@@ -119,6 +132,10 @@ export class AnalyticsService {
    * Enviar evento personalizado
    */
   trackEvent(eventName: string, eventParams: any = {}): void {
+    if (!isPlatformBrowser(this.platformId)) {
+      return;
+    }
+
     if (!this.initialized || !this.analyticsId) {
       console.warn('Analytics no inicializado');
       return;

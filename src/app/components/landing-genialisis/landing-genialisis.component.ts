@@ -11,11 +11,11 @@ import { CalendlyService } from '../../services/calendly.service';
 interface Stat {
   value: string;
   label: string;
-  icon: string;
+  icon: SafeHtml;
 }
 
 interface Problem {
-  icon: string;
+  icon: SafeHtml;
   title: string;
   description: string;
 }
@@ -36,7 +36,7 @@ interface Module {
 interface Differentiator {
   title: string;
   description: string;
-  icon: string;
+  icon: SafeHtml;
   badge?: string;
 }
 
@@ -88,53 +88,53 @@ export class LandingGenialisisComponent implements OnInit, AfterViewInit {
     {
       value: '60%',
       label: 'Ahorro en tiempo administrativo',
-      icon: '<path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>'
+      icon: this.sanitizer.bypassSecurityTrustHtml('<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="0.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>')
     },
     {
       value: '100%',
       label: 'Cobertura curricular garantizada',
-      icon: '<polyline points="20 6 9 17 4 12"/>'
+      icon: this.sanitizer.bypassSecurityTrustHtml('<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="0.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>')
     },
     {
       value: '5 min',
       label: 'Para evaluar 15 niños',
-      icon: '<circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>'
+      icon: this.sanitizer.bypassSecurityTrustHtml('<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="0.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="13" r="8"/><path d="M12 13V9.5"/><path d="M9 2h6"/><path d="m18 6 1.4-1.4"/></svg>')
     },
     {
       value: '24/7',
       label: 'Acceso para padres',
-      icon: '<path d="M12 2a10 10 0 1 0 0 20 10 10 0 1 0 0-20zM2 12h20"/>'
+      icon: this.sanitizer.bypassSecurityTrustHtml('<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="0.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><path d="M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></svg>')
     }
   ];
 
   problems: Problem[] = [
     {
-      icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="11" cy="5" rx="8" ry="2.5"/><path d="M3 5v14c0 1.4 3.6 2.5 8 2.5"/><path d="M19 5v6"/><path d="M3 12c0 1.4 3.6 2.5 8 2.5"/><line x1="16" y1="15" x2="22" y2="21"/><line x1="22" y1="15" x2="16" y2="21"/></svg>',
+      icon: this.sanitizer.bypassSecurityTrustHtml('<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="0.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 2 7l10 5 10-5-10-5z"/><path d="m2 17 10 5 10-5"/><path d="m2 12 10 5 10-5"/></svg>'),
       title: 'Información dispersa',
       description: 'Datos en Excel, WhatsApp, cuadernos físicos. Imposible encontrar nada cuando más lo necesitas.'
     },
     {
-      icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l2.5 2.5"/><path d="M5 3 2.5 5.5"/><path d="m19 3 2.5 2.5"/></svg>',
+      icon: this.sanitizer.bypassSecurityTrustHtml('<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="0.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 8v4"/><path d="M12 16h.01"/></svg>'),
       title: 'Docentes sobrecargadas',
       description: 'Horas extras registrando calificaciones de memoria fuera de horario laboral.'
     },
     {
-      icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="7" y="2" width="10" height="20" rx="2.5"/><line x1="11" y1="18" x2="13" y2="18"/><path d="M10.2 7a1.9 1.9 0 1 1 2.6 1.8c-.5.2-.8.6-.8 1.2"/></svg>',
+      icon: this.sanitizer.bypassSecurityTrustHtml('<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="0.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.4 8.4 0 0 1-8.5 8.5 8.4 8.4 0 0 1-4-1L3 21l2-5.5a8.4 8.4 0 0 1-1-4A8.5 8.5 0 0 1 21 11.5z"/><path d="M9.6 9a2.5 2.5 0 0 1 4.8 1c0 1.7-2.4 2-2.4 2"/><path d="M12 15.5h.01"/></svg>'),
       title: 'Padres sin información',
       description: 'Preguntan por WhatsApp 24/7 porque no tienen acceso a datos en tiempo real.'
     },
     {
-      icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>',
+      icon: this.sanitizer.bypassSecurityTrustHtml('<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="0.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><path d="m3.3 7 8.7 5 8.7-5"/><path d="M12 22V12"/></svg>'),
       title: 'Sin control de inventarios',
       description: 'Te enteras de faltantes cuando ya es demasiado tarde para reordenar.'
     },
     {
-      icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>',
+      icon: this.sanitizer.bypassSecurityTrustHtml('<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="0.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M9.1 9a3 3 0 0 1 5.8 1c0 2-3 3-3 3"/><path d="M12 17h.01"/></svg>'),
       title: 'Cobertura incierta',
       description: 'No sabes con certeza si trabajaste todos los indicadores prometidos.'
     },
     {
-      icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 17 13.5 8.5 8.5 13.5 2 7"/><polyline points="16 17 22 17 22 11"/></svg>',
+      icon: this.sanitizer.bypassSecurityTrustHtml('<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="0.8" stroke-linecap="round" stroke-linejoin="round"><path d="m22 17-8.5-8.5-5 5L2 7"/><path d="M16 17h6v-6"/></svg>'),
       title: 'Pérdida de matrículas',
       description: '3-4 matrículas perdidas al mes por falta de seguimiento profesional.'
     }
@@ -263,6 +263,21 @@ export class LandingGenialisisComponent implements OnInit, AfterViewInit {
       `
     },
     {
+      title: 'Restaurante',
+      description: 'La cocina sabe cuántos almuerzos y onces preparar cada día. Los cobros de lo vendido se generan automáticamente y el inventario se controla solo.',
+      icon: this.sanitizer.bypassSecurityTrustHtml('<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="0.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 2v7a3 3 0 0 0 3 3v10"/><path d="M6 2v6"/><path d="M9 2v6"/><path d="M16 2c-1.7 0-3 1.8-3 4.5s1.3 4.5 3 4.5v11"/></svg>'),
+      fullDescription: `
+        <p><strong>Gestión completa del servicio de alimentación, conectada con cocina, finanzas e inventario.</strong></p>
+        <ul>
+          <li><strong>Producción del día:</strong> la cocina ve exactamente cuántos almuerzos y onces debe preparar, según lo registrado.</li>
+          <li><strong>Cobros automáticos:</strong> lo vendido (almuerzos, onces y extras) se cobra solo, sin digitar nada aparte.</li>
+          <li><strong>Inventario:</strong> el consumo descuenta insumos y alerta faltantes para reordenar a tiempo.</li>
+          <li><strong>Integración:</strong> el dato fluye al estado de cuenta del padre y a los reportes financieros.</li>
+        </ul>
+        <p><strong>Beneficio:</strong> cero desperdicio, cero cobros perdidos y una cocina que sabe qué hacer cada mañana.</p>
+      `
+    },
+    {
       title: 'Tamizajes y antropometría',
       description: 'Tamizajes de desarrollo (EAD-3) y medidas de peso y talla, listos para Secretaría de Salud.',
       icon: this.sanitizer.bypassSecurityTrustHtml('<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>'),
@@ -283,37 +298,37 @@ export class LandingGenialisisComponent implements OnInit, AfterViewInit {
     {
       title: 'IA integrada en los procesos',
       description: 'La IA trabaja dentro del sistema: analiza tu cobertura curricular, registra los comprobantes de pago y responde tus consultas sobre los datos del jardín.',
-      icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l2.2 5.8L20 11l-5.8 2.2L12 19l-2.2-5.8L4 11l5.8-2.2z"/><path d="M19 4v3M20.5 5.5h-3M5 17v2M6 18H4"/></svg>',
+      icon: this.sanitizer.bypassSecurityTrustHtml('<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="0.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l2.2 5.8L20 11l-5.8 2.2L12 19l-2.2-5.8L4 11l5.8-2.2z"/><path d="M19 4v3M20.5 5.5h-3M5 17v2M6 18H4"/></svg>'),
       badge: 'IA'
     },
     {
       title: 'Control de Inventarios',
       description: 'Único en el mercado. Ningún competidor lo ofrece. Sabe exactamente qué tienes, qué falta y cuándo reordenar.',
-      icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>',
+      icon: this.sanitizer.bypassSecurityTrustHtml('<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="0.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><path d="m3.3 7 8.7 5 8.7-5"/><path d="M12 22V12"/></svg>'),
       badge: 'EXCLUSIVO'
     },
     {
       title: 'Metodología Ágil',
       description: 'Sprints educativos con cobertura curricular garantizada al 100%. No promesas, sino certeza medible.',
-      icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>',
+      icon: this.sanitizer.bypassSecurityTrustHtml('<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="0.8" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 3 14h9l-1 8 10-12h-9z"/></svg>'),
       badge: ''
     },
     {
       title: '100% Colombia',
       description: 'Cumple requisitos de Secretaría de Salud + Soporte local que entiende tu contexto y habla tu idioma.',
-      icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s-8-4.5-8-11.8A8 8 0 0 1 12 2a8 8 0 0 1 8 8.2c0 7.3-8 11.8-8 11.8z"/><path d="M12 13a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/></svg>',
+      icon: this.sanitizer.bypassSecurityTrustHtml('<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="0.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-5.5-7-11a7 7 0 0 1 14 0c0 5.5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>'),
       badge: ''
     },
     {
       title: 'Evaluaciones Incluidas',
       description: 'Competidores cobran $80.000 extra por evaluaciones. En GENIALISIS están incluidas sin costo adicional.',
-      icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>',
+      icon: this.sanitizer.bypassSecurityTrustHtml('<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="0.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3 8-8"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>'),
       badge: ''
     },
     {
       title: 'Tarifa Plana',
       description: 'Hasta 50 estudiantes sin cobro adicional. Predecible, transparente, justo. Sin sorpresas en la factura.',
-      icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>',
+      icon: this.sanitizer.bypassSecurityTrustHtml('<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="0.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/></svg>'),
       badge: ''
     }
   ];
@@ -483,10 +498,12 @@ export class LandingGenialisisComponent implements OnInit, AfterViewInit {
       heroLogo.style.animation = 'float 3s ease-in-out infinite';
     }
 
-    // Intersection Observer para animaciones al scroll (OPTIMIZADO)
+    // Intersection Observer para animaciones al scroll.
+    // El margen inferior negativo retrasa el disparo hasta que el elemento
+    // ya entró bien en pantalla, así el efecto de "flotar" sí se nota.
     const observerOptions = {
-      threshold: 0.05, // Reducido de 0.1 para que detecte antes
-      rootMargin: '0px 0px -50px 0px' // Reducido de -100px para aparecer más pronto
+      threshold: 0,
+      rootMargin: '0px 0px -160px 0px'
     };
 
     const observer = new IntersectionObserver((entries) => {
@@ -497,14 +514,22 @@ export class LandingGenialisisComponent implements OnInit, AfterViewInit {
       });
     }, observerOptions);
 
-    // Observar todos los elementos que queremos animar
-    const animatedElements = document.querySelectorAll(
-      '.stat-card, .problem-card, .flow-step, .module-card, .diff-card, .guarantee-card, .faq-item, .benefit-card'
-    );
+    // Observar elementos agrupados: el escalonado se reinicia en cada grupo,
+    // así las secciones de más abajo no acumulan un retraso largo.
+    const groupSelectors = [
+      '.stat-card', '.problem-card', '.flow-step', '.benefit-card',
+      '.module-card', '.diff-card', '.faq-item'
+    ];
 
-    animatedElements.forEach((el, index) => {
-      // Agregar delay escalonado MÁS RÁPIDO
-      (el as HTMLElement).style.transitionDelay = `${index * 0.05}s`; // Reducido de 0.1s a 0.05s
+    groupSelectors.forEach(selector => {
+      document.querySelectorAll(selector).forEach((el, index) => {
+        (el as HTMLElement).style.transitionDelay = `${index * 0.1}s`;
+        observer.observe(el);
+      });
+    });
+
+    // Elementos únicos (sin escalonado), aparecen de inmediato al entrar en pantalla
+    document.querySelectorAll('.guarantee-card').forEach(el => {
       observer.observe(el);
     });
   }

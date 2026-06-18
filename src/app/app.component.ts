@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject, PLATFORM_ID } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
+import { isPlatformBrowser } from '@angular/common';
 
 import { ConfiguracionService } from './services/configuracion.service';
 import { AnalyticsService } from './services/analytics.service';
@@ -16,11 +17,15 @@ export class AppComponent implements OnInit {
 
   constructor(
     private analyticsService: AnalyticsService,
-    private configuracionService: ConfiguracionService
+    private configuracionService: ConfiguracionService,
+    @Inject(PLATFORM_ID) private platformId: object
   ) {}
 
   ngOnInit(): void {
-    this.inicializarGoogleAnalytics();
+    // Google Analytics solo corre en el navegador, nunca durante el prerender.
+    if (isPlatformBrowser(this.platformId)) {
+      this.inicializarGoogleAnalytics();
+    }
   }
 
   private inicializarGoogleAnalytics(): void {
