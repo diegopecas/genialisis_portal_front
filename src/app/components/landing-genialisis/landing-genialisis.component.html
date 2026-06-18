@@ -5,6 +5,7 @@
     <div class="nav-inner">
       <div class="nav-logo">
         <img src="assets/images/logo.png" alt="GENIALISIS">
+        <span>GENIALISIS</span>
       </div>
       <div class="nav-links">
         <button type="button" (click)="scrollToSection('beneficios')">Beneficios</button>
@@ -373,6 +374,11 @@
       </div>
     </div>
   </section>
+
+  <!-- BOTÓN VOLVER ARRIBA -->
+  <button type="button" class="scroll-top" *ngIf="mostrarBotonArriba" (click)="scrollToTop()" aria-label="Volver arriba">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="18 15 12 9 6 15"/></svg>
+  </button>
 
   <!-- WHATSAPP FLOAT -->
   <a [href]="whatsappUrl" target="_blank" class="whatsapp-float" *ngIf="whatsappUrl" aria-label="Contactar por WhatsApp">

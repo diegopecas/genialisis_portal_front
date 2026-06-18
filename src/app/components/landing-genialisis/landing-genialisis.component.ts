@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit, ViewChild, ElementRef, Inject, PLATFORM_ID } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ViewChild, ElementRef, Inject, PLATFORM_ID, HostListener } from '@angular/core';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
@@ -81,6 +81,8 @@ export class LandingGenialisisComponent implements OnInit, AfterViewInit {
   mostrarDetalleComoConocio: boolean = false;
   // URL de agendamiento Calendly (se carga desde configuraciones públicas)
   calendlyUrl: string | null = null;
+  // Controla la visibilidad del botón "volver arriba"
+  mostrarBotonArriba: boolean = false;
 
   stats: Stat[] = [
     {
@@ -513,6 +515,21 @@ export class LandingGenialisisComponent implements OnInit, AfterViewInit {
 
   scrollToModules(): void {
     this.modulesSection.nativeElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  /**
+   * Muestra u oculta el botón "volver arriba" según el desplazamiento.
+   * Solo corre en el navegador; durante el prerender no hay eventos de scroll.
+   */
+  @HostListener('window:scroll')
+  onWindowScroll(): void {
+    if (isPlatformBrowser(this.platformId)) {
+      this.mostrarBotonArriba = window.scrollY > 600;
+    }
+  }
+
+  scrollToTop(): void {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
   /**
