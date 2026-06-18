@@ -30,6 +30,7 @@ interface Module {
   description: string;
   icon: SafeHtml;
   fullDescription: string;
+  iaNote?: string;
 }
 
 interface Differentiator {
@@ -106,32 +107,32 @@ export class LandingGenialisisComponent implements OnInit, AfterViewInit {
 
   problems: Problem[] = [
     {
-      icon: '📊',
+      icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="11" cy="5" rx="8" ry="2.5"/><path d="M3 5v14c0 1.4 3.6 2.5 8 2.5"/><path d="M19 5v6"/><path d="M3 12c0 1.4 3.6 2.5 8 2.5"/><line x1="16" y1="15" x2="22" y2="21"/><line x1="22" y1="15" x2="16" y2="21"/></svg>',
       title: 'Información dispersa',
       description: 'Datos en Excel, WhatsApp, cuadernos físicos. Imposible encontrar nada cuando más lo necesitas.'
     },
     {
-      icon: '⏰',
+      icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l2.5 2.5"/><path d="M5 3 2.5 5.5"/><path d="m19 3 2.5 2.5"/></svg>',
       title: 'Docentes sobrecargadas',
       description: 'Horas extras registrando calificaciones de memoria fuera de horario laboral.'
     },
     {
-      icon: '📱',
+      icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="7" y="2" width="10" height="20" rx="2.5"/><line x1="11" y1="18" x2="13" y2="18"/><path d="M10.2 7a1.9 1.9 0 1 1 2.6 1.8c-.5.2-.8.6-.8 1.2"/></svg>',
       title: 'Padres sin información',
       description: 'Preguntan por WhatsApp 24/7 porque no tienen acceso a datos en tiempo real.'
     },
     {
-      icon: '📦',
+      icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>',
       title: 'Sin control de inventarios',
       description: 'Te enteras de faltantes cuando ya es demasiado tarde para reordenar.'
     },
     {
-      icon: '❓',
+      icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>',
       title: 'Cobertura incierta',
       description: 'No sabes con certeza si trabajaste todos los indicadores prometidos.'
     },
     {
-      icon: '📉',
+      icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 17 13.5 8.5 8.5 13.5 2 7"/><polyline points="16 17 22 17 22 11"/></svg>',
       title: 'Pérdida de matrículas',
       description: '3-4 matrículas perdidas al mes por falta de seguimiento profesional.'
     }
@@ -145,356 +146,147 @@ export class LandingGenialisisComponent implements OnInit, AfterViewInit {
 
   modules: Module[] = [
     {
-      title: 'Estudiantes',
-      description: 'Vista 360° completa con historial médico, académico, financiero y antropométrico.',
-      icon: this.sanitizer.bypassSecurityTrustHtml('<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>'),
-      fullDescription: `
-        <p><strong>El corazón del ecosistema GENIALISIS. Centraliza TODA la información de cada niño en un solo lugar.</strong></p>
-
-        <p><strong>Ficha del Estudiante:</strong></p>
-        <ul>
-          <li><strong>Identificación completa:</strong> Tipo y número de documento, nombres completos, nacionalidad</li>
-          <li><strong>Información médica crítica:</strong> Grupo sanguíneo, EPS, fecha de nacimiento con cálculo automático de edad</li>
-          <li><strong>Contacto y ubicación:</strong> Dirección, ciudad, correo, teléfono principal y de emergencia</li>
-          <li><strong>Información académica:</strong> Grupo asignado, año escolar, fecha de ingreso</li>
-        </ul>
-
-        <p><strong>Gestión de Acudientes:</strong></p>
-        <ul>
-          <li><strong>Control granular de permisos:</strong> Define quién es responsable de pago, quién puede recoger al niño, quién tiene acceso al portal</li>
-          <li><strong>Seguridad verificable:</strong> Eliminación del "¿quién recogió al niño? ¿estaba autorizado?"</li>
-          <li><strong>Trazabilidad completa:</strong> Todo queda registrado con fecha y usuario</li>
-        </ul>
-
-        <p><strong>Vista 360° - Todo en una sola pantalla:</strong></p>
-        <ul>
-          <li><strong>Datos personales y acudientes:</strong> Información completa sin cambiar de pantalla</li>
-          <li><strong>Estado de cuenta:</strong> Resumen financiero, movimientos, pagos, saldo pendiente y vencido</li>
-          <li><strong>Asistencia:</strong> Resumen del mes, gráficas diarias, registro detallado con observaciones</li>
-          <li><strong>Evaluaciones:</strong> Promedio por área, desempeño global, áreas destacadas y por mejorar</li>
-          <li><strong>Medidas antropométricas:</strong> Gráficas de evolución de peso y talla</li>
-          <li><strong>Observaciones:</strong> Historial completo académico, disciplinario y social</li>
-        </ul>
-
-        <p><strong>Beneficio clave:</strong> Respuesta inmediata a cualquier pregunta. Cuando un padre llama, tienes TODO al instante. No más "lo busco y te llamo después".</p>
-      `
-    },
-    {
-      title: 'Académico',
-      description: 'Sprints + Logros + Indicadores con metodología ágil garantizando cobertura curricular.',
+      title: 'Gestión académica',
+      description: 'Estudiantes (vista 360°), sprints, logros, calificaciones y asistencia en un solo flujo.',
+      iaNote: 'Análisis de cobertura con IA',
       icon: this.sanitizer.bypassSecurityTrustHtml('<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>'),
       fullDescription: `
-        <p><strong>El cerebro pedagógico de GENIALISIS. Garantiza que TODOS los indicadores de logro se trabajen de manera equilibrada.</strong></p>
-
-        <p><strong>Estructura Curricular Clara:</strong></p>
+        <p><strong>El corazón pedagógico de GENIALISIS: toda la vida académica del niño en un solo lugar.</strong></p>
+        <p><strong>Vista 360° del estudiante:</strong></p>
         <ul>
-          <li><strong>Logros:</strong> Objetivos generales de aprendizaje por grupo y área</li>
-          <li><strong>Indicadores:</strong> Evidencias específicas y medibles de avance</li>
-          <li><strong>Actividades:</strong> Experiencias concretas con materiales, duración y niveles (básico/avanzado)</li>
+          <li>Datos personales, médicos y acudientes con control granular de permisos.</li>
+          <li>Estado de cuenta, asistencia, evaluaciones y medidas en una sola pantalla.</li>
+          <li>Historial completo académico, disciplinario y social.</li>
         </ul>
-
-        <p><strong>Sprints Académicos - Metodología Ágil Educativa:</strong></p>
+        <p><strong>Sprints, logros e indicadores:</strong></p>
         <ul>
-          <li><strong>Ciclos cortos:</strong> Períodos de 2 semanas con fechas definidas</li>
-          <li><strong>Control de capacidad:</strong> El sistema impide crear más actividades de las que caben en el tiempo disponible</li>
-          <li><strong>Visualización de progreso:</strong> Dashboards por grupo y área en tiempo real</li>
-          <li><strong>Identificación de vacíos:</strong> Alerta de logros sin actividades asignadas</li>
-          <li><strong>Análisis por áreas:</strong> Gráficas que comparan actividades del sprint vs acumulado del corte</li>
+          <li>Metodología ágil con ciclos cortos y control de capacidad por grupo y área.</li>
+          <li>Visualización del progreso y alerta de logros sin actividades asignadas.</li>
+          <li>La IA analiza la cobertura curricular y detecta vacíos automáticamente.</li>
         </ul>
-
-        <p><strong>Gestión del Sprint:</strong></p>
-        <ul>
-          <li><strong>Información General:</strong> KPIs, análisis de logros atendidos vs sin atender</li>
-          <li><strong>Configuración:</strong> Capacidad por grupo y área tipo "tanque" que muestra % utilizado</li>
-          <li><strong>Progreso:</strong> Avance por grupo y área con barras de progreso</li>
-        </ul>
-
-        <p><strong>Beneficio clave:</strong> El director puede demostrar con DATOS que el 100% de los indicadores prometidos se trabajaron. No basado en suposiciones, sino en registros reales.</p>
-      `
-    },
-    {
-      title: 'Calificaciones',
-      description: '~5 minutos para evaluar 15 niños en tiempo real, integrado con la clase.',
-      icon: this.sanitizer.bypassSecurityTrustHtml('<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>'),
-      fullDescription: `
-        <p><strong>Revoluciona la evaluación. La docente NUNCA más tiene que "quedarse después" o "llevarse trabajo a casa".</strong></p>
-
-        <p><strong>Evaluación en Dos Momentos:</strong></p>
-        <ul>
-          <li><strong>Momento 1 - Inicio de actividad:</strong>
-            <ul>
-              <li>Estado de Ánimo (3 estrellas): ¿Cómo llegó el niño? Triste, normal o entusiasta</li>
-              <li>Salud (2 estrellas): ¿Presenta síntomas o está en buen estado?</li>
-            </ul>
-          </li>
-          <li><strong>Momento 2 - Fin de actividad:</strong>
-            <ul>
-              <li>Efectividad (5 estrellas): ¿Qué tan bien logró el objetivo?</li>
-              <li>Número de Intentos (4 estrellas): ¿Cuántos intentos necesitó?</li>
-            </ul>
-          </li>
-        </ul>
-
-        <p><strong>Interfaz Optimizada:</strong></p>
-        <ul>
-          <li><strong>Todos los estudiantes visibles:</strong> En una sola pantalla, sin cambiar vistas</li>
-          <li><strong>Selección de un toque:</strong> Las estrellas se marcan con un clic</li>
-          <li><strong>Información completa visible:</strong> Indicador de logro, actividad, materiales, niveles</li>
-          <li><strong>Tiempo real:</strong> ~20 segundos por niño = 5 minutos para grupo completo</li>
-        </ul>
-
-        <p><strong>Criterios Personalizables:</strong></p>
-        <ul>
-          <li>El sistema viene con 4 criterios predefinidos</li>
-          <li>Cada establecimiento puede configurar los criterios que necesite: participación, creatividad, trabajo en equipo, etc.</li>
-          <li>Se adapta al proyecto educativo del establecimiento</li>
-        </ul>
-
-        <p><strong>Reportes Automáticos:</strong></p>
-        <ul>
-          <li>Al registrar calificaciones, los reportes se generan solos</li>
-          <li>Boletines listos para padres</li>
-          <li>Vista 360° actualizada en tiempo real</li>
-          <li>Portal de padres con información al día</li>
-        </ul>
-
-        <p><strong>Beneficio clave:</strong> La evaluación es parte natural de la clase, NO trabajo extra. Docentes liberadas, datos precisos, padres informados 24/7.</p>
-      `
-    },
-    {
-      title: 'Asistencia',
-      description: 'Verificación de personas autorizadas con trazabilidad completa de ingresos y salidas.',
-      icon: this.sanitizer.bypassSecurityTrustHtml('<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/><path d="M8 14h.01M12 14h.01M16 14h.01M8 18h.01M12 18h.01M16 18h.01"/></svg>'),
-      fullDescription: `
-        <p><strong>Control de seguridad profesional. Sabe en todo momento qué niños están en el establecimiento.</strong></p>
-
-        <p><strong>Registro de Ingreso:</strong></p>
-        <ul>
-          <li><strong>Lista organizada por grupo:</strong> Identificación visual por colores</li>
-          <li><strong>Campo de observaciones:</strong> "Llegó con gripa", "Trae autorización para salir temprano"</li>
-          <li><strong>Hora exacta automática:</strong> Registro con timestamp sin intervención</li>
-          <li><strong>Filtro de búsqueda:</strong> Ubicación rápida cuando hay varios niños llegando</li>
-        </ul>
-
-        <p><strong>Registro de Salida:</strong></p>
-        <ul>
-          <li><strong>Verificación de autorizados:</strong> Botón "detalle" muestra quién puede recoger al niño</li>
-          <li><strong>Lista de personas autorizadas:</strong> Nombre, relación (padre/madre/abuelo/nana), confirmación Sí/No</li>
-          <li><strong>Campo de observaciones:</strong> "Recogió la abuela María"</li>
-          <li><strong>Trazabilidad completa:</strong> Quién, cuándo y a qué hora</li>
-        </ul>
-
-        <p><strong>Contador en Tiempo Real:</strong></p>
-        <ul>
-          <li><strong>Vista "Actual":</strong> Cantidad exacta de niños presentes en este momento</li>
-          <li><strong>Actualización automática:</strong> Se actualiza con cada ingreso/salida</li>
-          <li><strong>Crítico para emergencias:</strong> Simulacros de evacuación, conteo rápido</li>
-          <li><strong>Control de capacidad:</strong> Saber cuántos espacios hay disponibles</li>
-        </ul>
-
-        <p><strong>Integración con Otros Módulos:</strong></p>
-        <ul>
-          <li>Alimenta la Vista 360° del estudiante con resumen mensual y gráficas</li>
-          <li>Conecta con módulo de Acudientes para verificación de autorizados</li>
-          <li>Las observaciones quedan en el historial del estudiante</li>
-        </ul>
-
-        <p><strong>Beneficio clave:</strong> Ante cualquier emergencia, sabes en segundos exactamente qué niños están en las instalaciones. Seguridad verificable con un clic.</p>
+        <p><strong>Calificaciones en tiempo real:</strong> evaluación en dos momentos (ánimo/salud y efectividad/intentos), todos los niños en una pantalla. ~5 minutos para un grupo completo y los reportes se generan solos.</p>
+        <p><strong>Asistencia:</strong> registro de ingreso y salida con verificación de personas autorizadas y conteo en tiempo real.</p>
       `
     },
     {
       title: 'Financiero',
-      description: 'Estados de cuenta automáticos con comprobantes profesionales y portal para padres.',
+      description: 'Estados de cuenta, comprobantes en 1 clic, cartera y recaudo siempre al día.',
+      iaNote: 'Registro de comprobantes con IA',
       icon: this.sanitizer.bypassSecurityTrustHtml('<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>'),
       fullDescription: `
-        <p><strong>Gestión financiera automatizada. Los padres dejan de preguntarte "¿cuánto debo?" por WhatsApp 24/7.</strong></p>
-
-        <p><strong>Gestión de Productos y Servicios:</strong></p>
+        <p><strong>Gestión financiera automatizada. Los padres dejan de preguntar "¿cuánto debo?" por WhatsApp.</strong></p>
         <ul>
-          <li><strong>Clasificación:</strong> Académico, Alimentación, Vestuario, Transporte, etc.</li>
-          <li><strong>Conceptos:</strong> Pensión, Matrícula, Almuerzo, Uniforme, Servicios extra</li>
-          <li><strong>Detalle completo:</strong> Fecha, valor, valor pagado, saldo pendiente</li>
-          <li><strong>Trazabilidad:</strong> Usuario que registró cada cargo</li>
+          <li><strong>Productos y conceptos:</strong> pensión, matrícula, alimentación, transporte y servicios extra con detalle y saldos.</li>
+          <li><strong>Registro de pagos:</strong> múltiples métodos, referencia bancaria y estado de contabilización.</li>
+          <li><strong>Comprobantes profesionales:</strong> generación automática con datos del establecimiento, número consecutivo y opción de imprimir, exportar o compartir por WhatsApp.</li>
+          <li><strong>IA:</strong> registra el comprobante de pago leyéndolo por ti, sin digitación manual.</li>
+          <li><strong>Cartera y recaudo:</strong> saldos pendientes, vencidos y proyección, siempre actualizados.</li>
         </ul>
-
-        <p><strong>Registro de Pagos:</strong></p>
-        <ul>
-          <li><strong>Múltiples métodos:</strong> Efectivo, Nequi, transferencia bancaria, etc.</li>
-          <li><strong>Referencia bancaria:</strong> Número de transacción para trazabilidad</li>
-          <li><strong>Estado:</strong> Contabilizado / Pendiente con fecha de estado</li>
-          <li><strong>Acciones:</strong> Editar, contabilizar, imprimir, ver detalle, eliminar (con permisos)</li>
-        </ul>
-
-        <p><strong>Comprobantes Profesionales:</strong></p>
-        <ul>
-          <li><strong>Generación automática:</strong> Con datos del establecimiento (nombre, NIT, ciudad)</li>
-          <li><strong>Número consecutivo:</strong> Control interno de documentos</li>
-          <li><strong>Detalle completo:</strong> Conceptos aplicados, valores, saldos</li>
-          <li><strong>Espacio para firmas:</strong> "Recibido por" y "Aprobado por"</li>
-          <li><strong>Opciones:</strong> Imprimir, exportar PDF, compartir por WhatsApp</li>
-        </ul>
-
-        <p><strong>Portal para Padres 24/7:</strong></p>
-        <ul>
-          <li><strong>Estado de cuenta en tiempo real:</strong> Total cobrado, saldo pendiente, valor pagado, vencido</li>
-          <li><strong>Fotos de actividades diarias:</strong> Ven qué hace su hijo cada día en el establecimiento</li>
-          <li><strong>Evaluaciones académicas:</strong> Seguimiento del progreso por áreas</li>
-          <li><strong>Asistencia y observaciones:</strong> Registro completo de ingresos, salidas y notas</li>
-          <li><strong>Descarga de documentos:</strong> Exportar estados de cuenta a PDF, compartir por WhatsApp</li>
-          <li><strong>Auto-servicio:</strong> Los padres consultan cuando quieran, sin molestar por WhatsApp</li>
-        </ul>
-
-        <p><strong>Beneficio clave:</strong> Ahorra horas semanales en generar estados de cuenta manualmente y responder consultas de padres. Profesionaliza la imagen del establecimiento con documentos formales. Los padres se autoatienden y ven en tiempo real todo lo relacionado con su hijo: finanzas, fotos, evaluaciones y más.</p>
       `
     },
     {
-      title: 'CRM Admisiones',
-      description: 'Seguimiento de visitas con temperatura de prospecto y conversión de matrículas.',
+      title: 'Portal de padres',
+      description: 'Consulta 24/7: fotos diarias, evaluaciones, estado de cuenta y asistencia.',
+      icon: this.sanitizer.bypassSecurityTrustHtml('<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>'),
+      fullDescription: `
+        <p><strong>Un espacio exclusivo donde los acudientes ven todo lo de su hijo en tiempo real, 24/7.</strong></p>
+        <ul>
+          <li><strong>Fotos de las actividades diarias:</strong> ven qué hace su hijo cada día.</li>
+          <li><strong>Estado de cuenta:</strong> total cobrado, pagado, pendiente y vencido.</li>
+          <li><strong>Evaluaciones académicas:</strong> seguimiento del progreso por áreas.</li>
+          <li><strong>Asistencia y observaciones:</strong> ingresos, salidas y notas del día.</li>
+          <li><strong>Documentos:</strong> descarga de estados de cuenta en PDF y compartir por WhatsApp.</li>
+        </ul>
+        <p><strong>Beneficio:</strong> los padres se autoatienden, dejan de saturar el WhatsApp del jardín y la comunicación se profesionaliza.</p>
+      `
+    },
+    {
+      title: 'WhatsApp integrado',
+      description: 'Bandeja única: las conversaciones quedan en el sistema, varios colaboradores responden el mismo chat, con análisis y monitoreo.',
+      icon: this.sanitizer.bypassSecurityTrustHtml('<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-8.5 8.5 8.38 8.38 0 0 1-4-1L3 21l2-5.5a8.38 8.38 0 0 1-1-4A8.5 8.5 0 0 1 21 11.5z"/></svg>'),
+      fullDescription: `
+        <p><strong>Toda la comunicación con los padres por WhatsApp Business, centralizada dentro de GENIALISIS.</strong></p>
+        <ul>
+          <li><strong>Bandeja única:</strong> cada conversación con los acudientes queda registrada en el sistema.</li>
+          <li><strong>Trabajo en equipo:</strong> varios colaboradores responden el mismo chat sin perder el hilo.</li>
+          <li><strong>Notificaciones automáticas:</strong> fotos, comprobantes y asistencia enviados a los padres.</li>
+          <li><strong>Análisis y monitoreo:</strong> mide tiempos de respuesta y supervisa la calidad de la atención.</li>
+        </ul>
+        <p><strong>Beneficio:</strong> nada se pierde en chats personales y la comunicación queda como activo del establecimiento, no de una persona.</p>
+      `
+    },
+    {
+      title: 'Gestión de colaboradores',
+      description: 'Control de ingreso, actividades, permisos, agenda, pagos y préstamos del personal.',
+      icon: this.sanitizer.bypassSecurityTrustHtml('<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>'),
+      fullDescription: `
+        <p><strong>El módulo de talento humano de tu jardín, sin hojas de cálculo paralelas.</strong></p>
+        <ul>
+          <li><strong>Control de ingreso:</strong> registro de entradas y salidas del personal.</li>
+          <li><strong>Actividades:</strong> seguimiento de las labores y responsabilidades de cada colaborador.</li>
+          <li><strong>Permisos y agenda:</strong> solicitudes, ausencias y programación del equipo.</li>
+          <li><strong>Pagos y préstamos:</strong> nómina, anticipos y préstamos con su trazabilidad.</li>
+        </ul>
+        <p><strong>Beneficio:</strong> orden y transparencia con tu equipo, todo conectado al resto del sistema.</p>
+      `
+    },
+    {
+      title: 'CRM de admisiones',
+      description: 'Seguimiento de visitas, temperatura de prospecto y conversión de matrículas.',
       icon: this.sanitizer.bypassSecurityTrustHtml('<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="8.5" cy="7" r="4"/><line x1="20" y1="8" x2="20" y2="14"/><line x1="23" y1="11" x2="17" y2="11"/></svg>'),
       fullDescription: `
-        <p><strong>Sistema profesional de admisiones. los establecimientos pierden 3-4 matrículas al mes porque no hay seguimiento estructurado.</strong></p>
-
-        <p><strong>Registro de Visitas:</strong></p>
+        <p><strong>Protocolo profesional de admisiones. Deja de perder matrículas por falta de seguimiento.</strong></p>
         <ul>
-          <li><strong>Información de la visita:</strong> Fecha, hora, tipo de contacto, canal de captación</li>
-          <li><strong>Quién nos visita:</strong> Datos completos de los padres</li>
-          <li><strong>Datos del niño:</strong> Información del prospecto</li>
-          <li><strong>Observaciones del asesor:</strong> Notas libres para contexto</li>
+          <li><strong>Registro de visitas:</strong> datos de los padres, del niño y canal de captación.</li>
+          <li><strong>Temperatura del prospecto:</strong> explorando, listo para despegar, sembrando semilla o descartado.</li>
+          <li><strong>Seguimiento estructurado:</strong> próximo contacto, horario preferido y compromisos del establecimiento.</li>
+          <li><strong>Dashboard de conversión:</strong> visitas vs matrículas y estadísticas por canal.</li>
         </ul>
-
-        <p><strong>Temperatura del Prospecto:</strong></p>
-        <ul>
-          <li><strong>Explorando:</strong> Está conociendo opciones, no hay urgencia</li>
-          <li><strong>Listo para despegar:</strong> Muestra interés alto, probable cierre pronto</li>
-          <li><strong>No le interesó:</strong> Descartó la opción</li>
-          <li><strong>Sembrando semilla:</strong> Interesado pero con restricciones temporales</li>
-        </ul>
-
-        <p><strong>Seguimiento Estructurado:</strong></p>
-        <ul>
-          <li><strong>Cuándo hacer seguimiento:</strong> Fecha programada del próximo contacto</li>
-          <li><strong>Horario preferido:</strong> Mejores horas para contactar</li>
-          <li><strong>Quién decide:</strong> Identificar el tomador de decisiones</li>
-        </ul>
-
-        <p><strong>Compromisos del establecimiento:</strong></p>
-        <ul>
-          <li>Agendar segunda visita</li>
-          <li>Enviar documentos</li>
-          <li>Compartir lista de precios</li>
-          <li>Otros compromisos personalizables</li>
-        </ul>
-
-        <p><strong>Dashboard de Conversión:</strong></p>
-        <ul>
-          <li>Métricas de visitas vs matrículas</li>
-          <li>Estadísticas por canal de captación</li>
-          <li>Temperatura promedio de prospectos</li>
-          <li>Seguimientos pendientes</li>
-        </ul>
-
-        <p><strong>Beneficio clave:</strong> Protocolo profesional de admisiones. Cada visita se trabaja con estructura, seguimiento automático y compromisos claros. Mayor conversión = más matrículas.</p>
+        <p><strong>Beneficio:</strong> cada visita se trabaja con método y seguimiento, lo que se traduce en más matrículas.</p>
       `
     },
     {
-      title: 'Operaciones',
-      description: 'Control de inventarios + Limpieza + Medidas antropométricas (EXCLUSIVO).',
+      title: 'Operaciones e inventarios',
+      description: 'Control de inventarios (exclusivo en el mercado), limpieza y alimentación.',
       icon: this.sanitizer.bypassSecurityTrustHtml('<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>'),
       fullDescription: `
-        <p><strong>Control operativo completo. ÚNICO EN EL MERCADO - Ningún competidor ofrece control de inventarios.</strong></p>
-
-        <p><strong>Control de Inventarios (EXCLUSIVO):</strong></p>
+        <p><strong>Control operativo completo. Único en el mercado: ningún competidor ofrece inventarios.</strong></p>
         <ul>
-          <li><strong>Productos de Mobiliario:</strong> Inventario de elementos físicos con mantenimiento</li>
-          <li><strong>Productos de Limpieza:</strong> Inventario con alertas de faltantes</li>
-          <li><strong>Productos de Alimentación:</strong> Control con vida útil y fechas de vencimiento</li>
-          <li><strong>Movimientos:</strong> Entradas, salidas y ajustes con trazabilidad</li>
-          <li><strong>Alertas automáticas:</strong> Notificaciones cuando algo está por agotarse</li>
+          <li><strong>Inventarios:</strong> mobiliario, limpieza y alimentación con movimientos y alertas de faltantes.</li>
+          <li><strong>Registro de limpieza:</strong> áreas, fichas técnicas, frecuencia y responsables.</li>
+          <li><strong>Alimentación:</strong> menús, salidas de cocina e integración financiera.</li>
+          <li><strong>Cumplimiento normativo:</strong> fichas listas para auditorías de Secretaría de Salud.</li>
         </ul>
-
-        <p><strong>Registro de Limpieza:</strong></p>
-        <ul>
-          <li><strong>Áreas Físicas:</strong> Espacios del establecimiento con mobiliario asignado</li>
-          <li><strong>Fichas técnicas:</strong> Procesos de limpieza y desinfección por área</li>
-          <li><strong>Frecuencia:</strong> Diaria, semanal, mensual según área</li>
-          <li><strong>Responsables:</strong> Asignación de personal por área</li>
-          <li><strong>Trazabilidad:</strong> Quién limpió, cuándo y qué productos usó</li>
-        </ul>
-
-        <p><strong>Medidas Antropométricas:</strong></p>
-        <ul>
-          <li><strong>Registro masivo:</strong> Captura de peso y talla de múltiples niños rápidamente</li>
-          <li><strong>Historial completo:</strong> Evolución del crecimiento con gráficas</li>
-          <li><strong>Cumplimiento normativo:</strong> Requisito de Secretaría de Salud</li>
-          <li><strong>Integración:</strong> Datos visibles en Vista 360° del estudiante</li>
-        </ul>
-
-        <p><strong>Gestión de Alimentación:</strong></p>
-        <ul>
-          <li><strong>Menús del restaurante:</strong> Planificación de menús e ítems</li>
-          <li><strong>Salidas por clasificación:</strong> Registro de productos usados en cocina</li>
-          <li><strong>Integración financiera:</strong> Genera cargos automáticos al padre</li>
-        </ul>
-
-        <p><strong>Beneficio clave:</strong> Control real de inventarios con alertas. Cumplimiento automático de Secretaría de Salud con fichas técnicas de limpieza. Auditorías listas en segundos, no en días.</p>
+        <p><strong>Beneficio:</strong> auditorías resueltas en segundos y cero sorpresas con faltantes.</p>
       `
     },
     {
-      title: 'Reportes',
-      description: 'Listos con un clic para auditorías, reuniones y Secretaría de Salud.',
-      icon: this.sanitizer.bypassSecurityTrustHtml('<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>'),
+      title: 'Tamizajes y antropometría',
+      description: 'Tamizajes de desarrollo (EAD-3) y medidas de peso y talla, listos para Secretaría de Salud.',
+      icon: this.sanitizer.bypassSecurityTrustHtml('<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>'),
       fullDescription: `
-        <p><strong>Reportes automáticos sin esfuerzo. Generar reportes toma horas de trabajo manual. Con GENIALISIS: un clic.</strong></p>
-
-        <p><strong>Reportes Académicos:</strong></p>
+        <p><strong>Seguimiento del desarrollo y crecimiento de cada niño, con respaldo normativo.</strong></p>
         <ul>
-          <li><strong>Calificaciones por Sprint:</strong> Seguimiento y evaluación de sprints académicos con progreso detallado</li>
-          <li><strong>Calificaciones por Estudiante:</strong> Reporte individual con promedios por área e indicador</li>
-          <li><strong>Boletines para padres:</strong> Exportables a PDF con formato profesional</li>
-          <li><strong>Análisis de cobertura:</strong> Verificación de que todos los indicadores fueron trabajados</li>
+          <li><strong>Tamizajes de desarrollo:</strong> evaluación por áreas con la escala EAD-3.</li>
+          <li><strong>Medidas antropométricas:</strong> registro masivo de peso y talla con gráficas de evolución.</li>
+          <li><strong>Integración:</strong> los datos alimentan la Vista 360° del estudiante.</li>
+          <li><strong>Cumplimiento:</strong> reportes listos para Secretaría de Salud.</li>
         </ul>
-
-        <p><strong>Reportes Operativos:</strong></p>
-        <ul>
-          <li><strong>Reporte de Asistencia:</strong> Control y análisis por fecha con indicadores de puntualidad</li>
-          <li><strong>Reporte de Alimentación:</strong> Control del servicio con valores y productos consumidos</li>
-          <li><strong>Inventarios:</strong> Estado actual con alertas de faltantes y próximos a vencer</li>
-          <li><strong>Limpieza:</strong> Fichas técnicas listas para Secretaría de Salud</li>
-        </ul>
-
-        <p><strong>Reportes Financieros:</strong></p>
-        <ul>
-          <li><strong>Estado de Cartera:</strong> Saldos pendientes, vencidos y pagos proyectados</li>
-          <li><strong>Movimientos Financieros:</strong> Ingresos, egresos y flujo de caja</li>
-          <li><strong>Análisis por concepto:</strong> Pensiones, matrículas, alimentación, servicios extra</li>
-          <li><strong>Estados de cuenta:</strong> Por estudiante o consolidados</li>
-        </ul>
-
-        <p><strong>Reportes para Auditorías:</strong></p>
-        <ul>
-          <li><strong>Reporte General de Estudiantes:</strong> Información completa de toda la población</li>
-          <li><strong>Tamizajes de Desarrollo:</strong> Análisis integral por áreas de desarrollo infantil</li>
-          <li><strong>Medidas antropométricas:</strong> Seguimiento nutricional con gráficas de evolución</li>
-          <li><strong>Cumplimiento normativo:</strong> Todo lo que Secretaría de Salud requiere</li>
-        </ul>
-
-        <p><strong>Características Transversales:</strong></p>
-        <ul>
-          <li><strong>Exportación múltiple:</strong> PDF, Excel, impresión directa</li>
-          <li><strong>Filtros avanzados:</strong> Por fecha, grupo, área, estado</li>
-          <li><strong>Compartir:</strong> WhatsApp, email, descarga</li>
-          <li><strong>Actualización automática:</strong> Datos siempre al día sin regenerar</li>
-        </ul>
-
-        <p><strong>Beneficio clave:</strong> Auditorías de Secretaría de Salud resueltas en segundos, no en días. Reuniones con padres con datos actualizados. Transparencia total con evidencia verificable.</p>
+        <p><strong>Beneficio:</strong> evidencia del desarrollo infantil lista para padres y entes de control.</p>
       `
     }
   ];
 
   differentiators: Differentiator[] = [
     {
+      title: 'IA integrada en los procesos',
+      description: 'La IA trabaja dentro del sistema: analiza tu cobertura curricular, registra los comprobantes de pago y responde tus consultas sobre los datos del jardín.',
+      icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l2.2 5.8L20 11l-5.8 2.2L12 19l-2.2-5.8L4 11l5.8-2.2z"/><path d="M19 4v3M20.5 5.5h-3M5 17v2M6 18H4"/></svg>',
+      badge: 'IA'
+    },
+    {
       title: 'Control de Inventarios',
-      description: 'ÚNICO en el mercado. Ningún competidor lo ofrece. Sabe exactamente qué tienes, qué falta y cuándo reordenar.',
+      description: 'Único en el mercado. Ningún competidor lo ofrece. Sabe exactamente qué tienes, qué falta y cuándo reordenar.',
       icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>',
       badge: 'EXCLUSIVO'
     },
@@ -521,12 +313,6 @@ export class LandingGenialisisComponent implements OnInit, AfterViewInit {
       description: 'Hasta 50 estudiantes sin cobro adicional. Predecible, transparente, justo. Sin sorpresas en la factura.',
       icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>',
       badge: ''
-    },
-    {
-      title: 'Todo Incluido',
-      description: 'Sin costos ocultos, sin módulos extra, sin sorpresas. Un precio, todo el poder del sistema completo.',
-      icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>',
-      badge: ''
     }
   ];
 
@@ -537,11 +323,11 @@ export class LandingGenialisisComponent implements OnInit, AfterViewInit {
     },
     {
       question: '¿Cómo garantizan el 100% de cobertura curricular?',
-      answer: 'Con nuestra metodología de Sprints Académicos. El sistema tiene "tanques de capacidad" por grupo y área. Si intentas crear más actividades de las que caben en 2 semanas, el sistema te alerta. También visualizas en tiempo real qué logros e indicadores aún no tienen actividades asignadas. No es una promesa, es una certeza medible con datos.'
+      answer: 'Con nuestra metodología de Sprints Académicos. El sistema tiene "tanques de capacidad" por grupo y área. Si intentas crear más actividades de las que caben en 2 semanas, el sistema te alerta. También visualizas en tiempo real qué logros e indicadores aún no tienen actividades asignadas, y la IA analiza la cobertura por ti. No es una promesa, es una certeza medible con datos.'
     },
     {
-      question: '¿Cuánto tiempo toma implementar GENIALISIS en mi establecimiento?',
-      answer: 'La implementación es rápida. Incluimos capacitación completa del equipo y soporte durante todo el proceso. La mayoría de establecimientos están operando en menos de 2 semanas. Si necesitas migrar datos desde Excel o sistemas anteriores, ofrecemos servicio de migración y digitación de información base.'
+      question: '¿Cómo está integrada la IA en GENIALISIS?',
+      answer: 'La IA trabaja dentro de tus procesos, no como un extra de moda: analiza tu cobertura curricular y detecta vacíos, registra los comprobantes de pago leyéndolos por ti, y responde consultas en lenguaje natural sobre los datos del jardín. Está pensada para ahorrarte trabajo real, no para impresionar.'
     },
     {
       question: '¿Es verdad que evaluar 15 niños toma solo 5 minutos?',
@@ -549,27 +335,19 @@ export class LandingGenialisisComponent implements OnInit, AfterViewInit {
     },
     {
       question: '¿Cómo funciona el modelo de precios?',
-      answer: 'Somos el sistema de gestión escolar con el mejor precio del mercado y la mejor relación costo-beneficio. Tarifa plana mensual sin cobros adicionales por módulos. Todo incluido: evaluaciones, inventarios, CRM, reportes, portal para padres y soporte. Mientras otros competidores cobran extra por evaluaciones y funcionalidades adicionales, con GENIALISIS pagas un precio justo, predecible y sin sorpresas.'
+      answer: 'Somos el sistema de gestión escolar con el mejor precio del mercado y la mejor relación costo-beneficio. Tarifa plana mensual sin cobros adicionales por módulos ni sorpresas. Todo incluido: evaluaciones, inventarios, CRM, IA, portal para padres, WhatsApp y soporte. Pagas un precio justo, predecible y sin letra pequeña.'
     },
     {
       question: '¿Qué pasa si decido no continuar después de los 60 días?',
-      answer: 'Te devolvemos el 100% de tu inversión sin preguntas Y te entregamos todos tus datos en formatos estándar (Excel, PDF). No quedas en ceros. Mantienes todo lo que construiste durante esos 60 días. ¿Por qué ofrecemos esto? Porque sabemos que una vez pruebes GENIALISIS, no querrás volver al caos de Excel + WhatsApp + cuadernos.'
+      answer: 'Te devolvemos el 100% de tu inversión sin preguntas Y te entregamos todos tus datos en formatos estándar (Excel, PDF). No quedas en ceros. Mantienes todo lo que construiste durante esos 60 días.'
     },
     {
       question: '¿Necesito conocimientos técnicos para usar GENIALISIS?',
-      answer: 'No. Si sabes usar Word y Excel, puedes usar GENIALISIS. La capacitación es parte de la implementación. Además, tu equipo sigue trabajando como siempre: las maestras registran actividades y evaluaciones, las directoras consultan dashboards, los padres ven información de sus hijos. Todo es intuitivo y está diseñado para el flujo de trabajo real de un establecimiento educativo colombiano.'
+      answer: 'No. Si sabes usar Word y Excel, puedes usar GENIALISIS. La capacitación es parte de la implementación. Tu equipo sigue trabajando como siempre: las maestras registran actividades, las directoras consultan dashboards y los padres ven la información de sus hijos. Todo es intuitivo y está diseñado para el flujo de trabajo real de un establecimiento educativo colombiano.'
     },
     {
       question: '¿Los padres pueden ver información de sus hijos?',
-      answer: 'Sí. GENIALISIS incluye un portal exclusivo para padres donde pueden consultar 24/7: fotos de las actividades diarias, estado de cuenta detallado, evaluaciones académicas, asistencia, observaciones, medidas antropométricas y más. Los padres dejan de preguntar por WhatsApp porque tienen toda la información actualizada en tiempo real. Esto libera tiempo de las maestras y profesionaliza la comunicación con las familias.'
-    },
-    {
-      question: '¿Puedo personalizar GENIALISIS para mi establecimiento?',
-      answer: 'Sí. Los campos de clasificación curricular, criterios de evaluación y estructura de grupos son completamente parametrizables según tu proyecto educativo. Puedes adaptar GENIALISIS a tu metodología sin perder la potencia del sistema.'
-    },
-    {
-      question: '¿GENIALISIS funciona para establecimientos de cualquier tamaño?',
-      answer: 'Sí. El sistema es escalable y funciona igual de bien con 20 o 200 estudiantes. La tarifa plana cubre hasta 50 estudiantes sin costo adicional. para establecimientos más grandes, tenemos planes empresariales con el mismo nivel de servicio.'
+      answer: 'Sí. GENIALISIS incluye un portal exclusivo para padres donde consultan 24/7: fotos de las actividades diarias, estado de cuenta, evaluaciones, asistencia, observaciones y más. Además, toda la comunicación por WhatsApp queda centralizada en el sistema. Los padres dejan de preguntar por WhatsApp porque tienen todo actualizado en tiempo real.'
     }
   ];
 
@@ -634,8 +412,8 @@ export class LandingGenialisisComponent implements OnInit, AfterViewInit {
    */
   aplicarSeo(): void {
     const tituloPagina = 'GENIALISIS | Software de gestión para jardines infantiles y preescolares en Colombia';
-    const descripcionPagina = 'GENIALISIS es la plataforma colombiana que centraliza estudiantes, académico, calificaciones, asistencia, finanzas, CRM de admisiones, inventarios y reportes para jardines infantiles. Ahorra 60% del tiempo administrativo y garantiza el 100% de cobertura curricular.';
-    const urlSitio = 'https://www.genialisis.com/';
+    const descripcionPagina = 'GENIALISIS es la plataforma colombiana que centraliza gestión académica, finanzas, portal de padres, WhatsApp, colaboradores, admisiones, inventarios y tamizajes para jardines infantiles, con IA integrada en los procesos. Ahorra 60% del tiempo administrativo y garantiza el 100% de cobertura curricular.';
+    const urlSitio = 'https://genialisis.com/';
 
     this.seoService.actualizarMetadatos({
       titulo: tituloPagina,
@@ -916,7 +694,6 @@ export class LandingGenialisisComponent implements OnInit, AfterViewInit {
   }
 
   abrirPaginaModal(pagina: string): void {
-    console.log('abrirPaginaModal llamado con:', pagina);
     const paginas: {[key: string]: {titulo: string, contenido: string}} = {
       'sobre-nosotros': {
         titulo: 'Sobre Nosotros',
@@ -966,23 +743,19 @@ export class LandingGenialisisComponent implements OnInit, AfterViewInit {
             <li><strong>Asesoría en implementación:</strong> Te acompañamos en todo el proceso</li>
           </ul>
 
-          <p style="margin-top: 24px; padding: 16px; background: #f5f5f5; border-radius: 8px;">
-            <strong>💡 Tip:</strong> Si nos contactas por WhatsApp, recibimos tu mensaje de inmediato y podemos agendar una videollamada para mostrarte el sistema en tiempo real.
+          <p style="margin-top: 24px; padding: 16px; background: rgba(212,175,55,0.1); border-radius: 8px;">
+            <strong>Tip:</strong> Si nos contactas por WhatsApp, recibimos tu mensaje de inmediato y podemos agendar una videollamada para mostrarte el sistema en tiempo real.
           </p>
         `
       }
     };
 
     if (paginas[pagina]) {
-    console.log("Buscando página:", pagina);
-    console.log("Página encontrada:", paginas[pagina]);
       this.paginaModalTitulo = paginas[pagina].titulo;
       this.paginaModalContenido = this.sanitizer.bypassSecurityTrustHtml(paginas[pagina].contenido);
-      console.log("Abriendo modal...");
       this.showPaginaModal = true;
       document.body.style.overflow = 'hidden';
     }
-      console.log("showPaginaModal:", this.showPaginaModal);
   }
 
   cerrarPaginaModal(): void {
@@ -1007,7 +780,6 @@ export class LandingGenialisisComponent implements OnInit, AfterViewInit {
   }
 
   scrollToSection(sectionId: string): void {
-    console.log('scrollToSection llamado con:', sectionId);
     this.cerrarMenuMobile();
     setTimeout(() => {
       const element = document.getElementById(sectionId);

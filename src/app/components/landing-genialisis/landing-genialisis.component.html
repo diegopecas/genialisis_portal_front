@@ -1,38 +1,85 @@
 <div class="landing-genialisis">
-  <!-- Hero Section -->
+
+  <!-- NAV -->
+  <nav class="nav">
+    <div class="nav-inner">
+      <div class="nav-logo">
+        <img src="assets/images/logo.png" alt="GENIALISIS">
+      </div>
+      <div class="nav-links">
+        <button type="button" (click)="scrollToSection('beneficios')">Beneficios</button>
+        <button type="button" (click)="scrollToSection('modulos')">Módulos</button>
+        <button type="button" (click)="scrollToSection('diferenciadores')">¿Por qué?</button>
+        <button type="button" (click)="scrollToSection('faq')">Preguntas</button>
+      </div>
+      <button type="button" class="btn btn-primary nav-cta" (click)="agendarDemo()">Agendar demo</button>
+    </div>
+  </nav>
+
+  <!-- HERO -->
   <section class="hero" id="hero">
-    <div class="container">
+    <div class="hero-aurora"></div>
+    <div class="hero-grid"></div>
+    <div class="hero-wrap">
       <div class="hero-content">
-        <div class="logo-container">
-          <img src="assets/images/logo.png" alt="GENIALISIS" class="hero-logo">
-        </div>
-        <h1 class="hero-title">
-          ¿Tu establecimiento funciona perfecto?<br>
-          <span class="highlight">Demuéstralo.</span>
-        </h1>
-        <p class="hero-description">
-          Ahorra 60% del tiempo administrativo mientras garantizas el 100% de tu promesa educativa
-        </p>
+        <span class="eyebrow"><span class="dot"></span> Simple de usar, imposible de igualar</span>
+        <h1 class="hero-title">El software que <span class="grad">demuestra</span> que tu jardín funciona perfecto.</h1>
+        <p class="hero-description">Centraliza estudiantes, académico, finanzas, asistencia e inventarios en un solo lugar. Ahorra 60% del tiempo administrativo y garantiza el 100% de tu promesa educativa.</p>
         <div class="hero-cta">
-          <button class="btn-primary" (click)="agendarDemo()">
-            <span>Agendar Demo</span>
-            <svg class="icon-star" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
-            </svg>
+          <button type="button" class="btn btn-primary" (click)="agendarDemo()">
+            <span>Agendar demo</span>
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
           </button>
-          <button class="btn-secondary" (click)="scrollToModules()">
-            Conocer más
-          </button>
+          <button type="button" class="btn btn-ghost" (click)="scrollToModules()">Conocer los módulos →</button>
+        </div>
+        <div class="hero-proof">
+          <div><div class="num">60%</div><div class="lbl">Menos tiempo<br>administrativo</div></div>
+          <div><div class="num">100%</div><div class="lbl">Cobertura<br>curricular</div></div>
+          <div><div class="num">24/7</div><div class="lbl">Acceso para<br>padres</div></div>
+        </div>
+      </div>
+
+      <div class="hero-stage">
+        <div class="float-card card-a">
+          <div class="fc-title"><span class="fc-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="3"/></svg></span> Vista 360° · Sofía M.</div>
+          <div class="fc-row"><span>Asistencia mes</span><b>96%</b></div>
+          <div class="fc-row"><span>Promedio áreas</span><b>4.6 / 5</b></div>
+          <div class="fc-row"><span>Estado de cuenta</span><span class="ok">Al día ✓</span></div>
+        </div>
+
+        <div class="float-card card-b">
+          <div class="fc-title"><span class="fc-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 8v4l3 2"/></svg></span> Asistencia en vivo</div>
+          <div class="fc-bignum">42</div>
+          <div class="fc-bigsub">niños presentes ahora</div>
+          <div class="fc-spark"><i style="height:40%"></i><i style="height:62%"></i><i style="height:48%"></i><i style="height:80%"></i><i style="height:66%"></i><i style="height:94%"></i><i style="height:72%"></i></div>
+        </div>
+
+        <div class="hero-chip">✓ Comprobantes en 1 clic</div>
+
+        <div class="float-card card-c">
+          <div class="fc-title"><span class="fc-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg></span> Estado de cuenta · Mayo</div>
+          <div class="fc-row"><span>Total recaudado</span><b>$4.820.000</b></div>
+          <div class="fc-row"><span>Saldo pendiente</span><b style="color:#D4AF37">$640.000</b></div>
+          <div class="fc-btn">Generar cuenta de cobro</div>
         </div>
       </div>
     </div>
-    <div class="hero-background">
-      <div class="grid-pattern"></div>
-    </div>
   </section>
 
-  <!-- Stats Section -->
-  <section class="stats" id="benefits">
+  <!-- TRUST -->
+  <div class="trust">
+    <div class="trust-inner">
+      <span class="trust-chip"><b>IA</b> integrada</span>
+      <span class="trust-chip">Inventarios <b>exclusivo</b></span>
+      <span class="trust-chip">Evaluaciones <b>incluidas</b></span>
+      <span class="trust-chip"><b>Sin</b> cobros inesperados</span>
+      <span class="trust-chip">Garantía <b>60 días</b></span>
+      <span class="trust-chip">Soporte <b>100% Colombia</b></span>
+    </div>
+  </div>
+
+  <!-- STATS -->
+  <section class="stats" id="beneficios">
     <div class="container">
       <div class="stats-grid">
         <div class="stat-card" *ngFor="let stat of stats">
@@ -46,24 +93,17 @@
     </div>
   </section>
 
-  <!-- Problem Section -->
+  <!-- PROBLEM -->
   <section class="problem-section">
     <div class="container">
       <div class="section-header">
-        <div class="icon-badge">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/>
-            <line x1="12" y1="9" x2="12" y2="13"/>
-            <line x1="12" y1="17" x2="12.01" y2="17"/>
-          </svg>
-        </div>
-        <h2 class="section-title">El Problema</h2>
-        <p class="section-subtitle">Excel + WhatsApp + Cuadernos = Caos</p>
+        <span class="eyebrow">El problema</span>
+        <h2 class="section-title">Excel + WhatsApp + Cuadernos = <span class="grad">Caos</span></h2>
+        <p class="section-subtitle">El día a día sin un sistema que conecte todo.</p>
       </div>
-
       <div class="problem-grid">
         <div class="problem-card" *ngFor="let problem of problems">
-          <div class="problem-icon">{{ problem.icon }}</div>
+          <div class="problem-icon" [innerHTML]="problem.icon"></div>
           <h3 class="problem-title">{{ problem.title }}</h3>
           <p class="problem-description">{{ problem.description }}</p>
         </div>
@@ -71,77 +111,80 @@
     </div>
   </section>
 
-  <!-- Solution Section -->
+  <!-- SOLUTION -->
   <section class="solution-section">
     <div class="container">
       <div class="section-header">
-        <div class="icon-badge badge-gold">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <polyline points="20 6 9 17 4 12"/>
-          </svg>
-        </div>
-        <h2 class="section-title">La Solución</h2>
-        <p class="section-subtitle">Ecosistema Integrado donde cada dato genera valor</p>
+        <span class="eyebrow">La solución</span>
+        <h2 class="section-title">Un <span class="grad">ecosistema integrado</span> donde cada dato genera valor</h2>
+        <p class="section-subtitle">Fácil como WhatsApp, potente como ningún Excel.</p>
       </div>
 
-      <div class="solution-content">
-        <div class="solution-visual">
-          <div class="solution-flow">
-            <div class="flow-step">
-              <div class="flow-icon">👩‍🏫</div>
-              <div class="flow-label">Docente registra</div>
-            </div>
-            <div class="flow-arrow">→</div>
-            <div class="flow-step">
-              <div class="flow-icon">⚙️</div>
-              <div class="flow-label">Sistema procesa</div>
-            </div>
-            <div class="flow-arrow">→</div>
-            <div class="flow-step">
-              <div class="flow-icon">📊</div>
-              <div class="flow-label">Áreas ejecutan</div>
-            </div>
-            <div class="flow-arrow">→</div>
-            <div class="flow-step">
-              <div class="flow-icon">👨‍👩‍👧</div>
-              <div class="flow-label">Padres consultan</div>
-            </div>
-          </div>
+      <div class="solution-flow">
+        <div class="flow-step">
+          <div class="flow-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.12 2.12 0 0 1 3 3L12 15l-4 1 1-4Z"/></svg></div>
+          <div class="flow-label">Docente registra</div>
         </div>
+        <span class="flow-arrow">→</span>
+        <div class="flow-step">
+          <div class="flow-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/><line x1="9" y1="1" x2="9" y2="4"/><line x1="15" y1="1" x2="15" y2="4"/><line x1="9" y1="20" x2="9" y2="23"/><line x1="15" y1="20" x2="15" y2="23"/><line x1="20" y1="9" x2="23" y2="9"/><line x1="1" y1="9" x2="4" y2="9"/></svg></div>
+          <div class="flow-label">Sistema procesa</div>
+        </div>
+        <span class="flow-arrow">→</span>
+        <div class="flow-step">
+          <div class="flow-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="20" x2="12" y2="10"/><line x1="18" y1="20" x2="18" y2="4"/><line x1="6" y1="20" x2="6" y2="16"/></svg></div>
+          <div class="flow-label">Áreas ejecutan</div>
+        </div>
+        <span class="flow-arrow">→</span>
+        <div class="flow-step">
+          <div class="flow-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/></svg></div>
+          <div class="flow-label">Padres consultan</div>
+        </div>
+      </div>
 
-        <div class="solution-benefits">
-          <div class="benefit-card" *ngFor="let benefit of solutionBenefits">
-            <div class="benefit-number">{{ benefit.value }}</div>
-            <div class="benefit-label">{{ benefit.label }}</div>
+      <div class="solution-benefits">
+        <div class="benefit-card" *ngFor="let benefit of solutionBenefits">
+          <div class="benefit-number">{{ benefit.value }}</div>
+          <div class="benefit-label">{{ benefit.label }}</div>
+        </div>
+      </div>
+
+      <div class="wa-feature">
+        <div>
+          <span class="eyebrow">Integración total</span>
+          <h3>Toda la comunicación con los padres, en <span class="grad">un solo lugar</span>.</h3>
+          <p class="wa-lead">Bandeja única de WhatsApp Business: cada conversación queda registrada en el sistema, varios colaboradores responden el mismo chat y obtienes análisis y monitoreo de toda la comunicación.</p>
+        </div>
+        <div class="wa-card">
+          <div class="wa-head">
+            <span class="wa-dot"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.5 14.4c-.3-.1-1.7-.9-2-1s-.5-.1-.7.1-.7.9-.9 1.1-.3.2-.6.1c-.3-.2-1.2-.5-2.4-1.5-.9-.8-1.5-1.8-1.6-2-.2-.3 0-.5.1-.6l.4-.5c.1-.2.2-.3.3-.5s0-.4 0-.5-.7-1.6-.9-2.2-.5-.5-.7-.5h-.5c-.2 0-.5 0-.8.4S6 7.4 6 8.9s1.1 2.9 1.2 3.1 2.1 3.2 5.1 4.5c.7.3 1.3.5 1.7.6.7.2 1.4.2 1.9.1.6-.1 1.7-.7 2-1.4s.2-1.3.2-1.4-.3-.2-.6-.3z"/></svg></span>
+            Familia Martínez · acudiente
           </div>
+          <div class="wa-bubble wa-in">Buenos días, ¿Sofía alcanzó a almorzar hoy? 🙏</div>
+          <div class="wa-bubble wa-out">¡Sí! Almorzó completo y está feliz. Le acabamos de subir fotos al portal 📷</div>
+          <div class="wa-foot">Respondido por Laura (docente) · visible para todo el equipo</div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Modules Section -->
-  <section class="modules-section" id="modules" #modulesSection>
+  <!-- MODULES -->
+  <section class="modules-section" id="modulos" #modulesSection>
     <div class="container">
       <div class="section-header">
-        <div class="icon-badge">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <rect x="3" y="3" width="7" height="7"/>
-            <rect x="14" y="3" width="7" height="7"/>
-            <rect x="14" y="14" width="7" height="7"/>
-            <rect x="3" y="14" width="7" height="7"/>
-          </svg>
-        </div>
-        <h2 class="section-title">8 Módulos Integrados</h2>
-        <p class="section-subtitle">Todo lo que necesitas en un solo lugar</p>
+        <span class="eyebrow">Módulos</span>
+        <h2 class="section-title">Una plataforma, <span class="grad">todo tu jardín</span></h2>
+        <p class="section-subtitle">Todo lo que necesitas para gestionar tu jardín, más allá de lo académico.</p>
       </div>
-
       <div class="modules-grid">
         <div class="module-card" *ngFor="let module of modules" (click)="openModuleModal(module)">
-          <div class="module-header">
-            <div class="module-icon" [innerHTML]="module.icon"></div>
-            <h3 class="module-title">{{ module.title }}</h3>
-          </div>
+          <div class="module-icon" [innerHTML]="module.icon"></div>
+          <h3 class="module-title">{{ module.title }}</h3>
           <p class="module-description">{{ module.description }}</p>
+          <div class="module-ia" *ngIf="module.iaNote">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l2 5 5 2-5 2-2 5-2-5-5-2 5-2z"/></svg>
+            {{ module.iaNote }}
+          </div>
           <div class="module-footer">
             <span class="module-link">Ver más →</span>
           </div>
@@ -150,24 +193,17 @@
     </div>
   </section>
 
-  <!-- Differentiators Section -->
-  <section class="differentiators-section">
+  <!-- DIFFERENTIATORS -->
+  <section class="differentiators-section" id="diferenciadores">
     <div class="container">
       <div class="section-header">
-        <div class="icon-badge badge-gold">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
-          </svg>
-        </div>
-        <h2 class="section-title">¿Por Qué GENIALISIS?</h2>
-        <p class="section-subtitle">Diferenciadores únicos en el mercado</p>
+        <span class="eyebrow">¿Por qué GENIALISIS?</span>
+        <h2 class="section-title">Todo lo que va <span class="grad">más allá</span> de lo académico</h2>
+        <p class="section-subtitle">Lo que de verdad nos separa de la competencia.</p>
       </div>
-
       <div class="differentiators-grid">
         <div class="diff-card" *ngFor="let diff of differentiators">
-          <div class="diff-badge" *ngIf="diff.badge">
-            <span>{{ diff.badge }}</span>
-          </div>
+          <div class="diff-badge" *ngIf="diff.badge">{{ diff.badge }}</div>
           <div class="diff-icon" [innerHTML]="diff.icon"></div>
           <h3 class="diff-title">{{ diff.title }}</h3>
           <p class="diff-description">{{ diff.description }}</p>
@@ -176,64 +212,41 @@
     </div>
   </section>
 
-  <!-- Guarantee Section -->
+  <!-- GUARANTEE -->
   <section class="guarantee-section">
     <div class="container">
       <div class="guarantee-card">
         <div class="guarantee-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
-            <polyline points="9 12 11 14 15 10"/>
-          </svg>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></svg>
         </div>
         <h2 class="guarantee-title">Garantía 60 Días</h2>
         <p class="guarantee-subtitle">Cero riesgo para tu establecimiento</p>
         <div class="guarantee-content">
           <div class="guarantee-point">
-            <svg class="check-icon" viewBox="0 0 24 24" fill="currentColor">
-              <polyline points="20 6 9 17 4 12"/>
-            </svg>
+            <span class="check-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></span>
             <span>Si no quedas satisfecho, devolvemos tu dinero</span>
           </div>
           <div class="guarantee-point">
-            <svg class="check-icon" viewBox="0 0 24 24" fill="currentColor">
-              <polyline points="20 6 9 17 4 12"/>
-            </svg>
+            <span class="check-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></span>
             <span>Te entregamos todos los datos en formatos estándar</span>
           </div>
           <div class="guarantee-point">
-            <svg class="check-icon" viewBox="0 0 24 24" fill="currentColor">
-              <polyline points="20 6 9 17 4 12"/>
-            </svg>
+            <span class="check-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></span>
             <span>Sin pérdida de tiempo ni información</span>
           </div>
         </div>
-        <button class="btn-guarantee" (click)="scrollToContact()">
-          Probar sin riesgo
-          <svg class="icon-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <line x1="5" y1="12" x2="19" y2="12"/>
-            <polyline points="12 5 19 12 12 19"/>
-          </svg>
-        </button>
+        <button type="button" class="btn btn-primary" (click)="scrollToContact()">Probar sin riesgo →</button>
       </div>
     </div>
   </section>
 
-  <!-- FAQ Section -->
+  <!-- FAQ -->
   <section class="faq-section" id="faq">
     <div class="container">
       <div class="section-header">
-        <div class="icon-badge">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <circle cx="12" cy="12" r="10"/>
-            <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/>
-            <line x1="12" y1="17" x2="12.01" y2="17"/>
-          </svg>
-        </div>
-        <h2 class="section-title">Preguntas Frecuentes</h2>
-        <p class="section-subtitle">Resolvemos tus dudas</p>
+        <span class="eyebrow">Preguntas frecuentes</span>
+        <h2 class="section-title">Resolvemos tus <span class="grad">dudas</span></h2>
       </div>
-
       <div class="faq-list">
         <div class="faq-item" *ngFor="let faq of faqs; let i = index"
              [class.active]="activeFaqIndex === i"
@@ -241,10 +254,7 @@
           <div class="faq-question">
             <h3>{{ faq.question }}</h3>
             <div class="faq-icon" [class.rotated]="activeFaqIndex === i">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <line x1="12" y1="5" x2="12" y2="19"/>
-                <line x1="5" y1="12" x2="19" y2="12"/>
-              </svg>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
             </div>
           </div>
           <div class="faq-answer" *ngIf="activeFaqIndex === i">
@@ -257,16 +267,11 @@
         <p>¿Tienes más preguntas?</p>
         <div class="faq-contact">
           <a [href]="'tel:' + telefonoContacto" class="contact-link">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
-            </svg>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
             {{ telefonoContacto }}
           </a>
           <a [href]="'mailto:' + emailContacto" class="contact-link">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
-              <polyline points="22,6 12,13 2,6"/>
-            </svg>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
             {{ emailContacto }}
           </a>
         </div>
@@ -274,8 +279,8 @@
     </div>
   </section>
 
-  <!-- Contact Section -->
-  <section class="contact-section" id="contact" #contactSection>
+  <!-- CONTACT -->
+  <section class="contact-section" id="contacto" #contactSection>
     <div class="container">
       <div class="contact-card">
         <h2 class="contact-title">Transforma tu Establecimiento Hoy</h2>
@@ -285,17 +290,13 @@
           <div class="form-row">
             <div class="form-group">
               <label>Nombre del Establecimiento *</label>
-              <input type="text" formControlName="nombreEstablecimiento" placeholder="establecimiento educativo...">
-              <span class="form-error" *ngIf="contactForm.get('nombreEstablecimiento')?.touched && contactForm.get('nombreEstablecimiento')?.invalid">
-                Campo requerido
-              </span>
+              <input type="text" formControlName="nombreEstablecimiento" placeholder="Establecimiento educativo...">
+              <span class="form-error" *ngIf="contactForm.get('nombreEstablecimiento')?.touched && contactForm.get('nombreEstablecimiento')?.invalid">Campo requerido</span>
             </div>
             <div class="form-group">
               <label>Nombre de Contacto *</label>
               <input type="text" formControlName="nombreContacto" placeholder="Tu nombre completo">
-              <span class="form-error" *ngIf="contactForm.get('nombreContacto')?.touched && contactForm.get('nombreContacto')?.invalid">
-                Campo requerido
-              </span>
+              <span class="form-error" *ngIf="contactForm.get('nombreContacto')?.touched && contactForm.get('nombreContacto')?.invalid">Campo requerido</span>
             </div>
           </div>
 
@@ -303,16 +304,12 @@
             <div class="form-group">
               <label>Email *</label>
               <input type="email" formControlName="email" placeholder="tu@email.com">
-              <span class="form-error" *ngIf="contactForm.get('email')?.touched && contactForm.get('email')?.invalid">
-                Email inválido
-              </span>
+              <span class="form-error" *ngIf="contactForm.get('email')?.touched && contactForm.get('email')?.invalid">Email inválido</span>
             </div>
             <div class="form-group">
               <label>Teléfono *</label>
               <input type="tel" formControlName="telefono" placeholder="3001234567">
-              <span class="form-error" *ngIf="contactForm.get('telefono')?.touched && contactForm.get('telefono')?.invalid">
-                Teléfono inválido
-              </span>
+              <span class="form-error" *ngIf="contactForm.get('telefono')?.touched && contactForm.get('telefono')?.invalid">Teléfono inválido</span>
             </div>
           </div>
 
@@ -321,119 +318,90 @@
               <label>Tipo de Consulta *</label>
               <select formControlName="tipoConsulta">
                 <option value="">Selecciona una opción...</option>
-                <option *ngFor="let tipo of tiposConsulta" [value]="tipo.id">
-                  {{ tipo.nombre }}
-                </option>
+                <option *ngFor="let tipo of tiposConsulta" [value]="tipo.id">{{ tipo.nombre }}</option>
               </select>
-              <span class="form-error" *ngIf="contactForm.get('tipoConsulta')?.touched && contactForm.get('tipoConsulta')?.invalid">
-                Campo requerido
-              </span>
+              <span class="form-error" *ngIf="contactForm.get('tipoConsulta')?.touched && contactForm.get('tipoConsulta')?.invalid">Campo requerido</span>
             </div>
             <div class="form-group">
               <label>¿Cómo nos conociste? *</label>
               <select formControlName="comoConocio">
                 <option value="">Selecciona una opción...</option>
-                <option *ngFor="let canal of canalesComoConocio" [value]="canal.id">
-                  {{ canal.nombre }}
-                </option>
+                <option *ngFor="let canal of canalesComoConocio" [value]="canal.id">{{ canal.nombre }}</option>
               </select>
-              <span class="form-error" *ngIf="contactForm.get('comoConocio')?.touched && contactForm.get('comoConocio')?.invalid">
-                Campo requerido
-              </span>
+              <span class="form-error" *ngIf="contactForm.get('comoConocio')?.touched && contactForm.get('comoConocio')?.invalid">Campo requerido</span>
             </div>
           </div>
 
           <div class="form-group" *ngIf="mostrarDetalleComoConocio">
             <label>{{ getPlaceholderDetalle() }} *</label>
-            <input
-              type="text"
-              formControlName="comoConocioDetalle"
-              [placeholder]="getPlaceholderDetalle()">
-            <span class="form-error" *ngIf="contactForm.get('comoConocioDetalle')?.touched && contactForm.get('comoConocioDetalle')?.invalid">
-              Campo requerido
-            </span>
+            <input type="text" formControlName="comoConocioDetalle" [placeholder]="getPlaceholderDetalle()">
+            <span class="form-error" *ngIf="contactForm.get('comoConocioDetalle')?.touched && contactForm.get('comoConocioDetalle')?.invalid">Campo requerido</span>
           </div>
 
           <div class="form-group">
             <label>Tamaño del Establecimiento (opcional)</label>
             <select formControlName="tamanoEstablecimiento">
               <option value="">Selecciona un rango...</option>
-              <option *ngFor="let tamano of tamanosEstablecimiento" [value]="tamano.id">
-                {{ tamano.nombre }}
-              </option>
+              <option *ngFor="let tamano of tamanosEstablecimiento" [value]="tamano.id">{{ tamano.nombre }}</option>
             </select>
           </div>
 
           <div class="form-group">
             <label>Mensaje *</label>
             <textarea formControlName="mensaje" rows="4" placeholder="Cuéntanos sobre tu establecimiento..."></textarea>
-            <span class="form-error" *ngIf="contactForm.get('mensaje')?.touched && contactForm.get('mensaje')?.invalid">
-              El mensaje es requerido (mínimo 10 caracteres)
-            </span>
+            <span class="form-error" *ngIf="contactForm.get('mensaje')?.touched && contactForm.get('mensaje')?.invalid">El mensaje es requerido (mínimo 10 caracteres)</span>
           </div>
 
           <div class="form-actions">
             <button type="submit" class="btn-submit" [disabled]="contactForm.invalid || isSubmitting">
               <span *ngIf="!isSubmitting">Solicitar Demostración</span>
               <span *ngIf="isSubmitting">Enviando...</span>
-              <svg class="icon-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <line x1="5" y1="12" x2="19" y2="12"/>
-                <polyline points="12 5 19 12 12 19"/>
-              </svg>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
             </button>
 
             <button type="button" class="btn-whatsapp" (click)="abrirWhatsApp()" *ngIf="whatsappUrl">
-              <svg viewBox="0 0 24 24" fill="currentColor">
-                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L0 24l6.304-1.654a11.881 11.881 0 005.713 1.456h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
-              </svg>
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L0 24l6.304-1.654a11.881 11.881 0 005.713 1.456h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
               Escribir por WhatsApp
             </button>
           </div>
         </form>
 
         <div class="success-message" *ngIf="showSuccessMessage">
-          <svg viewBox="0 0 24 24" fill="currentColor">
-            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
-          </svg>
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
           <p>¡Gracias por tu interés! Nos pondremos en contacto contigo pronto.</p>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Botón flotante WhatsApp -->
+  <!-- WHATSAPP FLOAT -->
   <a [href]="whatsappUrl" target="_blank" class="whatsapp-float" *ngIf="whatsappUrl" aria-label="Contactar por WhatsApp">
-    <svg viewBox="0 0 24 24" fill="currentColor">
-      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.890-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
-    </svg>
+    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L0 24l6.304-1.654a11.881 11.881 0 005.713 1.456h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
   </a>
 
-  <!-- Menú hamburguesa mobile -->
+  <!-- HAMBURGUESA MOBILE -->
   <button class="menu-hamburguesa" (click)="toggleMenuMobile()" [class.activo]="menuMobileAbierto" aria-label="Menú">
-    <span></span>
-    <span></span>
-    <span></span>
+    <span></span><span></span><span></span>
   </button>
 
-  <!-- Menu mobile overlay -->
+  <!-- MENU MOBILE -->
   <div class="menu-mobile-overlay" *ngIf="menuMobileAbierto" (click)="cerrarMenuMobile()">
     <nav class="menu-mobile" (click)="$event.stopPropagation()">
       <button class="menu-close" (click)="cerrarMenuMobile()" aria-label="Cerrar menú">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <line x1="18" y1="6" x2="6" y2="18"/>
-          <line x1="6" y1="6" x2="18" y2="18"/>
-        </svg>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
       </button>
       <ul class="menu-mobile-list">
         <li><button type="button" (click)="scrollToSection('hero')">Inicio</button></li>
-        <li><button type="button" (click)="scrollToSection('benefits')">Beneficios</button></li>
-        <li><button type="button" (click)="scrollToSection('modules')">Módulos</button></li>
+        <li><button type="button" (click)="scrollToSection('beneficios')">Beneficios</button></li>
+        <li><button type="button" (click)="scrollToSection('modulos')">Módulos</button></li>
+        <li><button type="button" (click)="scrollToSection('diferenciadores')">¿Por qué?</button></li>
         <li><button type="button" (click)="scrollToSection('faq')">Preguntas</button></li>
-        <li><button type="button" (click)="scrollToSection('contact')">Contacto</button></li>
+        <li><button type="button" (click)="scrollToSection('contacto')">Contacto</button></li>
       </ul>
     </nav>
   </div>
 
+  <!-- FOOTER -->
   <footer class="footer">
     <div class="container">
       <div class="footer-content">
@@ -441,51 +409,40 @@
           <img src="assets/images/logo_blanco.png" alt="GENIALISIS" class="footer-logo">
           <p class="footer-tagline">"No digitalizamos el caos. Creamos armonía operacional."</p>
         </div>
-
         <div class="footer-column">
           <h4>Empresa</h4>
           <ul>
             <li><button type="button" class="footer-link" (click)="abrirPaginaModal('sobre-nosotros')">Sobre Nosotros</button></li>
-            <li><button type="button" class="footer-link" (click)="scrollToSection('contact')">Contacto</button></li>
+            <li><button type="button" class="footer-link" (click)="scrollToSection('contacto')">Contacto</button></li>
             <li><a class="footer-link" routerLink="/politica-privacidad">Política de Privacidad</a></li>
             <li><a class="footer-link" routerLink="/terminos-condiciones">Términos y Condiciones</a></li>
           </ul>
         </div>
-
         <div class="footer-column">
           <h4>Contacto</h4>
           <ul class="contact-list">
             <li>
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
-              </svg>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
               <a [href]="'tel:' + telefonoContacto">{{ telefonoContacto }}</a>
             </li>
             <li>
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
-                <polyline points="22,6 12,13 2,6"/>
-              </svg>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
               <a [href]="'mailto:' + emailContacto">{{ emailContacto }}</a>
             </li>
           </ul>
         </div>
       </div>
-
       <div class="footer-bottom">
-        <p>&copy; 2025 GENIALISIS. Todos los derechos reservados.</p>
+        <p>&copy; 2026 GENIALISIS. Todos los derechos reservados.</p>
       </div>
     </div>
   </footer>
 
-  <!-- Module Modal -->
+  <!-- MODAL MÓDULO -->
   <div class="modal-overlay" *ngIf="showModal" (click)="closeModal()">
     <div class="modal-content" (click)="$event.stopPropagation()">
       <button class="modal-close" (click)="closeModal()">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <line x1="18" y1="6" x2="6" y2="18"/>
-          <line x1="6" y1="6" x2="18" y2="18"/>
-        </svg>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
       </button>
       <div class="modal-header">
         <div class="modal-icon" [innerHTML]="selectedModule?.icon"></div>
@@ -496,14 +453,11 @@
     </div>
   </div>
 
-  <!-- Modal Páginas Institucionales (solo sobre-nosotros) -->
+  <!-- MODAL PÁGINAS INSTITUCIONALES -->
   <div class="modal-overlay" *ngIf="showPaginaModal" (click)="cerrarPaginaModal()">
-    <div class="modal-content modal-pagina" (click)="$event.stopPropagation()">
+    <div class="modal-content" (click)="$event.stopPropagation()">
       <button class="modal-close" (click)="cerrarPaginaModal()">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <line x1="18" y1="6" x2="6" y2="18"/>
-          <line x1="6" y1="6" x2="18" y2="18"/>
-        </svg>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
       </button>
       <div class="modal-header">
         <h2 class="modal-title">{{ paginaModalTitulo }}</h2>
@@ -511,4 +465,5 @@
       <div class="modal-body" [innerHTML]="paginaModalContenido"></div>
     </div>
   </div>
+
 </div>
