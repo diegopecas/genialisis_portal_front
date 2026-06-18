@@ -151,7 +151,7 @@ export class LandingGenialisisComponent implements OnInit, AfterViewInit {
       title: 'Gestión académica',
       description: 'Estudiantes (vista 360°), sprints, logros, calificaciones y asistencia en un solo flujo.',
       iaNote: 'Análisis de cobertura con IA',
-      icon: this.sanitizer.bypassSecurityTrustHtml('<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>'),
+      icon: this.sanitizer.bypassSecurityTrustHtml('<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="0.8"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>'),
       fullDescription: `
         <p><strong>El corazón pedagógico de GENIALISIS: toda la vida académica del niño en un solo lugar.</strong></p>
         <p><strong>Vista 360° del estudiante:</strong></p>
@@ -174,7 +174,7 @@ export class LandingGenialisisComponent implements OnInit, AfterViewInit {
       title: 'Financiero',
       description: 'Estados de cuenta, comprobantes en 1 clic, cartera y recaudo siempre al día.',
       iaNote: 'Registro de comprobantes con IA',
-      icon: this.sanitizer.bypassSecurityTrustHtml('<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>'),
+      icon: this.sanitizer.bypassSecurityTrustHtml('<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="0.8"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>'),
       fullDescription: `
         <p><strong>Gestión financiera automatizada. Los padres dejan de preguntar "¿cuánto debo?" por WhatsApp.</strong></p>
         <ul>
@@ -189,7 +189,7 @@ export class LandingGenialisisComponent implements OnInit, AfterViewInit {
     {
       title: 'Portal de padres',
       description: 'Consulta 24/7: fotos diarias, evaluaciones, estado de cuenta y asistencia.',
-      icon: this.sanitizer.bypassSecurityTrustHtml('<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>'),
+      icon: this.sanitizer.bypassSecurityTrustHtml('<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="0.8"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>'),
       fullDescription: `
         <p><strong>Un espacio exclusivo donde los acudientes ven todo lo de su hijo en tiempo real, 24/7.</strong></p>
         <ul>
@@ -199,13 +199,13 @@ export class LandingGenialisisComponent implements OnInit, AfterViewInit {
           <li><strong>Asistencia y observaciones:</strong> ingresos, salidas y notas del día.</li>
           <li><strong>Documentos:</strong> descarga de estados de cuenta en PDF y compartir por WhatsApp.</li>
         </ul>
-        <p><strong>Beneficio:</strong> los padres se autoatienden, dejan de saturar el WhatsApp del jardín y la comunicación se profesionaliza.</p>
+        <p><strong>Beneficio:</strong> los padres se autoatienden, dejan de saturar el WhatsApp de la institución y la comunicación se profesionaliza.</p>
       `
     },
     {
       title: 'WhatsApp integrado',
       description: 'Bandeja única: las conversaciones quedan en el sistema, varios colaboradores responden el mismo chat, con análisis y monitoreo.',
-      icon: this.sanitizer.bypassSecurityTrustHtml('<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-8.5 8.5 8.38 8.38 0 0 1-4-1L3 21l2-5.5a8.38 8.38 0 0 1-1-4A8.5 8.5 0 0 1 21 11.5z"/></svg>'),
+      icon: this.sanitizer.bypassSecurityTrustHtml('<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="0.8"><path d="M21 11.5a8.38 8.38 0 0 1-8.5 8.5 8.38 8.38 0 0 1-4-1L3 21l2-5.5a8.38 8.38 0 0 1-1-4A8.5 8.5 0 0 1 21 11.5z"/></svg>'),
       fullDescription: `
         <p><strong>Toda la comunicación con los padres por WhatsApp Business, centralizada dentro de GENIALISIS.</strong></p>
         <ul>
@@ -214,15 +214,15 @@ export class LandingGenialisisComponent implements OnInit, AfterViewInit {
           <li><strong>Notificaciones automáticas:</strong> fotos, comprobantes y asistencia enviados a los padres.</li>
           <li><strong>Análisis y monitoreo:</strong> mide tiempos de respuesta y supervisa la calidad de la atención.</li>
         </ul>
-        <p><strong>Beneficio:</strong> nada se pierde en chats personales y la comunicación queda como activo del establecimiento, no de una persona.</p>
+        <p><strong>Beneficio:</strong> nada se pierde en chats personales y la comunicación queda como activo de la institución, no de una persona.</p>
       `
     },
     {
       title: 'Gestión de colaboradores',
       description: 'Control de ingreso, actividades, permisos, agenda, pagos y préstamos del personal.',
-      icon: this.sanitizer.bypassSecurityTrustHtml('<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>'),
+      icon: this.sanitizer.bypassSecurityTrustHtml('<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="0.8"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>'),
       fullDescription: `
-        <p><strong>El módulo de talento humano de tu jardín, sin hojas de cálculo paralelas.</strong></p>
+        <p><strong>El módulo de talento humano de tu institución, sin hojas de cálculo paralelas.</strong></p>
         <ul>
           <li><strong>Control de ingreso:</strong> registro de entradas y salidas del personal.</li>
           <li><strong>Actividades:</strong> seguimiento de las labores y responsabilidades de cada colaborador.</li>
@@ -235,7 +235,7 @@ export class LandingGenialisisComponent implements OnInit, AfterViewInit {
     {
       title: 'CRM de admisiones',
       description: 'Seguimiento de visitas, temperatura de prospecto y conversión de matrículas.',
-      icon: this.sanitizer.bypassSecurityTrustHtml('<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="8.5" cy="7" r="4"/><line x1="20" y1="8" x2="20" y2="14"/><line x1="23" y1="11" x2="17" y2="11"/></svg>'),
+      icon: this.sanitizer.bypassSecurityTrustHtml('<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="0.8"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="8.5" cy="7" r="4"/><line x1="20" y1="8" x2="20" y2="14"/><line x1="23" y1="11" x2="17" y2="11"/></svg>'),
       fullDescription: `
         <p><strong>Protocolo profesional de admisiones. Deja de perder matrículas por falta de seguimiento.</strong></p>
         <ul>
@@ -250,7 +250,7 @@ export class LandingGenialisisComponent implements OnInit, AfterViewInit {
     {
       title: 'Operaciones e inventarios',
       description: 'Control de inventarios (exclusivo en el mercado), limpieza y alimentación.',
-      icon: this.sanitizer.bypassSecurityTrustHtml('<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>'),
+      icon: this.sanitizer.bypassSecurityTrustHtml('<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="0.8"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>'),
       fullDescription: `
         <p><strong>Control operativo completo. Único en el mercado: ningún competidor ofrece inventarios.</strong></p>
         <ul>
@@ -280,7 +280,7 @@ export class LandingGenialisisComponent implements OnInit, AfterViewInit {
     {
       title: 'Tamizajes y antropometría',
       description: 'Tamizajes de desarrollo (EAD-3) y medidas de peso y talla, listos para Secretaría de Salud.',
-      icon: this.sanitizer.bypassSecurityTrustHtml('<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>'),
+      icon: this.sanitizer.bypassSecurityTrustHtml('<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="0.8"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>'),
       fullDescription: `
         <p><strong>Seguimiento del desarrollo y crecimiento de cada niño, con respaldo normativo.</strong></p>
         <ul>
@@ -297,7 +297,7 @@ export class LandingGenialisisComponent implements OnInit, AfterViewInit {
   differentiators: Differentiator[] = [
     {
       title: 'IA integrada en los procesos',
-      description: 'La IA trabaja dentro del sistema: analiza tu cobertura curricular, registra los comprobantes de pago y responde tus consultas sobre los datos del jardín.',
+      description: 'La IA trabaja dentro del sistema: analiza tu cobertura curricular, registra los comprobantes de pago y responde tus consultas sobre los datos de la institución.',
       icon: this.sanitizer.bypassSecurityTrustHtml('<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="0.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l2.2 5.8L20 11l-5.8 2.2L12 19l-2.2-5.8L4 11l5.8-2.2z"/><path d="M19 4v3M20.5 5.5h-3M5 17v2M6 18H4"/></svg>'),
       badge: 'IA'
     },
@@ -344,7 +344,7 @@ export class LandingGenialisisComponent implements OnInit, AfterViewInit {
     },
     {
       question: '¿Cómo está integrada la IA en GENIALISIS?',
-      answer: 'La IA trabaja dentro de tus procesos, no como un extra de moda: analiza tu cobertura curricular y detecta vacíos, registra los comprobantes de pago leyéndolos por ti, y responde consultas en lenguaje natural sobre los datos del jardín. Está pensada para ahorrarte trabajo real, no para impresionar.'
+      answer: 'La IA trabaja dentro de tus procesos, no como un extra de moda: analiza tu cobertura curricular y detecta vacíos, registra los comprobantes de pago leyéndolos por ti, y responde consultas en lenguaje natural sobre los datos de la institución. Está pensada para ahorrarte trabajo real, no para impresionar.'
     },
     {
       question: '¿Es verdad que evaluar 15 niños toma solo 5 minutos?',
@@ -428,8 +428,8 @@ export class LandingGenialisisComponent implements OnInit, AfterViewInit {
    * SoftwareApplication y FAQPage) construidos a partir del contenido real.
    */
   aplicarSeo(): void {
-    const tituloPagina = 'GENIALISIS | Software de gestión para jardines infantiles y preescolares en Colombia';
-    const descripcionPagina = 'GENIALISIS es la plataforma colombiana que centraliza gestión académica, finanzas, portal de padres, WhatsApp, colaboradores, admisiones, inventarios y tamizajes para jardines infantiles, con IA integrada en los procesos. Ahorra 60% del tiempo administrativo y garantiza el 100% de cobertura curricular.';
+    const tituloPagina = 'GENIALISIS | Software de gestión para instituciones educativas en Colombia';
+    const descripcionPagina = 'GENIALISIS es la plataforma colombiana que centraliza gestión académica, finanzas, portal de padres, WhatsApp, colaboradores, admisiones, restaurante, inventarios y tamizajes para instituciones educativas (jardines, preescolares y centros de formación), con IA integrada en los procesos. Ahorra 60% del tiempo administrativo y garantiza el 100% de cobertura curricular.';
     const urlSitio = 'https://genialisis.com/';
 
     this.seoService.actualizarMetadatos({
@@ -502,8 +502,8 @@ export class LandingGenialisisComponent implements OnInit, AfterViewInit {
     // El margen inferior negativo retrasa el disparo hasta que el elemento
     // ya entró bien en pantalla, así el efecto de "flotar" sí se nota.
     const observerOptions = {
-      threshold: 0,
-      rootMargin: '0px 0px -160px 0px'
+      threshold: 0.1,
+      rootMargin: '0px 0px -90px 0px'
     };
 
     const observer = new IntersectionObserver((entries) => {

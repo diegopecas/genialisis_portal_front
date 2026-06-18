@@ -24,7 +24,7 @@
     <div class="hero-wrap">
       <div class="hero-content">
         <span class="eyebrow"><span class="dot"></span> Simple de usar, imposible de igualar</span>
-        <h1 class="hero-title">El software que <span class="grad">demuestra</span> que tu jardín funciona perfecto.</h1>
+        <h1 class="hero-title">El software que <span class="grad">demuestra</span> que tu institución funciona perfecto.</h1>
         <p class="hero-description">Centraliza estudiantes, académico, finanzas, asistencia e inventarios en un solo lugar. Ahorra 60% del tiempo administrativo y garantiza el 100% de tu promesa educativa.</p>
         <div class="hero-cta">
           <button type="button" class="btn btn-primary" (click)="agendarDemo()">
@@ -172,13 +172,15 @@
     <div class="container">
       <div class="section-header">
         <span class="eyebrow">Módulos</span>
-        <h2 class="section-title">Una plataforma, <span class="grad">todo tu jardín</span></h2>
-        <p class="section-subtitle">Todo lo que necesitas para gestionar tu jardín, más allá de lo académico.</p>
+        <h2 class="section-title">Una plataforma, <span class="grad">toda tu institución</span></h2>
+        <p class="section-subtitle">Todo lo que necesitas para gestionar tu institución, más allá de lo académico.</p>
       </div>
 
       <div class="magia-band">
         <span class="eyebrow">La magia del sistema</span>
         <h3>Una sola acción mueve <span class="grad">todo el sistema</span></h3>
+        <p class="magia-note">Un ejemplo de cómo los procesos están profundamente integrados entre sí.</p><br/>
+    
         <div class="magia-flow">
           <span class="magia-chip">Registras las onces del niño</span>
           <span class="magia-arrow">→</span>
@@ -188,8 +190,8 @@
           <span class="magia-arrow">→</span>
           <span class="magia-chip">El papá lo ve en su estado de cuenta</span>
         </div>
-        <p class="magia-note">Un solo dato optimiza tu equipo. Y este es apenas un ejemplo: muchos de nuestros procesos están profundamente integrados así.</p>
-      </div>
+        <p>Un solo dato optimiza tu equipo.</p>
+          </div>
       <div class="modules-grid">
         <div class="module-card" *ngFor="let module of modules" (click)="openModuleModal(module)">
           <div class="module-icon" [innerHTML]="module.icon"></div>
